@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_starLocationFragment_to_starLocationDetailFragment"
             app:destination="@id/starLocationDetailFragment" />
+        <action
+            android:id="@+id/action_starLocationFragment_to_starLocationEditFragment"
+            app:destination="@id/starLocationEditFragment" />
     </fragment>
 
     <fragment
