@@ -23,6 +23,7 @@ class StarLocationEditViewModel @Inject constructor(
     data class EditState(
         val id: Long? = null,
         val name: String = "",
+        val location: String = "",
         val date: LocalDate? = null,
         val time: LocalTime? = null,
         val lat: String = "",
@@ -44,6 +45,7 @@ class StarLocationEditViewModel @Inject constructor(
                     state.value = state.value.copy(
                         id = it.id,
                         name = it.name,
+                        location = it.location,
                         date = it.date,
                         time = it.time,
                         lat = it.lat.toString(),
@@ -57,6 +59,7 @@ class StarLocationEditViewModel @Inject constructor(
     }
 
     fun onNameChanged(v: String) { state.update { it.copy(name = v) } }
+    fun onLocationChanged(v: String) { state.update { it.copy(location = v) } }
     fun onDatePicked(v: LocalDate) { state.update { it.copy(date = v) } }
     fun onTimePicked(v: LocalTime) { state.update { it.copy(time = v) } }
     fun onLatChanged(v: String) { state.update { it.copy(lat = v) } }
@@ -71,7 +74,7 @@ class StarLocationEditViewModel @Inject constructor(
 
         viewModelScope.launch {
             when {
-                s.name.isBlank() || s.date == null || s.time == null ||
+                s.name.isBlank() || s.location.isBlank() || s.date == null || s.time == null ||
                 s.notes.isBlank() || lat == null || lng == null || s.weather == null -> {
                     _events.send(UiEvent.ShowToast("Enter data to all fields before save"))
                 }
@@ -82,6 +85,7 @@ class StarLocationEditViewModel @Inject constructor(
                     val item = StarLocation(
                         id = s.id ?: 0,
                         name = s.name,
+                        location = s.location,
                         date = s.date,
                         time = s.time,
                         lat = lat,

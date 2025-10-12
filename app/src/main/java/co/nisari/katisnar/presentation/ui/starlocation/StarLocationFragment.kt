@@ -41,12 +41,12 @@ class StarLocationFragment : Fragment() {
         recyclerView.adapter = adapter
 
         // подписка на список
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.locations.collect { adapter.submitList(it) }
         }
 
         // подписка на события UI
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.NavigateToDetail -> {
@@ -58,8 +58,15 @@ class StarLocationFragment : Fragment() {
                     }
 
                     is UiEvent.NavigateToEdit -> {
-                        // переход на экран создания
-                        findNavController().navigate(R.id.action_starLocationFragment_to_starLocationDetailFragment)
+                        val actionId = R.id.action_starLocationFragment_to_starLocationEditFragment
+                        if (event.id != null) {
+                            findNavController().navigate(
+                                actionId,
+                                bundleOf("id" to event.id)
+                            )
+                        } else {
+                            findNavController().navigate(actionId)
+                        }
                     }
 
                     else -> Unit
@@ -68,8 +75,7 @@ class StarLocationFragment : Fragment() {
         }
 
         binding.btnAddLog.setOnClickListener {
-        // пример: кнопка добавления
-            findNavController().navigate(R.id.action_starLocationFragment_to_starLocationDetailFragment)
+            viewModel.onAddClick()
         }
     }
 }
