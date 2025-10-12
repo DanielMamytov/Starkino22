@@ -8,5 +8,51 @@
         android:id="@+id/dashBoardFragment"
         android:name="co.nisari.katisnar.presentation.ui.main.DashBoardFragment"
         android:label="fragment_dash_board"
-        tools:layout="@layout/fragment_dash_board" />
+        tools:layout="@layout/fragment_dash_board">
+        <action
+            android:id="@+id/action_dashBoardFragment_to_starLocationFragment"
+            app:destination="@id/starLocationFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_starRouteFragment"
+            app:destination="@id/starRouteFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_starNoteFragment"
+            app:destination="@id/starNoteFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_starArticleFragment"
+            app:destination="@id/starArticleFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/starLocationFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starlocation.StarLocationFragment"
+        android:label="fragment_star_location"
+        tools:layout="@layout/fragment_star_location" />
+
+    <fragment
+        android:id="@+id/starRouteFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starnoute.StarRoutineFragment"
+        android:label="fragment_star_route"
+        tools:layout="@layout/fragment_star_routine" />
+
+    <fragment
+        android:id="@+id/starNoteFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starroutine.StarNoteFragment"
+        android:label="fragment_star_note"
+        tools:layout="@layout/fragment_star_note" />
+
+    <fragment
+        android:id="@+id/starArticleFragment"
+        android:name="co.nisari.katisnar.presentation.ui.stararticle.StarArticleFragment"
+        android:label="fragment_star_article"
+        tools:layout="@layout/fragment_star_article" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="co.nisari.katisnar.presentation.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
