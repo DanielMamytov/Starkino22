@@ -3,16 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_onboarding_screen"
+    android:background="@drawable/OnboardingFragment_bg"
     tools:context=".presentation.ui.onboarding.OnboardFragment">
 
-    <ImageView
-        android:id="@+id/btn_begin_the_journey"
-        android:layout_width="200dp"
-        android:layout_height="55dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="34dp"
-        android:src="@drawable/btn_begin_the_journey" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="210dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="150dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:text="Capture your world with\nstar precision."/>
+            <View
+                android:layout_width="match_parent"
+                android:background="#18FFFFFF"
+                android:layout_height="150dp"/>
+        </FrameLayout>
+        <ImageView
+            android:id="@+id/btn_begin_the_journey"
+            android:layout_width="200dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="55dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="34dp"
+            android:src="@drawable/btn_begin_the_journey" />
+
+    </FrameLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
