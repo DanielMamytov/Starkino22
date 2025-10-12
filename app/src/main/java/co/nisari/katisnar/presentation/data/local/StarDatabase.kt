@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 
 @Database(
     entities = [StarLocation::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(StarLocationConverters::class)
