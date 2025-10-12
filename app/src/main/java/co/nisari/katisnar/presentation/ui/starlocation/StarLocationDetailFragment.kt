@@ -1,4 +1,4 @@
-package com.starkino.presentation.ui.starlocation
+package co.nisari.katisnar.presentation.ui.starlocation
 
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException

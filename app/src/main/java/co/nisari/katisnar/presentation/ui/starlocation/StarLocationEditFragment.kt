@@ -49,7 +49,8 @@ class StarLocationEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 1) Режим: создание или редактирование
-        val id = arguments?.getLong("id")
+        val args = arguments
+        val id = if (args != null && args.containsKey("id")) args.getLong("id") else null
         if (id != null) {
             vm.load(id)
             binding.btnDelete.visibility = View.VISIBLE
