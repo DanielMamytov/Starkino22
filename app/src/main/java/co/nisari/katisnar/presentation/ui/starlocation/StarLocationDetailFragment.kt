@@ -63,7 +63,7 @@ class StarLocationDetailFragment : Fragment() {
                 val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
                 binding.txtName.text = loc.name
-                binding.txtLocation.text = loc.name
+                binding.txtLocation.text = loc.location
                 binding.txtDate.text = loc.date.format(dateFormatter)
                 binding.txtTime.text = loc.time.format(timeFormatter)
                 binding.txtLatitude.text = String.format("%.4f", loc.lat)
@@ -74,7 +74,7 @@ class StarLocationDetailFragment : Fragment() {
 
                 // Кнопка показать на карте
                 binding.root.findViewById<View>(R.id.btn_show_map).setOnClickListener {
-                    viewModel.onShowOnMap(loc.lat, loc.lng, loc.name)
+                    viewModel.onShowOnMap(loc.lat, loc.lng, loc.location)
                 }
 
                 // Edit
