@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_screen_img"
+    tools:context=".presentation.ui.splash.SplashFragment">
+
+    <ProgressBar
+        android:id="@+id/loading_animation"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="152dp"
+        android:progressDrawable="@drawable/loading_progress"
+        android:max="100"
+        android:progress="50"
+        android:indeterminate="false" />
+
+</FrameLayout>

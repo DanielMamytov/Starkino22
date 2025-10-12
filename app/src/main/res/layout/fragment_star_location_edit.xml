@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_star_location_edit"
+    tools:context=".presentation.ui.starlocation.StarLocationEditFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="66dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/btn_back" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="start|top"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/btn_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="323dp"
+        android:layout_height="590dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background_location_detail"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="90dp"
+            app:prefixText="Name: "
+            app:prefixTextColor="#ABA9AB"
+            android:paddingStart="10dp"
+            android:background="@drawable/text_border"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingStart="60dp"
+                android:gravity="center_vertical" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:prefixText="Location: "
+            app:prefixTextColor="#ABA9AB"
+            android:paddingStart="10dp"
+            android:background="@drawable/text_border"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingStart="60dp"
+                android:gravity="center_vertical" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="134dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/text_border"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/img_date"
+                    android:contentDescription="Calendar icon" />
+
+                <EditText
+                    android:id="@+id/et_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:hint="Select Date"
+                    android:inputType="date"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/img_arrow_down"
+                    android:contentDescription="Dropdown arrow" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="134dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/text_border"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/img_time"
+                    android:contentDescription="Calendar icon" />
+
+                <EditText
+                    android:id="@+id/et_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:hint="Select Date"
+                    android:inputType="date"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/img_arrow_down"
+                    android:contentDescription="Dropdown arrow" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:prefixText="Latitude: "
+            app:prefixTextColor="#ABA9AB"
+            android:paddingStart="10dp"
+            android:background="@drawable/text_border"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingStart="60dp"
+                android:gravity="center_vertical" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:prefixText="Longitude: "
+            app:prefixTextColor="#ABA9AB"
+            android:paddingStart="10dp"
+            android:background="@drawable/text_border"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingStart="60dp"
+                android:gravity="center_vertical" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/text_border"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/img_weather"
+                android:contentDescription="Calendar icon" />
+
+            <EditText
+                android:id="@+id/et_weather"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:hint="Select Date"
+                android:inputType="date"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/img_arrow_down"
+                android:contentDescription="Dropdown arrow" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_notes"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:prefixText="Notes: "
+            app:prefixTextColor="#ABA9AB"
+            android:paddingStart="10dp"
+            android:background="@drawable/text_border"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingStart="60dp"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"
+                android:scrollbars="vertical" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btn_save"
+            android:layout_width="142dp"
+            android:layout_height="52dp"
+            android:layout_marginHorizontal="10dp"
+            android:src="@drawable/btn_save" />
+
+        <ImageView
+            android:id="@+id/btn_cancel"
+            android:layout_width="142dp"
+            android:layout_height="52dp"
+            android:src="@drawable/btn_cancel" />
+
+    </LinearLayout>
+
+</FrameLayout>
