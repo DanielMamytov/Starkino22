@@ -30,7 +30,11 @@
         android:id="@+id/starLocationFragment"
         android:name="co.nisari.katisnar.presentation.ui.starlocation.StarLocationFragment"
         android:label="fragment_star_location"
-        tools:layout="@layout/fragment_star_location" />
+        tools:layout="@layout/fragment_star_location" >
+        <action
+            android:id="@+id/action_starLocationFragment_to_starLocationDetailFragment"
+            app:destination="@id/starLocationDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/starRouteFragment"
@@ -65,4 +69,18 @@
         android:name="co.nisari.katisnar.presentation.ui.onboarding.OnboardFragment"
         android:label="fragment_onboard"
         tools:layout="@layout/fragment_onboard" />
+    <fragment
+        android:id="@+id/starLocationDetailFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starlocation.StarLocationDetailFragment"
+        android:label="fragment_star_location_detail"
+        tools:layout="@layout/fragment_star_location_detail" >
+        <action
+            android:id="@+id/action_starLocationDetailFragment_to_starLocationEditFragment"
+            app:destination="@id/starLocationEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/starLocationEditFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starlocation.StarLocationEditFragment"
+        android:label="fragment_star_location_edit"
+        tools:layout="@layout/fragment_star_location_edit" />
 </navigation>

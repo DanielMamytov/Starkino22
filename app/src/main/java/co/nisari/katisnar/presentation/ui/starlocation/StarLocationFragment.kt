@@ -5,56 +5,71 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
+import co.nisari.katisnar.databinding.FragmentStarLocationBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [StarLocationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class StarLocationFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentStarLocationBinding
+    private val viewModel: LocationListViewModel by viewModels()
+    private lateinit var adapter: StarLocationAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_star_location, container, false)
+        binding = FragmentStarLocationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StarLocationFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StarLocationFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        adapter = StarLocationAdapter { location ->
+            viewModel.onLocationClick(location.id)
+        }
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_locations)
+        recyclerView.adapter = adapter
+
+        // подписка на список
+        lifecycleScope.launchWhenStarted {
+            viewModel.locations.collect { adapter.submitList(it) }
+        }
+
+        // подписка на события UI
+        lifecycleScope.launchWhenStarted {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.NavigateToDetail -> {
+                        // переход на экран деталей
+                        findNavController().navigate(
+                            R.id.action_starLocationFragment_to_starLocationDetailFragment,
+                            bundleOf("id" to event.id)
+                        )
+                    }
+
+                    is UiEvent.NavigateToEdit -> {
+                        // переход на экран создания
+                        findNavController().navigate(R.id.action_starLocationFragment_to_starLocationDetailFragment)
+                    }
+
+                    else -> Unit
                 }
             }
+        }
+
+        binding.btnAddLog.setOnClickListener {
+        // пример: кнопка добавления
+            findNavController().navigate(R.id.action_starLocationFragment_to_starLocationDetailFragment)
+        }
     }
 }

@@ -1,60 +1,193 @@
 package co.nisari.katisnar.presentation.ui.starlocation
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
+import co.nisari.katisnar.databinding.FragmentStarLocationBinding
+import co.nisari.katisnar.databinding.FragmentStarLocationEditBinding
+import co.nisari.katisnar.presentation.data.model.Weather
+import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [StarLocationEditFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class StarLocationEditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var binding: FragmentStarLocationEditBinding
+    private val vm: StarLocationEditViewModel by viewModels()
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val timeFmt = DateTimeFormatter.ofPattern("HH:mm")
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentStarLocationEditBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 1) Режим: создание или редактирование
+        val id = arguments?.getLong("id")
+        if (id != null) {
+            vm.load(id)
+            binding.btnDelete.visibility = View.VISIBLE
+        } else {
+            binding.btnDelete.visibility = View.GONE
+            // Префилл текущей датой/временем
+            if (vm.state.value.date == null) vm.onDatePicked(LocalDate.now())
+            if (vm.state.value.time == null) vm.onTimePicked(LocalTime.now().withSecond(0).withNano(0))
+        }
+
+        // 2) Подписка на состояние
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            vm.state.collect { s ->
+                // name
+                if (binding.etName.text.toString() != s.name)
+                    binding.etName.setText(s.name)
+
+                // date
+                binding.txtDate.text = s.date?.format(dateFmt) ?: ""
+
+                // time
+                binding.txtTime.setText(s.time?.format(timeFmt) ?: "")
+
+                // lat/lng
+                binding.txtLatitude.text = s.lat
+                binding.txtLongitude.text = s.lng
+
+                // weather (Capitalized)
+                binding.txtWeather.text = s.weather?.name
+                    ?.lowercase()?.replaceFirstChar { it.uppercase() } ?: "Weather"
+
+                // notes
+                if (binding.etNotes.text.toString() != s.notes)
+                    binding.etNotes.setText(s.notes)
+            }
+        }
+
+        // 3) Слушатели ввода
+        binding.etName.doOnTextChanged { t, _, _, _ -> vm.onNameChanged(t?.toString().orEmpty()) }
+        binding.etNotes.doOnTextChanged { t, _, _, _ -> vm.onNotesChanged(t?.toString().orEmpty()) }
+
+        // 4) Выбор даты
+        binding.txtDate.setOnClickListener { showDatePicker() }
+        binding.icArrowDate.setOnClickListener { showDatePicker() }
+
+        // 5) Выбор времени
+        binding.txtTime.setOnClickListener { showTimePicker() }
+        binding.icArrowTime.setOnClickListener { showTimePicker() }
+
+        // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
+        binding.txtLatitude.setOnClickListener { showCoordDialog(isLat = true) }
+        binding.txtLongitude.setOnClickListener { showCoordDialog(isLat = false) }
+
+        // 7) Выбор погоды
+        binding.txtWeather.setOnClickListener { showWeatherDialog() }
+        binding.icDropdown.setOnClickListener { showWeatherDialog() }
+        binding.icWeather.setOnClickListener { showWeatherDialog() }
+
+        // 8) Кнопки
+        binding.btnSave.setOnClickListener { vm.onSave() }
+        binding.btnCancel.setOnClickListener { vm.onBack() }
+        binding.btnBack.setOnClickListener { vm.onBack() }
+        binding.btnDelete.setOnClickListener { vm.requestDelete() }
+
+        // 9) UI-события (тосты / диалоги / навигация)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            vm.events.collect { e ->
+                when (e) {
+                    is UiEvent.ShowToast -> toast(e.message)
+                    is UiEvent.NavigateBack -> findNavController().popBackStack()
+                    is UiEvent.ShowDeleteDialog -> showDeleteDialog()
+                    else -> Unit
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_star_location_edit, container, false)
+    // ---------- helpers ----------
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showDatePicker() {
+        val now = vm.state.value.date ?: LocalDate.now()
+        DatePickerDialog(
+            requireContext(), { _, y, m, d ->
+                vm.onDatePicked(LocalDate.of(y, m + 1, d))
+            }, now.year, now.monthValue - 1, now.dayOfMonth
+        ).show()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StarLocationEditFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StarLocationEditFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showTimePicker() {
+        val now = vm.state.value.time ?: LocalTime.now().withSecond(0).withNano(0)
+        TimePickerDialog(
+            requireContext(),
+            { _, hh, mm -> vm.onTimePicked(LocalTime.of(hh, mm)) },
+            now.hour, now.minute, true
+        ).show()
     }
+
+    private fun showCoordDialog(isLat: Boolean) {
+        val ctx = requireContext()
+        val input = EditText(ctx).apply {
+            inputType = InputType.TYPE_NUMBER_FLAG_SIGNED or InputType.TYPE_NUMBER_FLAG_DECIMAL or
+                    InputType.TYPE_CLASS_NUMBER
+            setText(if (isLat) vm.state.value.lat else vm.state.value.lng)
+        }
+        AlertDialog.Builder(ctx)
+            .setTitle(if (isLat) "Latitude (−90..90)" else "Longitude (−180..180)")
+            .setView(input)
+            .setPositiveButton("OK") { _, _ ->
+                val v = input.text?.toString().orEmpty()
+                if (isLat) vm.onLatChanged(v) else vm.onLngChanged(v)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showWeatherDialog() {
+        val items = Weather.values().map {
+            it.name.lowercase().replaceFirstChar { c -> c.uppercase() }
+        }.toTypedArray()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Weather")
+            .setItems(items) { _, which ->
+                vm.onWeatherSelected(Weather.values()[which])
+            }
+            .show()
+    }
+
+    private fun showDeleteDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage("Please confirm deletion")
+            .setPositiveButton("Confirm") { _, _ -> vm.onDeleteConfirm() }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun toast(msg: String) =
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
 }

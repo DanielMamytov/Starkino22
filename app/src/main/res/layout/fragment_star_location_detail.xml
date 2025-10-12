@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_star_location_edit"
+    tools:context=".presentation.ui.starlocation.StarLocationDetailFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="66dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/btn_back" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/btn_edit"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="start|top"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/btn_edit" />
+
+                <ImageView
+                    android:id="@+id/btn_delete"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="start|top"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:src="@drawable/btn_delete" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/route_detail_header"
+                android:gravity="center"
+                android:padding="20dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:text="Star route detail"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp">
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_bottom_round_white_9"
+                        android:orientation="vertical"
+                        android:paddingBottom="40dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Name: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Hiking along the valley"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Location: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_location"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Island  "
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Time and Date: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="2024-10-26, "
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_date"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text=" 14:30"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Latitude: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_latitude"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="34.0522 "
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Longitude: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_longitude"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="34.0522 "
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Weather: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_weather"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Sunny"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Notes: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_notes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:text="Take a small snack with you; there are no snack bars on the way."
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_show_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginHorizontal="60dp"
+                    android:backgroundTint="#FF0000"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:paddingVertical="10dp"
+                    android:text="Show on map"
+                    android:textAllCaps="true"
+                    android:textSize="17sp"
+                    app:icon="@drawable/icon_location" />
+
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</ScrollView>

@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentSplashBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
 
     private lateinit var binding: FragmentSplashBinding

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_star_notes_detail"
-    tools:context=".presentation.ui.admiral.AdmiralRoutesDetailFragment">
+    tools:context=".presentation.ui.admiral.AdmiralRouteEditFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -35,14 +35,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <ImageView
-                    android:id="@+id/btn_edit"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="start|top"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/btn_edit" />
 
                 <ImageView
                     android:id="@+id/btn_delete"
@@ -50,7 +42,7 @@
                     android:layout_height="34dp"
                     android:layout_gravity="start|top"
                     android:layout_marginTop="50dp"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginEnd="20dp"
                     android:src="@drawable/btn_delete" />
             </LinearLayout>
 
@@ -82,7 +74,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="40dp">
+                    android:paddingBottom="30dp">
 
 
                     <LinearLayout
@@ -90,41 +82,31 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_bottom_round_white_9"
                         android:orientation="vertical"
-                        android:paddingBottom="20dp">
+                        android:paddingBottom="10dp">
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="55dp"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="20dp"
                             app:cardBackgroundColor="#330200"
                             app:cardCornerRadius="4dp"
                             app:cardElevation="4dp">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center|start">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    android:text="Name: "
-                                    android:textColor="#9E9E9E"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/txt_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    android:text="Hiking along the valley"
-                                    android:textColor="@color/white"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
+                            <EditText
+                                android:id="@+id/et_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:hint="Name:  -"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapWords"
+                                android:maxLines="1"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp"
+                                android:textColor="@color/white"
+                                android:textColorHint="#9E9E9E"
+                                android:textStyle="bold" />
                         </com.google.android.material.card.MaterialCardView>
 
                         <LinearLayout
@@ -214,11 +196,36 @@
 
                         </LinearLayout>
 
-                        <com.google.android.material.card.MaterialCardView
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_view"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="10dp"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/item_point" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="#FF0000"
+                            android:fontFamily="@font/poppins_extrabold"
+                            android:paddingHorizontal="40dp"
+                            android:text="add point"
+                            android:textAllCaps="true"
+                            android:textSize="18sp"
+                            app:icon="@drawable/ic_plus" />
+
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="20dp"
+                            android:layout_marginBottom="30dp"
                             app:cardBackgroundColor="#330200"
                             app:cardCornerRadius="4dp"
                             app:cardElevation="4dp">
@@ -228,148 +235,26 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginStart="10dp"
-                                        android:layout_marginTop="10dp"
-                                        android:src="@drawable/ic_point" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:text="1 Point"
-                                        android:textColor="@color/white"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="15dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="Latitude: "
-                                        android:textColor="#A2A2A2"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/txt_latitude"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="20dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="34.0522 "
-                                        android:textColor="@color/white"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="15dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="Longitude: "
-                                        android:textColor="#A2A2A2"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/txt_longitude"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="20dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="34.0522"
-                                        android:textColor="@color/white"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
-                            app:cardBackgroundColor="#330200"
-                            app:cardCornerRadius="4dp"
-                            app:cardElevation="4dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Location: "
+                                    android:layout_marginTop="15dp"
+                                    android:text="Description: "
                                     android:textColor="#A2A2A2"
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/txt_location2"
+                                    android:id="@+id/txt_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="10dp"
-                                    android:text="Island"
+                                    android:layout_marginBottom="15dp"
+                                    android:text="Take a small snack with you; there are no snack bars on the way. "
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
-
                             </LinearLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cv_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            app:cardBackgroundColor="#330200"
-                            app:cardCornerRadius="4dp"
-                            app:cardElevation="4dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="15dp"
-                                android:text="Description: "
-                                android:textColor="#A2A2A2"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txt_description"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="30dp"
-                                android:text="Take a small snack with you; there are no snack bars on the way. "
-                                android:layout_marginBottom="15dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
 
                         </com.google.android.material.card.MaterialCardView>
 
@@ -378,19 +263,40 @@
 
                 </FrameLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_gravity="bottom|center"
-                    android:backgroundTint="#FF0000"
-                    android:fontFamily="@font/poppins_extrabold"
-                    android:text="Show on map"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/white"
-                    app:icon="@drawable/icon_location"
-                    app:iconGravity="textStart"
-                    app:iconPadding="8dp"
-                    app:iconTint="@android:color/white" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginHorizontal="30dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF0000"
+                        android:fontFamily="@font/poppins_extrabold"
+                        android:paddingHorizontal="40dp"
+                        android:paddingVertical="10dp"
+                        android:text="Save"
+                        android:textAllCaps="true"
+                        android:textSize="17sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#707070"
+                        android:fontFamily="@font/poppins_extrabold"
+                        android:paddingHorizontal="30dp"
+                        android:paddingVertical="10dp"
+                        android:text="Cancel"
+                        android:textAllCaps="true"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
             </FrameLayout>
 
         </LinearLayout>

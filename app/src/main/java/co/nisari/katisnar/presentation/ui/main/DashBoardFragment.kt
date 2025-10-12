@@ -8,7 +8,9 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashBoardFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
