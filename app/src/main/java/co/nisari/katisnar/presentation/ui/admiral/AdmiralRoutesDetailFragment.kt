@@ -20,6 +20,7 @@ import co.nisari.katisnar.databinding.FragmentAdmiralRoutesDetailBinding
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.drop
 
 
 @AndroidEntryPoint
@@ -61,12 +62,14 @@ class AdmiralRoutesDetailFragment : Fragment() {
 
         // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.state.collect { data ->
-                if (data == null) {
-                    Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                    return@collect
-                }
+            vm.state
+                .drop(1)
+                .collect { data ->
+                    if (data == null) {
+                        Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                        return@collect
+                    }
                 val r = data.route
                 binding.txtName.text = r.name
                 binding.txtDate.text = r.date.format(dateFmt)

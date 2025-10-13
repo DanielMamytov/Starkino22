@@ -21,6 +21,7 @@ import co.nisari.katisnar.presentation.ui.starlocation.StarLocationDetailViewMod
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.drop
 import java.net.URLEncoder
 import java.time.format.DateTimeFormatter
 
@@ -52,12 +53,14 @@ class StarLocationDetailFragment : Fragment() {
 
         // Подписка на данные
         lifecycleScope.launchWhenStarted {
-            viewModel.location.collectLatest { loc ->
-                if (loc == null) {
-                    Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                    return@collectLatest
-                }
+            viewModel.location
+                .drop(1)
+                .collectLatest { loc ->
+                    if (loc == null) {
+                        Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                        return@collectLatest
+                    }
 
                 val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
