@@ -69,9 +69,7 @@ class StarLocationEditFragment : Fragment() {
                     binding.etName.setText(s.name)
 
                 // location
-                if (binding.txtLocation.text?.toString() != s.location) {
-                    binding.txtLocation.setText(s.location)
-                }
+                binding.txtLocation.text = s.location
 
                 // date
                 binding.txtDate.text = s.date?.format(dateFmt) ?: ""
