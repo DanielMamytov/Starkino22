@@ -5,12 +5,13 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.text.InputType
+import android.text.InputFilter
+import android.text.Spanned
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
@@ -18,7 +19,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
-import co.nisari.katisnar.databinding.FragmentStarLocationBinding
 import co.nisari.katisnar.databinding.FragmentStarLocationEditBinding
 import co.nisari.katisnar.presentation.data.model.Weather
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,9 +34,6 @@ class StarLocationEditFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val timeFmt = DateTimeFormatter.ofPattern("HH:mm")
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -49,7 +46,8 @@ class StarLocationEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 1) Режим: создание или редактирование
-        val id = arguments?.getLong("id")
+        val args = arguments
+        val id = if (args != null && args.containsKey("id")) args.getLong("id") else null
         if (id != null) {
             vm.load(id)
             binding.btnDelete.visibility = View.VISIBLE
@@ -67,19 +65,20 @@ class StarLocationEditFragment : Fragment() {
                 if (binding.etName.text.toString() != s.name)
                     binding.etName.setText(s.name)
 
-                // date
-                binding.txtDate.text = s.date?.format(dateFmt) ?: ""
+                // location
+                binding.txtLocation.setTextIfDifferent(s.location)
 
-                // time
-                binding.txtTime.setText(s.time?.format(timeFmt) ?: "")
+                val dateText = s.date?.format(dateFmt) ?: ""
+                binding.txtDate.setTextIfDifferent(dateText)
 
-                // lat/lng
-                binding.txtLatitude.text = s.lat
-                binding.txtLongitude.text = s.lng
+                binding.txtTime.setTextIfDifferent(s.timeDisplay)
 
-                // weather (Capitalized)
-                binding.txtWeather.text = s.weather?.name
+                binding.txtLatitude.setTextIfDifferent(s.lat)
+                binding.txtLongitude.setTextIfDifferent(s.lng)
+
+                val weatherText = s.weather?.name
                     ?.lowercase()?.replaceFirstChar { it.uppercase() } ?: "Weather"
+                binding.txtWeather.setTextIfDifferent(weatherText)
 
                 // notes
                 if (binding.etNotes.text.toString() != s.notes)
@@ -90,6 +89,13 @@ class StarLocationEditFragment : Fragment() {
         // 3) Слушатели ввода
         binding.etName.doOnTextChanged { t, _, _, _ -> vm.onNameChanged(t?.toString().orEmpty()) }
         binding.etNotes.doOnTextChanged { t, _, _, _ -> vm.onNotesChanged(t?.toString().orEmpty()) }
+        binding.txtLocation.doOnTextChanged { t, _, _, _ -> vm.onLocationChanged(t?.toString().orEmpty()) }
+        binding.txtLatitude.doOnTextChanged { t, _, _, _ -> vm.onLatChanged(t?.toString().orEmpty()) }
+        binding.txtLongitude.doOnTextChanged { t, _, _, _ -> vm.onLngChanged(t?.toString().orEmpty()) }
+        binding.txtTime.doOnTextChanged { t, _, _, _ -> vm.onTimeTextChanged(t?.toString().orEmpty()) }
+
+        binding.txtLatitude.filters = arrayOf(RangeInputFilter(-90.0, 90.0))
+        binding.txtLongitude.filters = arrayOf(RangeInputFilter(-180.0, 180.0))
 
         // 4) Выбор даты
         binding.txtDate.setOnClickListener { showDatePicker() }
@@ -98,10 +104,6 @@ class StarLocationEditFragment : Fragment() {
         // 5) Выбор времени
         binding.txtTime.setOnClickListener { showTimePicker() }
         binding.icArrowTime.setOnClickListener { showTimePicker() }
-
-        // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
-        binding.txtLatitude.setOnClickListener { showCoordDialog(isLat = true) }
-        binding.txtLongitude.setOnClickListener { showCoordDialog(isLat = false) }
 
         // 7) Выбор погоды
         binding.txtWeather.setOnClickListener { showWeatherDialog() }
@@ -149,24 +151,6 @@ class StarLocationEditFragment : Fragment() {
         ).show()
     }
 
-    private fun showCoordDialog(isLat: Boolean) {
-        val ctx = requireContext()
-        val input = EditText(ctx).apply {
-            inputType = InputType.TYPE_NUMBER_FLAG_SIGNED or InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    InputType.TYPE_CLASS_NUMBER
-            setText(if (isLat) vm.state.value.lat else vm.state.value.lng)
-        }
-        AlertDialog.Builder(ctx)
-            .setTitle(if (isLat) "Latitude (−90..90)" else "Longitude (−180..180)")
-            .setView(input)
-            .setPositiveButton("OK") { _, _ ->
-                val v = input.text?.toString().orEmpty()
-                if (isLat) vm.onLatChanged(v) else vm.onLngChanged(v)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
     private fun showWeatherDialog() {
         val items = Weather.values().map {
             it.name.lowercase().replaceFirstChar { c -> c.uppercase() }
@@ -190,4 +174,37 @@ class StarLocationEditFragment : Fragment() {
 
     private fun toast(msg: String) =
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+
+    private fun TextView.setTextIfDifferent(value: CharSequence?) {
+        val newText = value?.toString().orEmpty()
+        if (text.toString() != newText) {
+            setText(newText)
+        }
+    }
+}
+
+private class RangeInputFilter(
+    private val min: Double,
+    private val max: Double
+) : InputFilter {
+
+    override fun filter(
+        source: CharSequence?,
+        start: Int,
+        end: Int,
+        dest: Spanned?,
+        dstart: Int,
+        dend: Int
+    ): CharSequence? {
+        val prefix = dest?.subSequence(0, dstart).orEmpty()
+        val suffix = dest?.subSequence(dend, dest.length).orEmpty()
+        val newValue = "$prefix${source?.subSequence(start, end) ?: ""}$suffix"
+
+        if (newValue.isBlank() || newValue == "-" || newValue == "." || newValue == "-.") {
+            return null
+        }
+
+        val number = newValue.toString().toDoubleOrNull() ?: return ""
+        return if (number in min..max) null else ""
+    }
 }

@@ -13,6 +13,7 @@ data class StarLocation(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val name: String,
+    val location: String,
     val date: LocalDate,
     val time: LocalTime,
     val lat: Double,
