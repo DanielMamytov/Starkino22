@@ -66,12 +66,21 @@ class StarLocationEditFragment : Fragment() {
                     binding.etName.setText(s.name)
 
                 // location
-                binding.txtLocation.setTextIfDifferent(s.location)
+                binding.txtLocation.text = s.location
+
+                // date
+                binding.txtDate.text = s.date?.format(dateFmt) ?: ""
 
                 val dateText = s.date?.format(dateFmt) ?: ""
                 binding.txtDate.setTextIfDifferent(dateText)
 
-                binding.txtTime.setTextIfDifferent(s.timeDisplay)
+                // lat/lng
+                if (binding.txtLatitude.text?.toString() != s.lat) {
+                    binding.txtLatitude.setText(s.lat)
+                }
+                if (binding.txtLongitude.text?.toString() != s.lng) {
+                    binding.txtLongitude.setText(s.lng)
+                }
 
                 binding.txtLatitude.setTextIfDifferent(s.lat)
                 binding.txtLongitude.setTextIfDifferent(s.lng)
