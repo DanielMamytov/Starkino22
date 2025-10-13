@@ -5,7 +5,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.text.InputType
+import android.text.InputFilter
+import android.text.Spanned
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -157,24 +158,6 @@ class StarLocationEditFragment : Fragment() {
             { _, hh, mm -> vm.onTimePicked(LocalTime.of(hh, mm)) },
             now.hour, now.minute, true
         ).show()
-    }
-
-    private fun showCoordDialog(isLat: Boolean) {
-        val ctx = requireContext()
-        val input = EditText(ctx).apply {
-            inputType = InputType.TYPE_NUMBER_FLAG_SIGNED or InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    InputType.TYPE_CLASS_NUMBER
-            setText(if (isLat) vm.state.value.lat else vm.state.value.lng)
-        }
-        AlertDialog.Builder(ctx)
-            .setTitle(if (isLat) "Latitude (−90..90)" else "Longitude (−180..180)")
-            .setView(input)
-            .setPositiveButton("OK") { _, _ ->
-                val v = input.text?.toString().orEmpty()
-                if (isLat) vm.onLatChanged(v) else vm.onLngChanged(v)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
     }
 
     private fun showWeatherDialog() {
