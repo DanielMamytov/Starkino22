@@ -49,7 +49,8 @@ class StarLocationEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 1) Режим: создание или редактирование
-        val id = arguments?.getLong("id")
+        val args = arguments
+        val id = if (args != null && args.containsKey("id")) args.getLong("id") else null
         if (id != null) {
             vm.load(id)
             binding.btnDelete.visibility = View.VISIBLE
@@ -67,6 +68,11 @@ class StarLocationEditFragment : Fragment() {
                 if (binding.etName.text.toString() != s.name)
                     binding.etName.setText(s.name)
 
+                // location
+                if (binding.txtLocation.text?.toString() != s.location) {
+                    binding.txtLocation.setText(s.location)
+                }
+
                 // date
                 binding.txtDate.text = s.date?.format(dateFmt) ?: ""
 
@@ -74,8 +80,12 @@ class StarLocationEditFragment : Fragment() {
                 binding.txtTime.setText(s.time?.format(timeFmt) ?: "")
 
                 // lat/lng
-                binding.txtLatitude.text = s.lat
-                binding.txtLongitude.text = s.lng
+                if (binding.txtLatitude.text?.toString() != s.lat) {
+                    binding.txtLatitude.setText(s.lat)
+                }
+                if (binding.txtLongitude.text?.toString() != s.lng) {
+                    binding.txtLongitude.setText(s.lng)
+                }
 
                 // weather (Capitalized)
                 binding.txtWeather.text = s.weather?.name
@@ -100,6 +110,7 @@ class StarLocationEditFragment : Fragment() {
         binding.icArrowTime.setOnClickListener { showTimePicker() }
 
         // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
+        binding.txtLocation.setOnClickListener { showLocationDialog() }
         binding.txtLatitude.setOnClickListener { showCoordDialog(isLat = true) }
         binding.txtLongitude.setOnClickListener { showCoordDialog(isLat = false) }
 
@@ -177,6 +188,24 @@ class StarLocationEditFragment : Fragment() {
             .setItems(items) { _, which ->
                 vm.onWeatherSelected(Weather.values()[which])
             }
+            .show()
+    }
+
+    private fun showLocationDialog() {
+        val ctx = requireContext()
+        val input = EditText(ctx).apply {
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            setText(vm.state.value.location)
+            setSelection(text?.length ?: 0)
+        }
+
+        AlertDialog.Builder(ctx)
+            .setTitle("Location")
+            .setView(input)
+            .setPositiveButton("OK") { _, _ ->
+                vm.onLocationChanged(input.text?.toString().orEmpty())
+            }
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
