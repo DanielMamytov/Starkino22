@@ -49,87 +49,126 @@
                 android:src="@drawable/btn_delete" />
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="326dp"
-        android:layout_height="505dp"
-        android:layout_gravity="center"
-        android:background="@drawable/img_star_notes_detail"
-        android:orientation="vertical">
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="80dp"
-            app:cardBackgroundColor="#330200"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="4dp"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Name: "
-                    android:textColor="#9E9E9E"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Hiking along the valley"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            app:cardBackgroundColor="#330200"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="4dp"
-           >
+            android:background="@drawable/route_detail_header"
+            android:gravity="center"
+            android:padding="20dp">
 
-            <LinearLayout
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:fontFamily="@font/poppins_extrabold"
+                android:text="Star location detail"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp">
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Notes: "
-                    android:textColor="#9E9E9E"
-                    android:textStyle="bold" />
+                    android:background="@drawable/bg_bottom_round_white_9"
+                    android:orientation="vertical"
+                    android:paddingBottom="40dp">
 
-                <TextView
-                    android:id="@+id/txt_notes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:text="Lorem ipsum dolor sit amet consectetur. Rutrum pellentesque tellus in phasellus quam aliquam. Rutrum in dignissim egestas purus consequat at curabitur. Sem cras nunc tempus mauris vestibulum donec eu aliquet. Leo aliquam turpis lectus ut quis aliquam. Aenean eu praesent leo sed. "
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_marginHorizontal="20dp"
+                        app:cardBackgroundColor="#330200"
+                        android:layout_marginTop="20dp"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="4dp"
+                        >
 
-            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-        </androidx.cardview.widget.CardView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="Name: "
+                                android:textColor="#9E9E9E"
+                                android:textStyle="bold" />
 
+                            <TextView
+                                android:id="@+id/txt_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="Hiking along the valley"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="#330200"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="4dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="Notes: "
+                                android:textColor="#9E9E9E"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txt_notes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:text="Lorem ipsum dolor sit amet consectetur. Rutrum pellentesque tellus in phasellus quam aliquam. Rutrum in dignissim egestas purus consequat at curabitur. Sem cras nunc tempus mauris vestibulum donec eu aliquet. Leo aliquam turpis lectus ut quis aliquam. Aenean eu praesent leo sed. "
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </FrameLayout>
     </LinearLayout>
+
+
 
 </FrameLayout>

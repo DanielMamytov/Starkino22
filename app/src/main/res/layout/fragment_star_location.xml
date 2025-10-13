@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_star_location_screen"
-    android:orientation="vertical"
     tools:context=".presentation.ui.starlocation.StarLocationFragment">
 
     <LinearLayout
@@ -36,19 +35,19 @@
             android:layout_marginTop="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:spanCount="3"
-            tools:itemCount="6"
+            tools:itemCount="3"
             tools:listitem="@layout/item_star_location" />
 
-        <ImageView
-            android:id="@+id/btn_add_log"
-            android:layout_width="180dp"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="50dp"
-            android:src="@drawable/btn_add_log" />
 
     </LinearLayout>
+    <ImageView
+        android:id="@+id/btn_add_log"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/btn_add_log" />
 
 
-</ScrollView>
+</FrameLayout>

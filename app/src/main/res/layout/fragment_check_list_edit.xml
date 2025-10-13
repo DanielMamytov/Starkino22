@@ -27,21 +27,12 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/btn_edit"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_gravity="start|top"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/btn_edit" />
-
-        <ImageView
             android:id="@+id/btn_delete"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_gravity="start|top"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/btn_delete" />
     </LinearLayout>
 
@@ -59,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_extrabold"
-            android:text="Star location detail"
+            android:text="Star location edit"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="22sp" />
@@ -102,20 +93,27 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_margin="10dp"
                             android:text="Name: "
                             android:textColor="#9E9E9E"
                             android:textStyle="bold" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/txt_name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_gravity="center"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:hint="Enter name"
                             android:text="Hiking along the valley"
                             android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:textColorHint="#9E9E9E"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="textCapWords"
+                            android:padding="0dp"/>
 
                     </LinearLayout>
 
@@ -149,10 +147,26 @@
 
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
 
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_add_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            app:icon="@drawable/ic_plus"
+                            android:layout_marginTop="15dp"
+                            android:backgroundTint="#FF0000"
+                            android:fontFamily="@font/poppins_extrabold"
+                            android:paddingHorizontal="40dp"
+                            android:paddingVertical="10dp"
+                            android:text="Add goal"
+                            android:textAllCaps="true"
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                     <!--                        <CheckBox-->
@@ -214,7 +228,41 @@
 
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="30dp"
+            android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FF0000"
+                android:fontFamily="@font/poppins_extrabold"
+                android:paddingHorizontal="40dp"
+                android:paddingVertical="10dp"
+                android:text="Save"
+                android:textAllCaps="true"
+                android:textSize="10sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#707070"
+                android:fontFamily="@font/poppins_extrabold"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp"
+                android:text="Cancel"
+                android:textAllCaps="true"
+                android:textSize="10sp" />
+        </LinearLayout>
 
 
     </FrameLayout>

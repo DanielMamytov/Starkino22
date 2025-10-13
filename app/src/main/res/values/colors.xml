@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="seg_selected">#FF0000</color>
+    <color name="seg_unselected_fill">#00133C</color>
+    <color name="seg_unselected_text">#DADADA</color>
+    <color name="seg_text_selected">#FFFFFF</color>
+    <color name="seg_border">#FF0000</color>
+
 </resources>

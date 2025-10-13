@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,15 +7,104 @@
     android:background="@drawable/background_star_location_screen"
     tools:context=".presentation.ui.admiral.StarRouteFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_locations"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="10dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:spanCount="3"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_star_notes" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="66dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/btn_back" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/img_star_route" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/seg_container_bg"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="2dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNotes"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="Notes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/seg_text_selector"
+                    android:textSize="20sp"
+                    app:backgroundTint="@color/seg_bg_tint"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/seg_stroke_tint"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChecklist"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="Checklist"
+                    android:textAllCaps="false"
+                    android:textColor="@color/seg_text_selector"
+                    android:textSize="20sp"
+                    app:backgroundTint="@color/seg_bg_tint"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/seg_stroke_tint"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_locations"
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:spanCount="3"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_star_notes" />
+
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="15dp"
+            app:icon="@drawable/ic_plus"
+            android:backgroundTint="#FF0000"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/poppins_extrabold"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="10dp"
+            android:text="Add note"
+            android:textAllCaps="true"
+            android:textSize="15sp" />
+    </FrameLayout>
+</ScrollView>

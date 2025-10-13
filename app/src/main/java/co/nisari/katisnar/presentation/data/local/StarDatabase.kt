@@ -7,8 +7,11 @@ import co.nisari.katisnar.presentation.ui.admiral.RoutePoint
 import co.nisari.katisnar.presentation.ui.admiral.StarRoute
 
 @Database(
-    entities = [StarLocation::class,StarRoute::class,
-        RoutePoint::class],
+    entities = [StarLocation::class, StarRoute::class,
+        RoutePoint::class, NoteEntity::class,
+        ChecklistEntity::class,
+        ChecklistItemEntity::class,
+        ArticleEntity::class],
     version = 3,
     exportSchema = false
 )
@@ -16,4 +19,7 @@ import co.nisari.katisnar.presentation.ui.admiral.StarRoute
 abstract class StarDatabase : RoomDatabase() {
     abstract fun starLocationDao(): StarLocationDao
     abstract fun starRouteDao(): StarRouteDao
+    abstract fun noteDao(): NoteDao
+    abstract fun checklistDao(): ChecklistDao
+    abstract fun articleDao(): ArticleDao
 }
