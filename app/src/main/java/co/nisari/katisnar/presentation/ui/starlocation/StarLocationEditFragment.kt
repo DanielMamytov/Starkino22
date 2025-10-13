@@ -19,7 +19,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
-import co.nisari.katisnar.databinding.FragmentStarLocationBinding
 import co.nisari.katisnar.databinding.FragmentStarLocationEditBinding
 import co.nisari.katisnar.presentation.data.model.Weather
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +34,6 @@ class StarLocationEditFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val timeFmt = DateTimeFormatter.ofPattern("HH:mm")
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -102,6 +98,7 @@ class StarLocationEditFragment : Fragment() {
         // 3) Слушатели ввода
         binding.etName.doOnTextChanged { t, _, _, _ -> vm.onNameChanged(t?.toString().orEmpty()) }
         binding.etNotes.doOnTextChanged { t, _, _, _ -> vm.onNotesChanged(t?.toString().orEmpty()) }
+        binding.txtTime.doOnTextChanged { t, _, _, _ -> vm.onTimeTextChanged(t?.toString().orEmpty()) }
 
         // 4) Выбор даты
         binding.txtDate.setOnClickListener { showDatePicker() }
