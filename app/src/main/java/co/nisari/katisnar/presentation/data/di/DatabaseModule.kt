@@ -2,8 +2,11 @@ package co.nisari.katisnar.presentation.data.di
 
 import android.content.Context
 import androidx.room.Room
+import co.nisari.katisnar.presentation.data.local.MIGRATION_1_2
 import co.nisari.katisnar.presentation.data.local.StarDatabase
 import co.nisari.katisnar.presentation.data.local.StarLocationDao
+import co.nisari.katisnar.presentation.data.local.StarRouteDao
+import co.nisari.katisnar.presentation.data.repository.StarRouteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,9 +25,18 @@ object DatabaseModule {
             context,
             StarDatabase::class.java,
             "starkino_db"
-        ).fallbackToDestructiveMigration()
-         .build()
+        ).addMigrations(MIGRATION_1_2)
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     fun provideStarLocationDao(db: StarDatabase): StarLocationDao = db.starLocationDao()
+
+    @Provides
+    fun provideStarRouteDao(db: StarDatabase): StarRouteDao = db.starRouteDao()
+
+    @Provides
+    @Singleton
+    fun provideStarRouteRepository(dao: StarRouteDao): StarRouteRepository =
+        StarRouteRepository(dao)
 }

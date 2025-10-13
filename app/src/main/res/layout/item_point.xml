@@ -57,7 +57,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/et_latitude"
+                    android:id="@+id/et_latitude1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -89,7 +89,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/et_longitude"
+                    android:id="@+id/et_longitude1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -132,7 +132,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/et_location2"
+                android:id="@+id/et_location1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -147,9 +147,9 @@
                 android:textColorHint="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
-        
 
-        
+
+
     </com.google.android.material.card.MaterialCardView>
     <View
         android:layout_width="100dp"

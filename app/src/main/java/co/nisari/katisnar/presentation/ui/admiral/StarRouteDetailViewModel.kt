@@ -1,0 +1,95 @@
+package co.nisari.katisnar.presentation.ui.admiral
+
+import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import co.nisari.katisnar.presentation.data.repository.StarRouteRepository
+import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+
+@HiltViewModel
+class StarRouteDetailViewModel @Inject constructor(
+    private val repo: StarRouteRepository
+) : ViewModel() {
+
+    private val _state = MutableStateFlow<StarRouteWithPoints?>(null)
+    val state: StateFlow<StarRouteWithPoints?> = _state
+
+    private val _ui = Channel<UiEvent>(Channel.BUFFERED)
+    val ui = _ui.receiveAsFlow()
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val dateFmt: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    @RequiresApi(Build.VERSION_CODES.O)
+    val timeFmt: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+    fun load(id: Long) {
+        viewModelScope.launch {
+            repo.getRouteWithPoints(id).collect { _state.value = it }
+        }
+    }
+
+    fun onBack() = viewModelScope.launch { _ui.send(UiEvent.NavigateBack) }
+
+    fun onEdit() {
+        val id = _state.value?.route?.id ?: return
+        viewModelScope.launch { _ui.send(UiEvent.NavigateToEdit(id)) }
+    }
+
+    fun onDelete() {
+        val id = _state.value?.route?.id ?: return
+        viewModelScope.launch { _ui.send(UiEvent.ShowDeleteDialog(id)) }
+    }
+
+    fun confirmDelete(id: Long) = viewModelScope.launch {
+        repo.deleteById(id)
+        _ui.send(UiEvent.NavigateBack)
+    }
+
+    fun onShowOnMaps() {
+        val data = _state.value ?: return
+        val pts = data.points
+
+        // Должно быть минимум 2 точки, чтобы построить маршрут
+        if (pts.size < 2) {
+            viewModelScope.launch {
+                _ui.send(UiEvent.ShowToast("Add point of route to create new route"))
+            }
+            return
+        }
+
+        // Google Maps App/Web поддерживают до ~25 пунктов (origin + destination + <=23 waypoints).
+        // Ограничим на всякий случай, чтобы не было слишком длинной ссылки.
+        val limited = pts.take(25)
+
+        val origin = "${limited.first().lat},${limited.first().lng}"
+        val destination = "${limited.last().lat},${limited.last().lng}"
+
+        val waypoints = if (limited.size > 2) {
+            // между первой и последней — «промежуточные»
+            limited.subList(1, limited.lastIndex)
+                .joinToString("|") { "${it.lat},${it.lng}" }
+        } else null
+
+        // Формируем directions-URI c api=1 (Maps URLs)
+        val uri = Uri.parse(buildString {
+            append("https://www.google.com/maps/dir/?api=1")
+            append("&origin=").append(origin)
+            append("&destination=").append(destination)
+            waypoints?.let { append("&waypoints=").append(it) }
+            append("&travelmode=driving") // можно walking/bicycling/transit
+        })
+
+        viewModelScope.launch { _ui.send(UiEvent.OpenMaps1(uri)) }
+    }
+
+}

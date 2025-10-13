@@ -41,9 +41,16 @@
 
     <fragment
         android:id="@+id/starRouteFragment"
-        android:name="co.nisari.katisnar.presentation.ui.starnoute.StarRoutineFragment"
+        android:name="co.nisari.katisnar.presentation.ui.admiral.StarRouteFragment"
         android:label="fragment_star_route"
-        tools:layout="@layout/fragment_star_routine" />
+        tools:layout="@layout/fragment_star_routine" >
+        <action
+            android:id="@+id/action_starRouteFragment_to_admiralRouteEditFragment"
+            app:destination="@id/admiralRouteEditFragment" />
+        <action
+            android:id="@+id/action_starRouteFragment_to_admiralRouteDetailFragment"
+            app:destination="@id/admiralRouteDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/starNoteFragment"
@@ -86,4 +93,18 @@
         android:name="co.nisari.katisnar.presentation.ui.starlocation.StarLocationEditFragment"
         android:label="fragment_star_location_edit"
         tools:layout="@layout/fragment_star_location_edit" />
+    <fragment
+        android:id="@+id/admiralRouteEditFragment"
+        android:name="co.nisari.katisnar.presentation.ui.admiral.AdmiralRouteEditFragment"
+        android:label="fragment_admiral_route_edit"
+        tools:layout="@layout/fragment_admiral_route_edit" />
+    <fragment
+        android:id="@+id/admiralRouteDetailFragment"
+        android:name="co.nisari.katisnar.presentation.ui.admiral.AdmiralRouteEditFragment"
+        android:label="fragment_admiral_route_edit"
+        tools:layout="@layout/fragment_admiral_routes_detail" >
+        <action
+            android:id="@+id/action_admiralRouteDetailFragment_to_admiralRouteEditFragment"
+            app:destination="@id/admiralRouteEditFragment" />
+    </fragment>
 </navigation>

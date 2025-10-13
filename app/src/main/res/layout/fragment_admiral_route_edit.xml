@@ -199,6 +199,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_view"
                             android:layout_width="match_parent"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="10dp"
@@ -206,6 +207,7 @@
                             tools:listitem="@layout/item_point" />
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAddPoint"
                             android:layout_width="wrap_content"
                             android:layout_height="60dp"
                             android:layout_gravity="center"
@@ -271,6 +273,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSave"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
@@ -284,10 +287,12 @@
                         android:textSize="17sp" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCancel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
+
                         android:backgroundTint="#707070"
                         android:fontFamily="@font/poppins_extrabold"
                         android:paddingHorizontal="30dp"

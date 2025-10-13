@@ -126,6 +126,7 @@ class StarLocationDetailFragment : Fragment() {
                         Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT).show()
 
                     is UiEvent.NavigateToDetail -> TODO()
+                    is UiEvent.OpenMaps1 -> TODO()
                 }
             }
         }

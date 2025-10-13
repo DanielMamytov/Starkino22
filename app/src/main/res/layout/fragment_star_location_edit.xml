@@ -193,7 +193,7 @@
                                 android:background="@android:color/transparent"
                                 android:gravity="center"
                                 android:textColor="@color/white"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -431,7 +431,7 @@
                     android:paddingVertical="10dp"
                     android:text="Save"
                     android:textAllCaps="true"
-                    android:textSize="17sp" />
+                    android:textSize="10sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_cancel"
@@ -445,7 +445,7 @@
                     android:paddingVertical="10dp"
                     android:text="Cancel"
                     android:textAllCaps="true"
-                    android:textSize="17sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
         </FrameLayout>
 

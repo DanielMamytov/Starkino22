@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
+import android.text.InputType
 import android.text.Spanned
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,8 @@ class StarLocationEditFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val timeFmt = DateTimeFormatter.ofPattern("HH:mm")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -56,7 +59,9 @@ class StarLocationEditFragment : Fragment() {
             binding.btnDelete.visibility = View.GONE
             // Префилл текущей датой/временем
             if (vm.state.value.date == null) vm.onDatePicked(LocalDate.now())
-            if (vm.state.value.time == null) vm.onTimePicked(LocalTime.now().withSecond(0).withNano(0))
+            if (vm.state.value.time == null) vm.onTimePicked(
+                LocalTime.now().withSecond(0).withNano(0)
+            )
         }
 
         // 2) Подписка на состояние
@@ -68,6 +73,10 @@ class StarLocationEditFragment : Fragment() {
 
                 // location
                 binding.txtLocation.setTextIfDifferent(s.location)
+
+                // time
+                val timeText = s.time?.format(timeFmt) ?: ""
+                binding.txtTime.setTextIfDifferent(timeText)
 
                 // date
                 binding.txtDate.text = s.date?.format(dateFmt) ?: ""
@@ -99,7 +108,11 @@ class StarLocationEditFragment : Fragment() {
         // 3) Слушатели ввода
         binding.etName.doOnTextChanged { t, _, _, _ -> vm.onNameChanged(t?.toString().orEmpty()) }
         binding.etNotes.doOnTextChanged { t, _, _, _ -> vm.onNotesChanged(t?.toString().orEmpty()) }
-        binding.txtTime.doOnTextChanged { t, _, _, _ -> vm.onTimeTextChanged(t?.toString().orEmpty()) }
+        binding.txtTime.doOnTextChanged { t, _, _, _ ->
+            vm.onTimeTextChanged(
+                t?.toString().orEmpty()
+            )
+        }
 
         // 4) Выбор даты
         binding.txtDate.setOnClickListener { showDatePicker() }
@@ -110,10 +123,12 @@ class StarLocationEditFragment : Fragment() {
         binding.icArrowTime.setOnClickListener { showTimePicker() }
 
         // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
-        binding.txtLocation.setOnClickListener { showLocationDialog() }
-        binding.txtLatitude.setOnClickListener { showCoordDialog(isLat = true) }
-        binding.txtLongitude.setOnClickListener { showCoordDialog(isLat = false) }
+        binding.txtLocation.doOnTextChanged { t, _, _, _ -> vm.onLocationChanged(t?.toString().orEmpty()) }
+        binding.txtLatitude.doOnTextChanged { t, _, _, _ -> vm.onLatChanged(t?.toString().orEmpty()) }
+        binding.txtLongitude.doOnTextChanged { t, _, _, _ -> vm.onLngChanged(t?.toString().orEmpty()) }
 
+        binding.txtLatitude.filters = arrayOf(RangeInputFilter(-90.0, 90.0))
+        binding.txtLongitude.filters = arrayOf(RangeInputFilter(-180.0, 180.0))
         // 7) Выбор погоды
         binding.txtWeather.setOnClickListener { showWeatherDialog() }
         binding.icDropdown.setOnClickListener { showWeatherDialog() }
@@ -208,4 +223,39 @@ class StarLocationEditFragment : Fragment() {
             setText(newText)
         }
     }
-}
+
+
+    private class RangeInputFilter(
+        private val min: Double,
+        private val max: Double
+    ) : InputFilter {
+
+        override fun filter(
+            source: CharSequence?,
+            start: Int,
+            end: Int,
+            dest: Spanned?,
+            dstart: Int,
+            dend: Int
+        ): CharSequence? {
+            val destLen = dest?.length ?: 0
+            val safeStart = dstart.coerceIn(0, destLen)
+            val safeEnd = dend.coerceIn(0, destLen)
+
+            val prefix = dest?.subSequence(0, safeStart)?.toString() ?: ""
+            val middle = source?.subSequence(start, end)?.toString() ?: ""
+            val suffix = dest?.subSequence(safeEnd, destLen)?.toString() ?: ""
+
+            val newValue = prefix + middle + suffix
+
+            // Разрешаем промежуточные состояния ввода
+            if (newValue.isBlank() || newValue == "-" || newValue == "." || newValue == "-.") {
+                return null
+            }
+
+            val number = newValue.toDoubleOrNull() ?: return ""
+            return if (number in min..max) null else ""
+        }
+    }
+
+    }

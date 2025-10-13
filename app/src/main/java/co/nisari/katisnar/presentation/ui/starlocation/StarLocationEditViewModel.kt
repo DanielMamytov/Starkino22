@@ -1,5 +1,7 @@
 package co.nisari.katisnar.presentation.ui.starlocation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nisari.katisnar.presentation.data.local.StarLocation
@@ -37,11 +39,13 @@ class StarLocationEditViewModel @Inject constructor(
 
     val state = MutableStateFlow(EditState())
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     private val _events = Channel<UiEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun load(id: Long) {
         viewModelScope.launch {
             repo.getById(id).collect { loc ->
@@ -68,6 +72,7 @@ class StarLocationEditViewModel @Inject constructor(
     fun onNameChanged(v: String) { state.update { it.copy(name = v) } }
     fun onLocationChanged(v: String) { state.update { it.copy(location = v) } }
     fun onDatePicked(v: LocalDate) { state.update { it.copy(date = v) } }
+    @RequiresApi(Build.VERSION_CODES.O)
     fun onTimePicked(v: LocalTime) {
         state.update {
             it.copy(
@@ -77,6 +82,7 @@ class StarLocationEditViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun onTimeTextChanged(value: String) {
         state.update { current ->
             val parsedTime = value.takeIf { it.isNotBlank() }
