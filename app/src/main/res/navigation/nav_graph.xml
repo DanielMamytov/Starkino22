@@ -54,9 +54,38 @@
 
     <fragment
         android:id="@+id/starNoteFragment"
-        android:name="co.nisari.katisnar.presentation.ui.starroutine.StarNoteFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starnotes.StarNotesFragment"
         android:label="fragment_star_note"
-        tools:layout="@layout/fragment_star_note" />
+        tools:layout="@layout/fragment_star_note">
+        <action
+            android:id="@+id/action_starNoteFragment_to_noteEditFragment"
+            app:destination="@id/noteEditFragment" />
+        <action
+            android:id="@+id/action_starNoteFragment_to_checklistEditFragment"
+            app:destination="@id/checklistEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteEditFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starnotes.NoteEditFragment"
+        android:label="fragment_note_edit"
+        tools:layout="@layout/fragment_note_edit">
+        <argument
+            android:name="noteId"
+            app:argType="long"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/checklistEditFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starnotes.ChecklistEditFragment"
+        android:label="fragment_checklist_edit"
+        tools:layout="@layout/fragment_checklist_edit">
+        <argument
+            android:name="checklistId"
+            app:argType="long"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/starArticleFragment"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/round_item"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <CheckBox
+        android:id="@+id/cb_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="#FF0000"
+        android:contentDescription="@string/content_description_checklist_item_toggle" />
+
+    <EditText
+        android:id="@+id/et_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:hint="@string/checklist_item_hint"
+        android:inputType="textCapSentences"
+        android:textColor="@color/white"
+        android:textColorHint="#9E9E9E"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_medium" />
+
+    <ImageButton
+        android:id="@+id/btn_remove"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/content_description_remove_item"
+        android:padding="4dp"
+        android:src="@android:drawable/ic_menu_delete"
+        android:tint="@color/white" />
+</LinearLayout>
