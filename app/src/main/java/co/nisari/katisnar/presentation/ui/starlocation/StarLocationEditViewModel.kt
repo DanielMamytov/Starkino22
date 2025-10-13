@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +27,7 @@ class StarLocationEditViewModel @Inject constructor(
         val location: String = "",
         val date: LocalDate? = null,
         val time: LocalTime? = null,
+        val timeDisplay: String = "",
         val lat: String = "",
         val lng: String = "",
         val weather: Weather? = null,
@@ -35,6 +37,8 @@ class StarLocationEditViewModel @Inject constructor(
 
     val state = MutableStateFlow(EditState())
 
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
     private val _events = Channel<UiEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
@@ -42,12 +46,15 @@ class StarLocationEditViewModel @Inject constructor(
         viewModelScope.launch {
             repo.getById(id).collect { loc ->
                 loc?.let {
+                    val time = it.time
+                    val timeDisplay = time?.format(timeFormatter).orEmpty()
                     state.value = state.value.copy(
                         id = it.id,
                         name = it.name,
                         location = it.location,
                         date = it.date,
-                        time = it.time,
+                        time = time,
+                        timeDisplay = timeDisplay,
                         lat = it.lat.toString(),
                         lng = it.lng.toString(),
                         weather = it.weather,
@@ -61,7 +68,26 @@ class StarLocationEditViewModel @Inject constructor(
     fun onNameChanged(v: String) { state.update { it.copy(name = v) } }
     fun onLocationChanged(v: String) { state.update { it.copy(location = v) } }
     fun onDatePicked(v: LocalDate) { state.update { it.copy(date = v) } }
-    fun onTimePicked(v: LocalTime) { state.update { it.copy(time = v) } }
+    fun onTimePicked(v: LocalTime) {
+        state.update {
+            it.copy(
+                time = v,
+                timeDisplay = v.format(timeFormatter)
+            )
+        }
+    }
+
+    fun onTimeTextChanged(value: String) {
+        state.update { current ->
+            val parsedTime = value.takeIf { it.isNotBlank() }
+                ?.let { runCatching { LocalTime.parse(it, timeFormatter) }.getOrNull() }
+
+            current.copy(
+                time = parsedTime,
+                timeDisplay = value
+            )
+        }
+    }
     fun onLatChanged(v: String) { state.update { it.copy(lat = v) } }
     fun onLngChanged(v: String) { state.update { it.copy(lng = v) } }
     fun onWeatherSelected(v: Weather) { state.update { it.copy(weather = v) } }
