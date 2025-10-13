@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
@@ -49,7 +50,8 @@ class StarLocationEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 1) Режим: создание или редактирование
-        val id = arguments?.getLong("id")
+        val args = arguments
+        val id = if (args != null && args.containsKey("id")) args.getLong("id") else null
         if (id != null) {
             vm.load(id)
             binding.btnDelete.visibility = View.VISIBLE
@@ -67,19 +69,21 @@ class StarLocationEditFragment : Fragment() {
                 if (binding.etName.text.toString() != s.name)
                     binding.etName.setText(s.name)
 
-                // date
-                binding.txtDate.text = s.date?.format(dateFmt) ?: ""
+                // location
+                binding.txtLocation.setTextIfDifferent(s.location)
 
-                // time
-                binding.txtTime.setText(s.time?.format(timeFmt) ?: "")
+                val dateText = s.date?.format(dateFmt) ?: ""
+                binding.txtDate.setTextIfDifferent(dateText)
 
-                // lat/lng
-                binding.txtLatitude.text = s.lat
-                binding.txtLongitude.text = s.lng
+                val timeText = s.time?.format(timeFmt) ?: ""
+                binding.txtTime.setTextIfDifferent(timeText)
 
-                // weather (Capitalized)
-                binding.txtWeather.text = s.weather?.name
+                binding.txtLatitude.setTextIfDifferent(s.lat)
+                binding.txtLongitude.setTextIfDifferent(s.lng)
+
+                val weatherText = s.weather?.name
                     ?.lowercase()?.replaceFirstChar { it.uppercase() } ?: "Weather"
+                binding.txtWeather.setTextIfDifferent(weatherText)
 
                 // notes
                 if (binding.etNotes.text.toString() != s.notes)
@@ -100,6 +104,7 @@ class StarLocationEditFragment : Fragment() {
         binding.icArrowTime.setOnClickListener { showTimePicker() }
 
         // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
+        binding.txtLocation.setOnClickListener { showLocationDialog() }
         binding.txtLatitude.setOnClickListener { showCoordDialog(isLat = true) }
         binding.txtLongitude.setOnClickListener { showCoordDialog(isLat = false) }
 
@@ -180,6 +185,24 @@ class StarLocationEditFragment : Fragment() {
             .show()
     }
 
+    private fun showLocationDialog() {
+        val ctx = requireContext()
+        val input = EditText(ctx).apply {
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            setText(vm.state.value.location)
+            setSelection(text?.length ?: 0)
+        }
+
+        AlertDialog.Builder(ctx)
+            .setTitle("Location")
+            .setView(input)
+            .setPositiveButton("OK") { _, _ ->
+                vm.onLocationChanged(input.text?.toString().orEmpty())
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
     private fun showDeleteDialog() {
         AlertDialog.Builder(requireContext())
             .setMessage("Please confirm deletion")
@@ -190,4 +213,11 @@ class StarLocationEditFragment : Fragment() {
 
     private fun toast(msg: String) =
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+
+    private fun TextView.setTextIfDifferent(value: CharSequence?) {
+        val newText = value?.toString().orEmpty()
+        if (text.toString() != newText) {
+            setText(newText)
+        }
+    }
 }
