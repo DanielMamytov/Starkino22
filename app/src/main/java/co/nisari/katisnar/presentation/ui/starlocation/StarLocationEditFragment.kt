@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
@@ -74,8 +75,8 @@ class StarLocationEditFragment : Fragment() {
                 // date
                 binding.txtDate.text = s.date?.format(dateFmt) ?: ""
 
-                // time
-                binding.txtTime.setText(s.time?.format(timeFmt) ?: "")
+                val dateText = s.date?.format(dateFmt) ?: ""
+                binding.txtDate.setTextIfDifferent(dateText)
 
                 // lat/lng
                 if (binding.txtLatitude.text?.toString() != s.lat) {
@@ -85,9 +86,12 @@ class StarLocationEditFragment : Fragment() {
                     binding.txtLongitude.setText(s.lng)
                 }
 
-                // weather (Capitalized)
-                binding.txtWeather.text = s.weather?.name
+                binding.txtLatitude.setTextIfDifferent(s.lat)
+                binding.txtLongitude.setTextIfDifferent(s.lng)
+
+                val weatherText = s.weather?.name
                     ?.lowercase()?.replaceFirstChar { it.uppercase() } ?: "Weather"
+                binding.txtWeather.setTextIfDifferent(weatherText)
 
                 // notes
                 if (binding.etNotes.text.toString() != s.notes)
@@ -217,4 +221,11 @@ class StarLocationEditFragment : Fragment() {
 
     private fun toast(msg: String) =
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+
+    private fun TextView.setTextIfDifferent(value: CharSequence?) {
+        val newText = value?.toString().orEmpty()
+        if (text.toString() != newText) {
+            setText(newText)
+        }
+    }
 }
