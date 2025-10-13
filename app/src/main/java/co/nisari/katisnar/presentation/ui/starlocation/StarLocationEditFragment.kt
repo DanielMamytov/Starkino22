@@ -78,8 +78,12 @@ class StarLocationEditFragment : Fragment() {
                 binding.txtTime.setText(s.time?.format(timeFmt) ?: "")
 
                 // lat/lng
-                binding.txtLatitude.text = s.lat
-                binding.txtLongitude.text = s.lng
+                if (binding.txtLatitude.text?.toString() != s.lat) {
+                    binding.txtLatitude.setText(s.lat)
+                }
+                if (binding.txtLongitude.text?.toString() != s.lng) {
+                    binding.txtLongitude.setText(s.lng)
+                }
 
                 // weather (Capitalized)
                 binding.txtWeather.text = s.weather?.name
