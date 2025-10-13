@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -68,10 +69,19 @@ class StarLocationEditFragment : Fragment() {
                 // location
                 binding.txtLocation.setTextIfDifferent(s.location)
 
+                // date
+                binding.txtDate.text = s.date?.format(dateFmt) ?: ""
+
                 val dateText = s.date?.format(dateFmt) ?: ""
                 binding.txtDate.setTextIfDifferent(dateText)
 
-                binding.txtTime.setTextIfDifferent(s.timeDisplay)
+                // lat/lng
+                if (binding.txtLatitude.text?.toString() != s.lat) {
+                    binding.txtLatitude.setText(s.lat)
+                }
+                if (binding.txtLongitude.text?.toString() != s.lng) {
+                    binding.txtLongitude.setText(s.lng)
+                }
 
                 binding.txtLatitude.setTextIfDifferent(s.lat)
                 binding.txtLongitude.setTextIfDifferent(s.lng)
@@ -89,13 +99,7 @@ class StarLocationEditFragment : Fragment() {
         // 3) Слушатели ввода
         binding.etName.doOnTextChanged { t, _, _, _ -> vm.onNameChanged(t?.toString().orEmpty()) }
         binding.etNotes.doOnTextChanged { t, _, _, _ -> vm.onNotesChanged(t?.toString().orEmpty()) }
-        binding.txtLocation.doOnTextChanged { t, _, _, _ -> vm.onLocationChanged(t?.toString().orEmpty()) }
-        binding.txtLatitude.doOnTextChanged { t, _, _, _ -> vm.onLatChanged(t?.toString().orEmpty()) }
-        binding.txtLongitude.doOnTextChanged { t, _, _, _ -> vm.onLngChanged(t?.toString().orEmpty()) }
         binding.txtTime.doOnTextChanged { t, _, _, _ -> vm.onTimeTextChanged(t?.toString().orEmpty()) }
-
-        binding.txtLatitude.filters = arrayOf(RangeInputFilter(-90.0, 90.0))
-        binding.txtLongitude.filters = arrayOf(RangeInputFilter(-180.0, 180.0))
 
         // 4) Выбор даты
         binding.txtDate.setOnClickListener { showDatePicker() }
@@ -104,6 +108,11 @@ class StarLocationEditFragment : Fragment() {
         // 5) Выбор времени
         binding.txtTime.setOnClickListener { showTimePicker() }
         binding.icArrowTime.setOnClickListener { showTimePicker() }
+
+        // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
+        binding.txtLocation.setOnClickListener { showLocationDialog() }
+        binding.txtLatitude.setOnClickListener { showCoordDialog(isLat = true) }
+        binding.txtLongitude.setOnClickListener { showCoordDialog(isLat = false) }
 
         // 7) Выбор погоды
         binding.txtWeather.setOnClickListener { showWeatherDialog() }
@@ -164,6 +173,24 @@ class StarLocationEditFragment : Fragment() {
             .show()
     }
 
+    private fun showLocationDialog() {
+        val ctx = requireContext()
+        val input = EditText(ctx).apply {
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            setText(vm.state.value.location)
+            setSelection(text?.length ?: 0)
+        }
+
+        AlertDialog.Builder(ctx)
+            .setTitle("Location")
+            .setView(input)
+            .setPositiveButton("OK") { _, _ ->
+                vm.onLocationChanged(input.text?.toString().orEmpty())
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
     private fun showDeleteDialog() {
         AlertDialog.Builder(requireContext())
             .setMessage("Please confirm deletion")
@@ -180,31 +207,5 @@ class StarLocationEditFragment : Fragment() {
         if (text.toString() != newText) {
             setText(newText)
         }
-    }
-}
-
-private class RangeInputFilter(
-    private val min: Double,
-    private val max: Double
-) : InputFilter {
-
-    override fun filter(
-        source: CharSequence?,
-        start: Int,
-        end: Int,
-        dest: Spanned?,
-        dstart: Int,
-        dend: Int
-    ): CharSequence? {
-        val prefix = dest?.subSequence(0, dstart).orEmpty()
-        val suffix = dest?.subSequence(dend, dest.length).orEmpty()
-        val newValue = "$prefix${source?.subSequence(start, end) ?: ""}$suffix"
-
-        if (newValue.isBlank() || newValue == "-" || newValue == "." || newValue == "-.") {
-            return null
-        }
-
-        val number = newValue.toString().toDoubleOrNull() ?: return ""
-        return if (number in min..max) null else ""
     }
 }
