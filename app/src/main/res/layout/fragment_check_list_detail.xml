@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_star_notes_detail"
     android:orientation="vertical"
-    tools:context=".presentation.ui.checklist.StarChecklistEditFragment">
+    tools:context=".presentation.ui.checklist.CheckListDetailFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -110,12 +110,13 @@
 
                         <TextView
                             android:id="@+id/txt_name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="Hiking along the valley"
+                            android:layout_weight="1"
                             android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:text="Checklist title" />
 
                     </LinearLayout>
 
@@ -149,8 +150,10 @@
 
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            tools:listitem="@layout/item_checklist_edit" />
 
 
                     </LinearLayout>
