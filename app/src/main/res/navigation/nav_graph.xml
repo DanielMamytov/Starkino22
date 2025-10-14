@@ -58,8 +58,11 @@
         android:label="fragment_star_note"
         tools:layout="@layout/fragment_star_note">
         <action
-            android:id="@+id/action_starNoteFragment_to_noteEditFragment"
-            app:destination="@id/noteEditFragment" />
+            android:id="@+id/action_starNoteFragment_to_starRoutineEditFragment"
+            app:destination="@id/starRoutineEditFragment" />
+        <action
+            android:id="@+id/action_starNoteFragment_to_starRoutineDetailFragment"
+            app:destination="@id/starRoutineDetailFragment" />
         <action
             android:id="@+id/action_starNoteFragment_to_checkListDetailFragment"
             app:destination="@id/checkListDetailFragment" />
@@ -77,6 +80,30 @@
             android:name="noteId"
             app:argType="long"
            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/starRoutineEditFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starnoute.StarRoutineEditFragment"
+        android:label="fragment_star_notes_edit"
+        tools:layout="@layout/fragment_star_notes_edit">
+        <argument
+            android:name="noteId"
+            app:argType="long"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/starRoutineDetailFragment"
+        android:name="co.nisari.katisnar.presentation.ui.starnoute.StarRoutineDetailFragment"
+        android:label="fragment_star_notes_detail"
+        tools:layout="@layout/fragment_star_notes_detail">
+        <argument
+            android:name="noteId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_starRoutineDetailFragment_to_noteEditFragment"
+            app:destination="@id/noteEditFragment" />
     </fragment>
 
     <fragment
