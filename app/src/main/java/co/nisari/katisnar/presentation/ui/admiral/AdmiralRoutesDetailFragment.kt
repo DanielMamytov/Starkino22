@@ -31,6 +31,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
     private lateinit var binding: FragmentAdmiralRoutesDetailBinding
     private val vm: StarRouteDetailViewModel by viewModels()
     private val pointsAdapter = AdmiralRoutePointsAdapter()
+    private var navigatingAfterDelete = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -80,6 +81,10 @@ class AdmiralRoutesDetailFragment : Fragment() {
                 .drop(1)
                 .collectLatest { data ->
                     if (data == null) {
+                        if (navigatingAfterDelete || vm.isRouteDeleted()) {
+                            navigatingAfterDelete = true
+                            return@collectLatest
+                        }
                         Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
                         findNavController().popBackStack()
                         return@collectLatest
@@ -168,7 +173,15 @@ class AdmiralRoutesDetailFragment : Fragment() {
                             }
                         }
                     }
-                    is UiEvent.NavigateBack -> findNavController().popBackStack()
+                    is UiEvent.NavigateBack -> {
+                        if (vm.isRouteDeleted()) {
+                            navigatingAfterDelete = true
+                            findNavController().popBackStack(R.id.starRouteFragment, false)
+                            vm.onRouteDeletionHandled()
+                        } else {
+                            findNavController().popBackStack()
+                        }
+                    }
                     is UiEvent.OpenMaps -> {
                         val geoUri = Uri.parse(
                             "geo:${e.lat},${e.lng}?q=${e.lat},${e.lng}(${Uri.encode(e.name)})"
