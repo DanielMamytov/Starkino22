@@ -3,12 +3,14 @@ package co.nisari.katisnar.presentation.ui.starlocation
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -20,6 +22,9 @@ import co.nisari.katisnar.databinding.FragmentStarLocationDetailBinding
 import co.nisari.katisnar.presentation.ui.starlocation.StarLocationDetailViewModel
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import dagger.hilt.android.AndroidEntryPoint
+import eightbitlab.com.blurview.BlurTarget
+import eightbitlab.com.blurview.BlurView
+import eightbitlab.com.blurview.RenderScriptBlur
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import java.net.URLEncoder
@@ -42,6 +47,18 @@ class StarLocationDetailFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val blurView = requireView().findViewById<BlurView>(R.id.blurView)
+        val decorView = requireActivity().window.decorView
+        val windowBackground: Drawable = decorView.background
+
+        blurView.setupWith(decorView.findViewById(android.R.id.content)) // размывает всё под ним
+            .setFrameClearDrawable(windowBackground)
+            .setBlurRadius(25f) // сила размытия
+
+        blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
+        blurView.setClipToOutline(true)
+
 
 
 

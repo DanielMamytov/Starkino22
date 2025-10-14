@@ -2,7 +2,7 @@
     android:shape="rectangle">
 
     <!-- Белый фон с 9% прозрачностью -->
-    <solid android:color="#17FFFFFF" /> <!-- #17 = ~9% прозрачности -->
+    <solid android:color="#22FFFFFF" /> <!-- #17 = ~9% прозрачности -->
 
     <!-- Скругление только снизу -->
     <corners

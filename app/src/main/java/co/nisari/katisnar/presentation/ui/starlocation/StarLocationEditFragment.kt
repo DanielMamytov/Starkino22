@@ -3,6 +3,8 @@ package co.nisari.katisnar.presentation.ui.starlocation
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.graphics.Shader
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
@@ -12,10 +14,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +29,9 @@ import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarLocationEditBinding
 import co.nisari.katisnar.presentation.data.model.Weather
 import dagger.hilt.android.AndroidEntryPoint
+import eightbitlab.com.blurview.BlurTarget
+import eightbitlab.com.blurview.BlurView
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -48,6 +56,9 @@ class StarLocationEditFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
 
         // 1) Режим: создание или редактирование
         val args = arguments

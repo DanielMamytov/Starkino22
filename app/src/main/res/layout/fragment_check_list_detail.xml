@@ -112,6 +112,8 @@
                             android:id="@+id/txt_name"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
                             android:textColor="@color/white"

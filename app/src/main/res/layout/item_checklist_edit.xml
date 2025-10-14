@@ -4,31 +4,32 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
 
     <CheckBox
         android:id="@+id/cb_done"
-        android:layout_width="20dp"
-        android:layout_height="wrap_content"
-        android:buttonTint="#FF0000"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="center"
-        android:contentDescription="@string/content_description_checklist_item_toggle" />
+        android:background="@drawable/custom_checkbox"
+        android:button="@null"
+        android:contentDescription="@string/content_description_checklist_item_toggle"
+        android:padding="2dp" />
 
     <EditText
         android:id="@+id/et_item"
         android:layout_width="0dp"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/poppins_medium"
         android:hint="@string/checklist_item_hint"
         android:inputType="textCapSentences"
         android:textColor="@color/white"
         android:textColorHint="#9E9E9E"
-        android:textSize="16sp"
-        android:fontFamily="@font/poppins_medium" />
+        android:textSize="16sp" />
 
 
 </LinearLayout>

@@ -63,13 +63,15 @@ dependencies {
     kapt(libs.room.compiler)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation ("androidx.compose.material3:material3:1.0.0")
+    implementation("androidx.compose.material3:material3:1.0.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.google.android.material:material:1.11.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation ("com.github.Dimezis:BlurView:version-3.1.0")
 
 }

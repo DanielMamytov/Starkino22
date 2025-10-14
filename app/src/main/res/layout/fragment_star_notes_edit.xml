@@ -115,6 +115,8 @@
                                 android:hint="Enter name"
                                 android:inputType="textCapWords"
                                 android:padding="0dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
                                 android:textColor="@color/white"
                                 android:textColorHint="#9E9E9E"
                                 android:textSize="16sp"
@@ -173,25 +175,40 @@
                 </LinearLayout>
 
             </FrameLayout>
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal">
+                android:layout_gravity="bottom"
+                android:layout_marginHorizontal="30dp"
+                android:orientation="horizontal">
 
-                <ImageView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_save"
-                    android:layout_width="142dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:src="@drawable/btn_save" />
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FF0000"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:text="Save"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="16sp" />
 
-                <ImageView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_cancel"
-                    android:layout_width="142dp"
-                    android:layout_height="52dp"
-                    android:src="@drawable/btn_cancel" />
-
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#707070"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="Cancel"
+                    android:textAllCaps="true"
+                    android:textSize="16sp" />
             </LinearLayout>
         </FrameLayout>
 
