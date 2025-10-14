@@ -99,28 +99,28 @@ class AdmiralRoutesDetailFragment : Fragment() {
                         points.size,
                         points.size
                     )
-                    binding.txtPointsTitle.text = countText
-
+//                    binding.txtPointsTitle.text = countText
+//
                     val latText = if (points.isEmpty()) "-" else points.first().lat.toString()
                     val lngText = if (points.isEmpty()) "-" else points.first().lng.toString()
-                    binding.txtLatitude.text = latText
-                    binding.txtLongitude.text = lngText
-                    binding.txtLocation2.text = when {
-                        points.isEmpty() -> getString(R.string.route_detail_location_empty)
-                        points.size == 1 -> getString(
-                            R.string.route_detail_location_single,
-                            points.first().lat,
-                            points.first().lng
-                        )
-                        else -> getString(
-                            R.string.route_detail_location_multi,
-                            points.first().lat,
-                            points.first().lng,
-                            points.last().lat,
-                            points.last().lng,
-                            points.size
-                        )
-                    }
+//                    binding.txtLatitude.text = latText
+//                    binding.txtLongitude.text = lngText
+//                    binding.txtLocation2.text = when {
+//                        points.isEmpty() -> getString(R.string.route_detail_location_empty)
+//                        points.size == 1 -> getString(
+//                            R.string.route_detail_location_single,
+//                            points.first().lat,
+//                            points.first().lng
+//                        )
+//                        else -> getString(
+//                            R.string.route_detail_location_multi,
+//                            points.first().lat,
+//                            points.first().lng,
+//                            points.last().lat,
+//                            points.last().lng,
+//                            points.size
+//                        )
+//                    }
                 val r = data.route
                 binding.txtName.text = r.name
                 binding.txtDate.text = r.date.format(dateFmt)

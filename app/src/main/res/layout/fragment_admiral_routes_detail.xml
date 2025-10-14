@@ -219,13 +219,16 @@
                         </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycler_view"
+                            android:id="@+id/rv_points"
                             android:layout_width="match_parent"
-                            android:layout_marginTop="15dp"
-                            tools:itemCount="1"
-                            tools:listitem="@layout/item_point"
+                            android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
-                            android:layout_height="wrap_content"/>
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            tools:itemCount="1"
+                            android:clipToPadding="false"
+                            android:overScrollMode="never"
+                            tools:listitem="@layout/item_point" />
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_description"
@@ -267,16 +270,7 @@
 
                         </com.google.android.material.card.MaterialCardView>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_points"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            tools:listitem="@layout/item_point" />
+
 
                     </LinearLayout>
 
