@@ -2,7 +2,6 @@ package co.nisari.katisnar.presentation.ui.starnotes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.nisari.katisnar.presentation.data.local.ChecklistItemEntity
 import co.nisari.katisnar.presentation.data.local.NoteEntity
 import co.nisari.katisnar.presentation.data.local.ChecklistWithItems
 import co.nisari.katisnar.presentation.data.repository.ChecklistRepository
@@ -107,13 +106,12 @@ class StarNotesViewModel @Inject constructor(
     }
 
     private fun ChecklistWithItems.toChecklistListItem(): ChecklistListItem {
-        val total = items.size
-        val checked = items.count(ChecklistItemEntity::isChecked)
+        val created = Date(checklist.createdAt)
         return ChecklistListItem(
             id = checklist.id,
             title = checklist.title,
-            summary = "$checked completed",
-            secondary = "$total items"
+            date = dateFormatter.format(created),
+            time = timeFormatter.format(created)
         )
     }
 }
@@ -129,6 +127,6 @@ data class NoteListItem(
 data class ChecklistListItem(
     val id: Long,
     val title: String,
-    val summary: String,
-    val secondary: String
+    val date: String,
+    val time: String
 )

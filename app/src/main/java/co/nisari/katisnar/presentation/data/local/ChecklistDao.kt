@@ -8,7 +8,7 @@ interface ChecklistDao {
 
     // Списки с пунктами
     @Transaction
-    @Query("SELECT * FROM checklists ORDER BY id DESC")
+    @Query("SELECT * FROM checklists ORDER BY createdAt DESC")
     fun getAllWithItems(): Flow<List<ChecklistWithItems>>
 
     @Transaction
