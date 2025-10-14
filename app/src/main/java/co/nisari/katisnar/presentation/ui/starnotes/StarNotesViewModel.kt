@@ -40,7 +40,7 @@ class StarNotesViewModel @Inject constructor(
     }
 
     sealed interface UiEvent {
-        data class NavigateToNote(val noteId: Long?) : UiEvent
+        data class NavigateToNoteEditor(val noteId: Long?) : UiEvent
         data class NavigateToChecklistDetail(val checklistId: Long) : UiEvent
         data class NavigateToChecklistEditor(val checklistId: Long?) : UiEvent
     }
@@ -74,7 +74,7 @@ class StarNotesViewModel @Inject constructor(
     fun onAddClicked() {
         viewModelScope.launch {
             when (_activeTab.value) {
-                Tab.NOTES -> _events.send(UiEvent.NavigateToNote(null))
+                Tab.NOTES -> _events.send(UiEvent.NavigateToNoteEditor(null))
                 Tab.CHECKLIST -> _events.send(UiEvent.NavigateToChecklistEditor(null))
             }
         }
@@ -82,7 +82,7 @@ class StarNotesViewModel @Inject constructor(
 
     fun onNoteClicked(id: Long) {
         viewModelScope.launch {
-            _events.send(UiEvent.NavigateToNote(id))
+            _events.send(UiEvent.NavigateToNoteEditor(id))
         }
     }
 
