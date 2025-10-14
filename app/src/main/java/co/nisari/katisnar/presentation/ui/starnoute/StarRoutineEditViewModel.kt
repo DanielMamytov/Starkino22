@@ -77,7 +77,7 @@ class StarRoutineEditViewModel @Inject constructor(
         val current = _state.value
         val name = current.name.trim()
         val notes = current.notes.trim()
-        if (name.isBlank() && notes.isBlank()) {
+        if (name.isBlank() || notes.isBlank()) {
             viewModelScope.launch { _events.send(UiEvent.ShowToast(emptyMessage)) }
             return
         }
