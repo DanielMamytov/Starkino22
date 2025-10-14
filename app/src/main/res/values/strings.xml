@@ -17,8 +17,6 @@
     <string name="checklist_item_hint">Checklist item</string>
     <string name="add_item">Add Item</string>
     <string name="add_point">Add Point</string>
-    <string name="point_title_placeholder">Point %1$d</string>
-    <string name="save_point">Save Point</string>
     <string name="toast_write_before_saving">Write something before saving</string>
     <string name="toast_fill_all_fields">Fill in both name and notes before saving</string>
     <string name="error_required_field">Required</string>

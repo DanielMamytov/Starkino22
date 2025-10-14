@@ -54,16 +54,16 @@ class StarLocationDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val blurView = requireView().findViewById<BlurView>(R.id.blurView)
-        val decorView = requireActivity().window.decorView
-        val windowBackground: Drawable = decorView.background
-
-        blurView.setupWith(decorView.findViewById(android.R.id.content)) // размывает всё под ним
-            .setFrameClearDrawable(windowBackground)
-            .setBlurRadius(25f) // сила размытия
-
-        blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
-        blurView.setClipToOutline(true)
+//        val blurView = requireView().findViewById<BlurView>(R.id.blurView)
+//        val decorView = requireActivity().window.decorView
+//        val windowBackground: Drawable = decorView.background
+//
+//        blurView.setupWith(decorView.findViewById(android.R.id.content)) // размывает всё под ним
+//            .setFrameClearDrawable(windowBackground)
+//            .setBlurRadius(25f) // сила размытия
+//
+//        blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
+//        blurView.setClipToOutline(true)
 
 
 

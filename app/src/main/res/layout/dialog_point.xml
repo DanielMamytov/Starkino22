@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
-    android:orientation="vertical"
-    android:paddingBottom="16dp">
+    android:background="#00FFFFFF"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_dialog_title"
@@ -44,27 +44,56 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="#330200"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Location:"
+                android:textColor="#A2A2A2"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_location1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/poppins_extrabold"
+                android:hint="Enter location"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="end"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_close_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:backgroundTint="#707070"
-            android:text="@android:string/cancel"
-            android:textAllCaps="true" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_done_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginStart="12dp"
-            android:backgroundTint="#FF0000"
-            android:text="@string/save"
-            android:textAllCaps="true" />
-    </LinearLayout>
+        android:layout_marginTop="10dp"
+        android:text="Save"
+        android:layout_gravity="center"
+        android:paddingHorizontal="40dp"
+        android:textSize="18sp"
+        android:backgroundTint="#FF0000"/>
 
 </LinearLayout>

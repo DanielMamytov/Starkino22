@@ -300,50 +300,19 @@ class AdmiralRouteEditFragment : Fragment() {
         }, t.hour, t.minute, true).show()
     }
 
-    private fun showAddPointDialog(onConfirm: (String, String, String) -> Boolean) {
+    private fun showAddPointDialog(onConfirm: (String, String, String) -> Unit) {
         val dialogBinding = DialogPointBinding.inflate(layoutInflater)
-        val dialog = MaterialAlertDialogBuilder(requireContext())
+
+        MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
-            .create()
-
-        fun renumberForms() {
-            for (i in 0 until dialogBinding.layoutPointContainer.childCount) {
-                val child = dialogBinding.layoutPointContainer.getChildAt(i)
-                val itemBinding = ItemPointBinding.bind(child)
-                itemBinding.tvPointTitle.text = getString(R.string.point_title_placeholder, i + 1)
+            .setPositiveButton(R.string.add_point) { _, _ ->
+                val lat = dialogBinding.etLatitude1.text?.toString().orEmpty().trim()
+                val lng = dialogBinding.etLongitude1.text?.toString().orEmpty().trim()
+                val location = dialogBinding.etLocation1.text?.toString().orEmpty().trim()
+                onConfirm(lat, lng, location)
             }
-        }
-
-        fun addPointForm() {
-            val itemBinding = ItemPointBinding.inflate(layoutInflater, dialogBinding.layoutPointContainer, false)
-            itemBinding.btnSavePoint.setOnClickListener {
-                val lat = itemBinding.etLatitude1.text?.toString().orEmpty().trim()
-                val lng = itemBinding.etLongitude1.text?.toString().orEmpty().trim()
-                val location = itemBinding.etLocation1.text?.toString().orEmpty().trim()
-                val success = onConfirm(lat, lng, location)
-                if (success) {
-                    dialogBinding.layoutPointContainer.removeView(itemBinding.root)
-                    if (dialogBinding.layoutPointContainer.childCount == 0) {
-                        addPointForm()
-                    } else {
-                        renumberForms()
-                    }
-                }
-            }
-            dialogBinding.layoutPointContainer.addView(itemBinding.root)
-            renumberForms()
-        }
-
-        dialogBinding.btnAddForm.setOnClickListener {
-            addPointForm()
-        }
-
-        dialogBinding.btnCloseDialog.setOnClickListener { dialog.dismiss() }
-        dialogBinding.btnDoneDialog.setOnClickListener { dialog.dismiss() }
-
-        addPointForm()
-
-        dialog.show()
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun showDescriptionDialog() {
