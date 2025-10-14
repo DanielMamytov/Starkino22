@@ -1,6 +1,7 @@
 package co.nisari.katisnar.presentation.ui.starnoute
 
 import android.os.Bundle
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarNotesEditBinding
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,12 +29,17 @@ class StarRoutineEditFragment : Fragment() {
 
     private val viewModel: StarRoutineEditViewModel by viewModels()
 
+    private var validationActivated = false
+    private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") }
+    private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStarNotesEditBinding.inflate(inflater, container, false)
+        validationActivated = false
         return binding.root
     }
 
@@ -52,37 +59,31 @@ class StarRoutineEditFragment : Fragment() {
 
             txtName.doAfterTextChanged { editable ->
                 viewModel.onNameChanged(editable?.toString().orEmpty())
-                if (!editable.isNullOrBlank()) {
-                    txtName.error = null
-                }
+                markNameIfFilled()
             }
             txtNotes.doAfterTextChanged { editable ->
                 viewModel.onNotesChanged(editable?.toString().orEmpty())
-                if (!editable.isNullOrBlank()) {
-                    txtNotes.error = null
-                }
+                markNotesIfFilled()
             }
         }
+
+        setNameError(false)
+        setNotesError(false)
     }
 
     private fun onSaveClicked() {
+        if (!validationActivated) validationActivated = true
         val name = binding.txtName.text?.toString().orEmpty().trim()
         val notes = binding.txtNotes.text?.toString().orEmpty().trim()
         val fillAllFieldsMessage = getString(R.string.toast_fill_all_fields)
 
-        var hasError = false
+        val nameEmpty = name.isBlank()
+        val notesEmpty = notes.isBlank()
 
-        if (name.isBlank()) {
-            binding.txtName.error = getString(R.string.error_required_field)
-            hasError = true
-        }
+        setNameError(nameEmpty)
+        setNotesError(notesEmpty)
 
-        if (notes.isBlank()) {
-            binding.txtNotes.error = getString(R.string.error_required_field)
-            hasError = true
-        }
-
-        if (hasError) {
+        if (nameEmpty || notesEmpty) {
             Toast.makeText(requireContext(), fillAllFieldsMessage, Toast.LENGTH_SHORT).show()
             return
         }
@@ -105,6 +106,8 @@ class StarRoutineEditFragment : Fragment() {
                         binding.txtNotes.setText(state.notes)
                         binding.txtNotes.setSelection(binding.txtNotes.text?.length ?: 0)
                     }
+
+                    syncValidation(state)
                 }
             }
         }
@@ -138,5 +141,34 @@ class StarRoutineEditFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun syncValidation(state: StarRoutineEditViewModel.UiState) {
+        if (!validationActivated) return
+        setNameError(state.name.trim().isEmpty())
+        setNotesError(state.notes.trim().isEmpty())
+    }
+
+    private fun markNameIfFilled() {
+        if (!validationActivated) return
+        if (!binding.txtName.text?.toString()?.trim().isNullOrEmpty()) setNameError(false)
+    }
+
+    private fun markNotesIfFilled() {
+        if (!validationActivated) return
+        if (!binding.txtNotes.text?.toString()?.trim().isNullOrEmpty()) setNotesError(false)
+    }
+
+    private fun setNameError(error: Boolean) {
+        setCardStroke(binding.cardName, error)
+    }
+
+    private fun setNotesError(error: Boolean) {
+        setCardStroke(binding.cardNotes, error)
+    }
+
+    private fun setCardStroke(card: MaterialCardView, error: Boolean) {
+        card.strokeWidth = resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+        card.strokeColor = if (error) errorStrokeColor else normalStrokeColor
     }
 }

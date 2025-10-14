@@ -83,6 +83,7 @@
                 android:paddingBottom="30dp">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
@@ -126,6 +127,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_goals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"

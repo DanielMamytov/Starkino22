@@ -95,6 +95,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/box_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
@@ -131,6 +132,7 @@
 
                     <LinearLayout
                         xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/box_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
@@ -178,6 +180,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/box_date"
                             android:layout_width="134dp"
                             android:layout_height="45dp"
                             android:layout_gravity="start"
@@ -218,6 +221,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/box_time"
                             android:layout_width="134dp"
                             android:layout_height="45dp"
                             android:layout_gravity="end"
@@ -269,6 +273,7 @@
 
                         <!-- Latitude -->
                         <LinearLayout
+                            android:id="@+id/box_latitude"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_border_bg"
@@ -306,6 +311,7 @@
 
                         <!-- Longitude -->
                         <LinearLayout
+                            android:id="@+id/box_longitude"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -346,6 +352,7 @@
 
 
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/box_weather"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
@@ -386,6 +393,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/box_notes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
