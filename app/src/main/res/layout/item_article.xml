@@ -1,77 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="32dp"
-    android:layout_marginTop="16dp">
+    android:layout_height="170dp"
+    android:layout_marginVertical="10dp">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:id="@+id/cardArticle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="0dp">
+        android:layout_width="330dp"
+        android:layout_height="130dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_item">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_item"
-            android:padding="16dp">
-
-            <ImageView
-                android:id="@+id/imgCover"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:contentDescription="@string/article_cover_content_description"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_star_article"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="120dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="0dp"
+                android:id="@+id/txtTitle"                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="THE CITY THAT NEVER SLEEPS UNDER THE STARS"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtPreview"                android:layout_width="198dp"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imgCover"
-                app:layout_constraintTop_toTopOf="@id/imgCover" />
+                android:text="There is a moment each evening when the city begins to glow with the light of thousands of stars, both above and around you. Neon reflections ripple on wet streets, music drifts from rooftop bars, and every building seems to hum with hidden stories. This is the true pulse of the night, and Starkino invites you to capture it. Every coordinate you save becomes a portal to memory, a digital echo of where you once stood.
+The modern traveler is not guided by maps alone. Instead, we navigate emotions, experiences, and atmosphere. The street corner where you shared a secret, the terrace where the skyline felt infinite, the park where the wind whispered something only you could understand. Each of these deserves a place in your personal constellation of memories.
+Technology often distances us from reality, but in this context it draws us closer. With each pin you drop, you are claiming a star for yourself. The map becomes a reflection of your journey, a story told through light and space.
+As you explore, remember to look up once in a while. The same stars above your city shimmer over oceans and deserts. They have seen civilizations rise and fade, and now they illuminate your path. The beauty of night is not only in its mystery but in its infinite capacity for rediscovery. With Starkino, your story joins that timeless sky.
+"
+                android:textColor="#A4A4A4"
+                android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/txtPreview"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="13sp"
-                app:layout_constraintBottom_toTopOf="@id/btnMoreDetails"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imgCover"
-                app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/btnMoreDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/article_more_details_content_description"
-                android:src="@drawable/btn_more_details"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/img_cover"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/img_night_city" />
 
-    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/btnMoreDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/btn_more_details" />
 
 </FrameLayout>
