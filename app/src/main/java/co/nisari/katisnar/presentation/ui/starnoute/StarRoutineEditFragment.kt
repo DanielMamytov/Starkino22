@@ -47,18 +47,47 @@ class StarRoutineEditFragment : Fragment() {
         with(binding) {
             btnBack.setOnClickListener { findNavController().popBackStack() }
             btnCancel.setOnClickListener { findNavController().popBackStack() }
-            btnSave.setOnClickListener {
-                viewModel.onSaveClicked(getString(R.string.toast_write_before_saving))
-            }
+            btnSave.setOnClickListener { onSaveClicked() }
             btnDelete.setOnClickListener { showDeleteDialog() }
 
             txtName.doAfterTextChanged { editable ->
                 viewModel.onNameChanged(editable?.toString().orEmpty())
+                if (!editable.isNullOrBlank()) {
+                    txtName.error = null
+                }
             }
             txtNotes.doAfterTextChanged { editable ->
                 viewModel.onNotesChanged(editable?.toString().orEmpty())
+                if (!editable.isNullOrBlank()) {
+                    txtNotes.error = null
+                }
             }
         }
+    }
+
+    private fun onSaveClicked() {
+        val name = binding.txtName.text?.toString().orEmpty().trim()
+        val notes = binding.txtNotes.text?.toString().orEmpty().trim()
+        val fillAllFieldsMessage = getString(R.string.toast_fill_all_fields)
+
+        var hasError = false
+
+        if (name.isBlank()) {
+            binding.txtName.error = getString(R.string.error_required_field)
+            hasError = true
+        }
+
+        if (notes.isBlank()) {
+            binding.txtNotes.error = getString(R.string.error_required_field)
+            hasError = true
+        }
+
+        if (hasError) {
+            Toast.makeText(requireContext(), fillAllFieldsMessage, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        viewModel.onSaveClicked(fillAllFieldsMessage)
     }
 
     private fun observeState() {

@@ -17,6 +17,8 @@
     <string name="checklist_item_hint">Checklist item</string>
     <string name="add_item">Add Item</string>
     <string name="toast_write_before_saving">Write something before saving</string>
+    <string name="toast_fill_all_fields">Fill in both name and notes before saving</string>
+    <string name="error_required_field">Required</string>
     <string name="toast_note_not_found">Note not found</string>
     <string name="toast_enter_checklist_name">Enter checklist name to save</string>
     <string name="toast_add_checklist_item">Add at least one checklist item</string>
