@@ -121,11 +121,30 @@ class AdmiralRoutesDetailFragment : Fragment() {
                             points.size
                         )
                     }
+                val r = data.route
+                binding.txtName.text = r.name
+                binding.txtDate.text = r.date.format(dateFmt)
+                binding.txtTime.setText(r.time.format(timeFmt))
+                binding.txtDescription.text = r.description
 
-                    binding.cardPointSummary.isVisible = points.isEmpty()
-                    pointsAdapter.submit(points, startIndex = 1)
-                    binding.rvPoints.isVisible = points.isNotEmpty()
-                }
+                // блок с точками:
+                // в твоём макете есть фиксированный “1 Point” + txt_latitude/txt_longitude.
+                // Покажем количество точек и первую точку (как минимум).
+                val count = data.points.size
+                // Найти TextView с текстом “1 Point” у тебя без id — лучше дай ему id:
+                // android:id="@+id/txt_points_title"
+                // Тогда:
+                // binding.txtPointsTitle.text = if (count == 1) "1 Point" else "$count Points"
+
+//                if (count > 0) {
+//                    val p0 = data.points.first()
+//                    binding.txtLatitude.text = p0.lat.toString()
+//                    binding.txtLongitude.text = p0.lng.toString()
+//                } else {
+//                    binding.txtLatitude.text = ""
+//                    binding.txtLongitude.text = ""
+//                }
+            }
         }
 
         // 4) UI-события

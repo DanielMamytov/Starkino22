@@ -3,6 +3,7 @@ package co.nisari.katisnar.presentation.data.di
 import android.content.Context
 import androidx.room.Room
 import co.nisari.katisnar.presentation.data.local.MIGRATION_1_2
+import co.nisari.katisnar.presentation.data.local.MIGRATION_3_4
 import co.nisari.katisnar.presentation.data.local.StarDatabase
 import co.nisari.katisnar.presentation.data.local.StarLocationDao
 import co.nisari.katisnar.presentation.data.local.StarRouteDao
@@ -25,7 +26,7 @@ object DatabaseModule {
             context,
             StarDatabase::class.java,
             "starkino_db"
-        ).addMigrations(MIGRATION_1_2)
+        ).addMigrations(MIGRATION_1_2, MIGRATION_3_4)
             .fallbackToDestructiveMigration()
             .build()
 
