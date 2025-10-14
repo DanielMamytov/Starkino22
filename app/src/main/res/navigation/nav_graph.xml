@@ -61,8 +61,11 @@
             android:id="@+id/action_starNoteFragment_to_noteEditFragment"
             app:destination="@id/noteEditFragment" />
         <action
-            android:id="@+id/action_starNoteFragment_to_checklistEditFragment"
-            app:destination="@id/checklistEditFragment" />
+            android:id="@+id/action_starNoteFragment_to_checkListDetailFragment"
+            app:destination="@id/checkListDetailFragment" />
+        <action
+            android:id="@+id/action_starNoteFragment_to_starChecklistEditFragment"
+            app:destination="@id/starChecklistEditFragment" />
     </fragment>
 
     <fragment
@@ -77,14 +80,27 @@
     </fragment>
 
     <fragment
-        android:id="@+id/checklistEditFragment"
-        android:name="co.nisari.katisnar.presentation.ui.starnotes.ChecklistEditFragment"
+        android:id="@+id/checkListDetailFragment"
+        android:name="co.nisari.katisnar.presentation.ui.checklist.CheckListDetailFragment"
+        android:label="fragment_check_list_detail"
+        tools:layout="@layout/fragment_check_list_detail">
+        <argument
+            android:name="checklistId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_checkListDetailFragment_to_starChecklistEditFragment"
+            app:destination="@id/starChecklistEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/starChecklistEditFragment"
+        android:name="co.nisari.katisnar.presentation.ui.checklist.StarChecklistEditFragment"
         android:label="fragment_checklist_edit"
         tools:layout="@layout/fragment_checklist_edit">
         <argument
             android:name="checklistId"
             app:argType="long"
-           />
+            android:defaultValue="-1" />
     </fragment>
 
     <fragment
@@ -111,7 +127,24 @@
         android:id="@+id/settingsFragment"
         android:name="co.nisari.katisnar.presentation.ui.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_termsOfUseFragment"
+            app:destination="@id/termsOfUseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="co.nisari.katisnar.presentation.ui.settings.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/termsOfUseFragment"
+        android:name="co.nisari.katisnar.presentation.ui.settings.TermsOfUseFragment"
+        android:label="fragment_terms_of_use"
+        tools:layout="@layout/fragment_terms_of_use" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="co.nisari.katisnar.presentation.ui.splash.SplashFragment"
