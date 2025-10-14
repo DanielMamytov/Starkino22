@@ -3,7 +3,6 @@ package co.nisari.katisnar.presentation.ui.admiral
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -19,9 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
-import co.nisari.katisnar.databinding.DialogPointBinding
 import co.nisari.katisnar.databinding.FragmentAdmiralRouteEditBinding
-import co.nisari.katisnar.databinding.ItemPointBinding
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -101,6 +98,7 @@ class AdmiralRouteEditFragment : Fragment() {
         } else {
             binding.btnDelete.visibility = View.GONE
             vm.prefillNowIfNeeded(LocalDate.now(), LocalTime.now().withSecond(0).withNano(0))
+            vm.ensureAtLeastOnePoint()
         }
 
         // список точек
@@ -143,9 +141,7 @@ class AdmiralRouteEditFragment : Fragment() {
         // Кнопки
         binding.btnBack.setOnClickListener { vm.onBack() }
         binding.btnDelete.setOnClickListener { vm.requestDelete() }
-        binding.btnAddPoint.setOnClickListener {
-            showAddPointDialog { la, lo, location -> vm.addPoint(la, lo, location) }
-        }
+        binding.btnAddPoint.setOnClickListener { vm.addEmptyPoint() }
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnSave.setOnClickListener { onSaveClicked() }
 
@@ -300,34 +296,6 @@ class AdmiralRouteEditFragment : Fragment() {
             onPicked(LocalTime.of(h, min))
         }, t.hour, t.minute, true).show()
     }
-
-    private fun showAddPointDialog(onConfirm: (String, String, String) -> Unit) {
-        val dialogBinding = DialogPointBinding.inflate(layoutInflater)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setView(dialogBinding.root)
-            .create()
-
-        // 🔹 Убираем стандартный фон
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        dialog.show()
-
-        dialogBinding.btnSave.setOnClickListener {
-            val lat = dialogBinding.etLatitude1.text?.toString().orEmpty().trim()
-            val lng = dialogBinding.etLongitude1.text?.toString().orEmpty().trim()
-            val location = dialogBinding.etLocation1.text?.toString().orEmpty().trim()
-
-            onConfirm(lat, lng, location)
-            dialog.dismiss()
-        }
-
-        dialogBinding.root.findViewById<View?>(R.id.btnCancel)?.setOnClickListener {
-            dialog.dismiss()
-        }
-    }
-
-
 
     private fun showDescriptionDialog() {
         val et = EditText(requireContext()).apply {

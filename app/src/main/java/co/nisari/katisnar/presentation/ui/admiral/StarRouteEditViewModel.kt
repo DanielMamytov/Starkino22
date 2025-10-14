@@ -51,7 +51,7 @@ class StarRouteEditViewModel @Inject constructor(
                                 // если в entity нет location — просто не заполняем:
                                 location = ""
                             )
-                        }
+                        }.ifEmpty { listOf(PointItem()) }
 
                     )
                 }
@@ -66,19 +66,16 @@ class StarRouteEditViewModel @Inject constructor(
     fun onTimePick(v: LocalTime) = state.update { it.copy(time = v) }
     fun onDescChange(v: String) = state.update { it.copy(description = v) }
 
-    fun addPoint(latStr: String, lngStr: String, locationStr: String) {
-        val lat = latStr.toDoubleOrNull()
-        val lng = lngStr.toDoubleOrNull()
-        if (lat == null || lng == null || lat !in -90.0..90.0 || lng !in -180.0..180.0) {
-            viewModelScope.launch {
-                _ui.send(UiEvent.ShowToast("Check latitude and longitude values before adding point"))
-            }
-//            return false
-        }
+    fun addEmptyPoint() {
         state.update { s ->
-            s.copy(points = s.points + PointItem(latStr, lngStr, locationStr))
+            s.copy(points = s.points + PointItem())
         }
-//        return true
+    }
+
+    fun ensureAtLeastOnePoint() {
+        state.update { s ->
+            if (s.points.isEmpty()) s.copy(points = listOf(PointItem())) else s
+        }
     }
 
     fun onPointSave(index: Int) {
@@ -100,6 +97,7 @@ class StarRouteEditViewModel @Inject constructor(
         state.update { s ->
             val m = s.points.toMutableList()
             if (index in m.indices) m.removeAt(index)
+            if (m.isEmpty()) m.add(PointItem())
             s.copy(points = m)
         }
     }
@@ -153,10 +151,15 @@ class StarRouteEditViewModel @Inject constructor(
     // Инициализация значений для режима Create
     fun prefillNowIfNeeded(nowDate: LocalDate, nowTime: LocalTime) {
         state.update { st ->
-            st.copy(
+            val withDateTime = st.copy(
                 date = st.date ?: nowDate,
                 time = st.time ?: nowTime
             )
+            if (withDateTime.points.isEmpty()) {
+                withDateTime.copy(points = listOf(PointItem()))
+            } else {
+                withDateTime
+            }
         }
     }
 }

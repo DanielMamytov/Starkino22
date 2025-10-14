@@ -37,6 +37,11 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="clear_data">Clear Data</string>
+    <plurals name="points_count">
+        <item quantity="zero">0 Points</item>
+        <item quantity="one">1 Point</item>
+        <item quantity="other">%d Points</item>
+    </plurals>
     <string name="share_app_message">Discover Starkino — your personal map under the stars. Download: http://play.google.com/store/apps/details?id=%1$s</string>
     <string name="data_cleared_message">App data cleared</string>
     <string name="privacy_policy_title">Privacy Policy</string>
