@@ -25,4 +25,14 @@
     <string name="content_description_back">Back</string>
     <string name="content_description_checklist_item_toggle">Toggle checklist item</string>
     <string name="content_description_remove_item">Remove checklist item</string>
+    <string name="share_the_app">Share the App</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="clear_data">Clear Data</string>
+    <string name="share_app_message">Discover Starkino — your personal map under the stars. Download: http://play.google.com/store/apps/details?id=%1$s</string>
+    <string name="data_cleared_message">App data cleared</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="terms_of_use_title">Terms of Use</string>
+    <string name="placeholder_content_coming_soon">Content coming soon</string>
 </resources>
