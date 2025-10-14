@@ -249,7 +249,7 @@
                                 android:background="@android:color/transparent"
                                 android:gravity="center"
                                 android:textColor="@color/white"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -279,7 +279,7 @@
                             android:background="@drawable/edittext_border_bg"
                             android:orientation="horizontal"
                             android:padding="10dp"
-                            android:gravity="center_vertical">
+                            android:gravity="center">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -300,7 +300,7 @@
                                 android:maxLines="1"
                                 android:ellipsize="end"
                                 android:background="@android:color/transparent"
-                                android:hint="Enter latitude"
+                                android:hint=""
                                 android:textColor="@color/white"
                                 android:textColorHint="#A2A2A2"
                                 android:textSize="16sp"
@@ -318,7 +318,7 @@
                             android:background="@drawable/edittext_border_bg"
                             android:orientation="horizontal"
                             android:padding="10dp"
-                            android:gravity="center_vertical">
+                            android:gravity="center">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -339,7 +339,7 @@
                                 android:background="@android:color/transparent"
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                android:hint="Enter longitude"
+                                android:hint=""
                                 android:textColor="@color/white"
                                 android:textColorHint="#A2A2A2"
                                 android:textSize="16sp"
