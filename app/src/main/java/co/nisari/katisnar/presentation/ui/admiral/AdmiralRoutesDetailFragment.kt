@@ -94,15 +94,18 @@ class AdmiralRoutesDetailFragment : Fragment() {
                     binding.txtDescription.text = route.description
 
                     val points = data.points
-                    val countText = resources.getQuantityString(
-                        R.plurals.points_count,
-                        points.size,
-                        points.size
-                    )
+                    pointsAdapter.submit(points)
+                    binding.rvPoints.isVisible = points.isNotEmpty()
+                }
+//                    val countText = resources.getQuantityString(
+//                        R.plurals.points_count,
+//                        points.size,
+//                        points.size
+//                    )
 //                    binding.txtPointsTitle.text = countText
 //
-                    val latText = if (points.isEmpty()) "-" else points.first().lat.toString()
-                    val lngText = if (points.isEmpty()) "-" else points.first().lng.toString()
+//                    val latText = if (points.isEmpty()) "-" else points.first().lat.toString()
+//                    val lngText = if (points.isEmpty()) "-" else points.first().lng.toString()
 //                    binding.txtLatitude.text = latText
 //                    binding.txtLongitude.text = lngText
 //                    binding.txtLocation2.text = when {
@@ -121,16 +124,16 @@ class AdmiralRoutesDetailFragment : Fragment() {
 //                            points.size
 //                        )
 //                    }
-                val r = data.route
-                binding.txtName.text = r.name
-                binding.txtDate.text = r.date.format(dateFmt)
-                binding.txtTime.setText(r.time.format(timeFmt))
-                binding.txtDescription.text = r.description
+//                val r = data.route
+//                binding.txtName.text = r.name
+//                binding.txtDate.text = r.date.format(dateFmt)
+//                binding.txtTime.setText(r.time.format(timeFmt))
+//                binding.txtDescription.text = r.description
 
                 // блок с точками:
                 // в твоём макете есть фиксированный “1 Point” + txt_latitude/txt_longitude.
                 // Покажем количество точек и первую точку (как минимум).
-                val count = data.points.size
+//                val count = data.points.size
                 // Найти TextView с текстом “1 Point” у тебя без id — лучше дай ему id:
                 // android:id="@+id/txt_points_title"
                 // Тогда:
@@ -144,7 +147,6 @@ class AdmiralRoutesDetailFragment : Fragment() {
 //                    binding.txtLatitude.text = ""
 //                    binding.txtLongitude.text = ""
 //                }
-            }
         }
 
         // 4) UI-события
