@@ -163,7 +163,7 @@
         android:backgroundTint="#FF0000"
         android:fontFamily="@font/poppins_extrabold"
         android:minWidth="140dp"
-        android:text="@string/save_point"
+        android:text="save point"
         android:textAllCaps="true"
         android:textSize="14sp" />
 
