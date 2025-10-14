@@ -41,7 +41,8 @@
             android:background="@drawable/seg_container_bg"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="8dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNotes"

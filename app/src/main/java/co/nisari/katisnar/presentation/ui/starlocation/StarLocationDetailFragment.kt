@@ -43,6 +43,8 @@ class StarLocationDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         val id = arguments?.getLong("id") ?: run {
             Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()

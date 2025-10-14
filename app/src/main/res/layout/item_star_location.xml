@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:layout_marginVertical="10dp"
     android:background="@drawable/round_item"
     android:padding="10dp">
@@ -15,7 +16,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -25,7 +26,14 @@
             android:text="ISLAND DISCOVERY"
             android:textColor="@color/white"
             android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:paddingEnd="10dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_weight="1"
+            android:scrollHorizontally="false" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -36,6 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2024-10-26,"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -47,6 +57,8 @@
                 android:text="14:30"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -59,6 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lat:"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -68,6 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15,234"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -78,6 +94,8 @@
                 android:layout_marginStart="10dp"
                 android:text="Lon."
                 android:textColor="#A4A4A4"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -86,8 +104,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-61.789"
+                android:paddingEnd="10dp"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textStyle="bold" />
 
         </LinearLayout>

@@ -87,11 +87,13 @@
                     android:paddingBottom="30dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_bottom_round_white_9"
                         android:orientation="vertical"
                         android:paddingBottom="40dp">
+
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
@@ -119,6 +121,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:text="Hiking along the valley"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -152,6 +156,8 @@
                                     android:id="@+id/txt_location"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:layout_margin="10dp"
                                     android:text="Island  "
                                     android:textColor="@color/white"
@@ -186,6 +192,8 @@
                                     android:id="@+id/txt_time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:layout_margin="10dp"
                                     android:text="2024-10-26, "
                                     android:textColor="@color/white"
@@ -196,6 +204,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:text=" 14:30"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -230,6 +240,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:text="34.0522 "
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -265,6 +277,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
                                     android:text="34.0522 "
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
 
@@ -299,6 +313,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
                                     android:text="Sunny"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
 
