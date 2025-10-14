@@ -17,7 +17,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/btn_back"                android:layout_width="66dp"
+                android:id="@+id/btn_back"
+                android:layout_width="70dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="50dp"
@@ -36,7 +37,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background_star_articles_detail"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <ImageView
                     android:id="@+id/img_cover"
@@ -46,29 +48,40 @@
                     android:layout_marginTop="16dp"
                     android:src="@drawable/img_article" />
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    app:cardBackgroundColor="#330200"
-                    app:cardCornerRadius="4dp"
-                    app:cardElevation="4dp">
 
-                    <TextView
-                        android:id="@+id/txt_content"                        android:layout_width="match_parent"
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="There is a moment each evening when the city begins to glow with the light of thousands of stars, both above and around you. Neon reflections ripple on wet streets, music drifts from rooftop bars, and every building seems to hum with hidden stories. This is the true pulse of the night, and Starkino invites you to capture it. Every coordinate you save becomes a portal to memory, a digital echo of where you once stood.
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="#330200"
+                        app:cardCornerRadius="8dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardElevation="4dp">
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/txt_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="15dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="20dp"
+                            android:text="There is a moment each evening when the city begins to glow with the light of thousands of stars, both above and around you. Neon reflections ripple on wet streets, music drifts from rooftop bars, and every building seems to hum with hidden stories. This is the true pulse of the night, and Starkino invites you to capture it. Every coordinate you save becomes a portal to memory, a digital echo of where you once stood.
 The modern traveler is not guided by maps alone. Instead, we navigate emotions, experiences, and atmosphere. The street corner where you shared a secret, the terrace where the skyline felt infinite, the park where the wind whispered something only you could understand. Each of these deserves a place in your personal constellation of memories.
 Technology often distances us from reality, but in this context it draws us closer. With each pin you drop, you are claiming a star for yourself. The map becomes a reflection of your journey, a story told through light and space.
 As you explore, remember to look up once in a while. The same stars above your city shimmer over oceans and deserts. They have seen civilizations rise and fade, and now they illuminate your path. The beauty of night is not only in its mystery but in its infinite capacity for rediscovery. With Starkino, your story joins that timeless sky.
  "
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold" />
+                        </ScrollView>
 
-                </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
+
 
             </LinearLayout>
         </LinearLayout>
