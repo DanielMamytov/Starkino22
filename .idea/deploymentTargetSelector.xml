@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="Starkino.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-10-14T14:49:25.320536200Z">
+        <DropdownSelection timestamp="2025-10-14T19:28:13.543091300Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\prost\.android\avd\Small_Phone_10.avd" />

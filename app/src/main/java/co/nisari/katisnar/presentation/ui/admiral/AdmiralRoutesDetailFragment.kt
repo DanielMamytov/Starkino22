@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +22,7 @@ import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.drop
 
 
 @AndroidEntryPoint
@@ -74,24 +76,74 @@ class AdmiralRoutesDetailFragment : Fragment() {
 
         // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.state.collectLatest { data ->
-                if (data == null) {
-                    pointsAdapter.submit(emptyList())
-                    binding.rvPoints.visibility = View.GONE
-                    return@collectLatest
-                }
+            vm.state
+                .drop(1)
+                .collectLatest { data ->
+                    if (data == null) {
+                        Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                        return@collectLatest
+                    }
+                    val route = data.route
+                    binding.txtName.text = route.name
+                    binding.txtDate.text = route.date.format(dateFmt)
+                    val timeFormatted = route.time.format(timeFmt)
+                    if (binding.txtTime.text?.toString() != timeFormatted) {
+                        binding.txtTime.setText(timeFormatted)
+                    }
+                    binding.txtDescription.text = route.description
 
-                val route = data.route
-                binding.txtName.text = route.name
-                binding.txtDate.text = route.date.format(dateFmt)
-                val timeFormatted = route.time.format(timeFmt)
-                if (binding.txtTime.text?.toString() != timeFormatted) {
-                    binding.txtTime.setText(timeFormatted)
-                }
+                    val points = data.points
+                    val countText = resources.getQuantityString(
+                        R.plurals.points_count,
+                        points.size,
+                        points.size
+                    )
+//                    binding.txtPointsTitle.text = countText
+//
+                    val latText = if (points.isEmpty()) "-" else points.first().lat.toString()
+                    val lngText = if (points.isEmpty()) "-" else points.first().lng.toString()
+//                    binding.txtLatitude.text = latText
+//                    binding.txtLongitude.text = lngText
+//                    binding.txtLocation2.text = when {
+//                        points.isEmpty() -> getString(R.string.route_detail_location_empty)
+//                        points.size == 1 -> getString(
+//                            R.string.route_detail_location_single,
+//                            points.first().lat,
+//                            points.first().lng
+//                        )
+//                        else -> getString(
+//                            R.string.route_detail_location_multi,
+//                            points.first().lat,
+//                            points.first().lng,
+//                            points.last().lat,
+//                            points.last().lng,
+//                            points.size
+//                        )
+//                    }
+                val r = data.route
+                binding.txtName.text = r.name
+                binding.txtDate.text = r.date.format(dateFmt)
+                binding.txtTime.setText(r.time.format(timeFmt))
+                binding.txtDescription.text = r.description
 
-                val points = data.points
-                binding.rvPoints.visibility = if (points.isEmpty()) View.GONE else View.VISIBLE
-                pointsAdapter.submit(points, startIndex = 1)
+                // блок с точками:
+                // в твоём макете есть фиксированный “1 Point” + txt_latitude/txt_longitude.
+                // Покажем количество точек и первую точку (как минимум).
+                val count = data.points.size
+                // Найти TextView с текстом “1 Point” у тебя без id — лучше дай ему id:
+                // android:id="@+id/txt_points_title"
+                // Тогда:
+                // binding.txtPointsTitle.text = if (count == 1) "1 Point" else "$count Points"
+
+//                if (count > 0) {
+//                    val p0 = data.points.first()
+//                    binding.txtLatitude.text = p0.lat.toString()
+//                    binding.txtLongitude.text = p0.lng.toString()
+//                } else {
+//                    binding.txtLatitude.text = ""
+//                    binding.txtLongitude.text = ""
+//                }
             }
         }
 
@@ -149,5 +201,6 @@ class AdmiralRoutesDetailFragment : Fragment() {
 
     }
 
+    private fun formatCoordinate(value: Double): String = String.format(Locale.US, "%1$.4f", value)
 }
 
