@@ -88,7 +88,7 @@ class StarNotesFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
                     when (event) {
-                        is StarNotesViewModel.UiEvent.NavigateToNote -> navigateToNote(event.noteId)
+                        is StarNotesViewModel.UiEvent.NavigateToNoteEditor -> navigateToNoteEditor(event.noteId)
                         is StarNotesViewModel.UiEvent.NavigateToChecklistDetail ->
                             navigateToChecklistDetail(event.checklistId)
                         is StarNotesViewModel.UiEvent.NavigateToChecklistEditor ->
@@ -99,10 +99,9 @@ class StarNotesFragment : Fragment() {
         }
     }
 
-    private fun navigateToNote(noteId: Long?) {
-        val actionId = R.id.action_starNoteFragment_to_noteEditFragment
-        val args = if (noteId != null) Bundle().apply { putLong("noteId", noteId) } else null
-        findNavController().navigate(actionId, args)
+    private fun navigateToNoteEditor(noteId: Long?) {
+        val args = Bundle().apply { putLong("noteId", noteId ?: -1L) }
+        findNavController().navigate(R.id.noteEditFragment, args)
     }
 
     private fun navigateToChecklistDetail(checklistId: Long) {
