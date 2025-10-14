@@ -91,7 +91,21 @@
         android:id="@+id/starArticleFragment"
         android:name="co.nisari.katisnar.presentation.ui.stararticle.StarArticleFragment"
         android:label="fragment_star_article"
-        tools:layout="@layout/fragment_star_article" />
+        tools:layout="@layout/fragment_star_article" >
+        <action
+            android:id="@+id/action_starArticleFragment_to_starArticleDetailFragment"
+            app:destination="@id/starArticleDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/starArticleDetailFragment"
+        android:name="co.nisari.katisnar.presentation.ui.stararticle.StarArticleDetailFragment"
+        android:label="fragment_star_article_detail"
+        tools:layout="@layout/fragment_star_article_detail">
+        <argument
+            android:name="articleId"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"

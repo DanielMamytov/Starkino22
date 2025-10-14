@@ -25,4 +25,9 @@
     <string name="content_description_back">Back</string>
     <string name="content_description_checklist_item_toggle">Toggle checklist item</string>
     <string name="content_description_remove_item">Remove checklist item</string>
+    <string name="starkino_articles_title">Starkino Articles</string>
+    <string name="article_cover_content_description">Article cover preview</string>
+    <string name="article_more_details_content_description">Open article details</string>
+    <string name="article_detail_cover_content_description">Cover illustration for the article</string>
+    <string name="article_not_found">Article not found</string>
 </resources>
