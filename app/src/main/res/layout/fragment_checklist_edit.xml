@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_star_notes_detail"
     android:orientation="vertical"
-    tools:context=".presentation.ui.starnotes.ChecklistEditFragment">
+    tools:context=".presentation.ui.checklist.StarChecklistEditFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"

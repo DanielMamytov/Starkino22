@@ -41,7 +41,8 @@ class StarNotesViewModel @Inject constructor(
 
     sealed interface UiEvent {
         data class NavigateToNote(val noteId: Long?) : UiEvent
-        data class NavigateToChecklist(val checklistId: Long?) : UiEvent
+        data class NavigateToChecklistDetail(val checklistId: Long) : UiEvent
+        data class NavigateToChecklistEditor(val checklistId: Long?) : UiEvent
     }
 
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -74,7 +75,7 @@ class StarNotesViewModel @Inject constructor(
         viewModelScope.launch {
             when (_activeTab.value) {
                 Tab.NOTES -> _events.send(UiEvent.NavigateToNote(null))
-                Tab.CHECKLIST -> _events.send(UiEvent.NavigateToChecklist(null))
+                Tab.CHECKLIST -> _events.send(UiEvent.NavigateToChecklistEditor(null))
             }
         }
     }
@@ -87,7 +88,7 @@ class StarNotesViewModel @Inject constructor(
 
     fun onChecklistClicked(id: Long) {
         viewModelScope.launch {
-            _events.send(UiEvent.NavigateToChecklist(id))
+            _events.send(UiEvent.NavigateToChecklistDetail(id))
         }
     }
 

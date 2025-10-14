@@ -89,7 +89,10 @@ class StarNotesFragment : Fragment() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is StarNotesViewModel.UiEvent.NavigateToNote -> navigateToNote(event.noteId)
-                        is StarNotesViewModel.UiEvent.NavigateToChecklist -> navigateToChecklist(event.checklistId)
+                        is StarNotesViewModel.UiEvent.NavigateToChecklistDetail ->
+                            navigateToChecklistDetail(event.checklistId)
+                        is StarNotesViewModel.UiEvent.NavigateToChecklistEditor ->
+                            navigateToChecklistEditor(event.checklistId)
                     }
                 }
             }
@@ -102,8 +105,14 @@ class StarNotesFragment : Fragment() {
         findNavController().navigate(actionId, args)
     }
 
-    private fun navigateToChecklist(checklistId: Long?) {
-        val actionId = R.id.action_starNoteFragment_to_checklistEditFragment
+    private fun navigateToChecklistDetail(checklistId: Long) {
+        val actionId = R.id.action_starNoteFragment_to_checkListDetailFragment
+        val args = Bundle().apply { putLong("checklistId", checklistId) }
+        findNavController().navigate(actionId, args)
+    }
+
+    private fun navigateToChecklistEditor(checklistId: Long?) {
+        val actionId = R.id.action_starNoteFragment_to_starChecklistEditFragment
         val args = if (checklistId != null) Bundle().apply { putLong("checklistId", checklistId) } else null
         findNavController().navigate(actionId, args)
     }
