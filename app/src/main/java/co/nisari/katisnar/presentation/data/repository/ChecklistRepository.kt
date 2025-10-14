@@ -10,16 +10,16 @@ class ChecklistRepository @Inject constructor(
     fun getAll(): Flow<List<ChecklistWithItems>> = dao.getAllWithItems()
     fun getById(id: Long): Flow<ChecklistWithItems?> = dao.getWithItems(id)
 
-    suspend fun insertChecklist(title: String, items: List<ChecklistItemEntity>) : Long {
-        val id = dao.insertChecklist(ChecklistEntity(title = title))
+    suspend fun insertChecklist(title: String, items: List<ChecklistItemEntity>, createdAt: Long = System.currentTimeMillis()) : Long {
+        val id = dao.insertChecklist(ChecklistEntity(title = title, createdAt = createdAt))
         if (items.isNotEmpty()) {
             dao.insertItems(items.map { it.copy(id = 0, checklistId = id) })
         }
         return id
     }
 
-    suspend fun updateChecklist(id: Long, title: String, items: List<ChecklistItemEntity>) {
-        dao.updateChecklist(ChecklistEntity(id = id, title = title))
+    suspend fun updateChecklist(id: Long, title: String, createdAt: Long, items: List<ChecklistItemEntity>) {
+        dao.updateChecklist(ChecklistEntity(id = id, title = title, createdAt = createdAt))
         dao.deleteItemsByChecklist(id)               // простой путь: подчистить
         if (items.isNotEmpty()) {
             dao.insertItems(items.map { it.copy(id = 0, checklistId = id) })
