@@ -7,6 +7,7 @@ import co.nisari.katisnar.presentation.data.local.NoteEntity
 import co.nisari.katisnar.presentation.data.local.ChecklistWithItems
 import co.nisari.katisnar.presentation.data.repository.ChecklistRepository
 import co.nisari.katisnar.presentation.data.repository.NoteRepository
+import co.nisari.katisnar.presentation.ui.starnoute.NoteTextMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
@@ -94,10 +95,11 @@ class StarNotesViewModel @Inject constructor(
     }
 
     private fun NoteEntity.toNoteListItem(): NoteListItem {
+        val (name, _) = NoteTextMapper.split(text)
         val created = Date(createdAt)
         return NoteListItem(
             id = id,
-            title = text.lineSequence().firstOrNull()?.takeIf { it.isNotBlank() } ?: text.take(40),
+            title = name,
             date = dateFormatter.format(created),
             time = timeFormatter.format(created),
             fullText = text
