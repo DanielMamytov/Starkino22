@@ -6,6 +6,9 @@
     <string name="add_note">Add Note</string>
     <string name="add_checklist">Add Checklist</string>
     <string name="point_title_placeholder">Point %1$d</string>
+    <string name="route_detail_location_empty">No points yet</string>
+    <string name="route_detail_location_single">Lat: %1$.4f, Lng: %2$.4f</string>
+    <string name="route_detail_location_multi">Start: %1$.4f, %2$.4f → End: %3$.4f, %4$.4f (%5$d points)</string>
     <string name="save_point">Save Point</string>
     <string name="notes_empty_state">Empty notes. Add your first</string>
     <string name="checklists_empty_state">No lists yet. Add your first</string>

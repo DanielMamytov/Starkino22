@@ -24,6 +24,8 @@ class StarRouteDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow<StarRouteWithPoints?>(null)
     val state: StateFlow<StarRouteWithPoints?> = _state
 
+    private var currentRouteId: Long? = null
+
     private val _ui = Channel<UiEvent>(Channel.BUFFERED)
     val ui = _ui.receiveAsFlow()
 
@@ -33,20 +35,26 @@ class StarRouteDetailViewModel @Inject constructor(
     val timeFmt: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     fun load(id: Long) {
+        currentRouteId = id
         viewModelScope.launch {
-            repo.getRouteWithPoints(id).collect { _state.value = it }
+            repo.getRouteWithPoints(id).collect { loaded ->
+                if (loaded != null) {
+                    currentRouteId = loaded.route.id
+                }
+                _state.value = loaded
+            }
         }
     }
 
     fun onBack() = viewModelScope.launch { _ui.send(UiEvent.NavigateBack) }
 
     fun onEdit() {
-        val id = _state.value?.route?.id ?: return
+        val id = currentRouteId ?: _state.value?.route?.id ?: return
         viewModelScope.launch { _ui.send(UiEvent.NavigateToEdit(id)) }
     }
 
     fun onDelete() {
-        val id = _state.value?.route?.id ?: return
+        val id = currentRouteId ?: _state.value?.route?.id ?: return
         viewModelScope.launch { _ui.send(UiEvent.ShowDeleteDialog(id)) }
     }
 
