@@ -41,17 +41,15 @@ class StarRoutineDetailViewModel @Inject constructor(
     val events = _events.receiveAsFlow()
 
     init {
-        val resolvedNoteId = noteId
-        if (resolvedNoteId == null) {
+        if (noteId == null) {
             viewModelScope.launch {
                 _events.send(UiEvent.NoteNotFound)
                 _events.send(UiEvent.CloseScreen)
             }
-            return
         }
 
         viewModelScope.launch {
-            repository.getById(resolvedNoteId).collectLatest { entity ->
+            repository.getById(noteId).collectLatest { entity ->
                 if (entity == null) {
                     _events.send(UiEvent.NoteNotFound)
                     _events.send(UiEvent.CloseScreen)
