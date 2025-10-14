@@ -97,7 +97,24 @@
         android:id="@+id/settingsFragment"
         android:name="co.nisari.katisnar.presentation.ui.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_termsOfUseFragment"
+            app:destination="@id/termsOfUseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="co.nisari.katisnar.presentation.ui.settings.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/termsOfUseFragment"
+        android:name="co.nisari.katisnar.presentation.ui.settings.TermsOfUseFragment"
+        android:label="fragment_terms_of_use"
+        tools:layout="@layout/fragment_terms_of_use" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="co.nisari.katisnar.presentation.ui.splash.SplashFragment"
