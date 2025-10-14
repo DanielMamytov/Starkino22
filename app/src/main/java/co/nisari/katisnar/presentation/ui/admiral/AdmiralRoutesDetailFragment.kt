@@ -201,6 +201,6 @@ class AdmiralRoutesDetailFragment : Fragment() {
 
     }
 
-    private fun formatCoordinate(value: Double): String = String.format(Locale.US, "%1$.4f", value)
+//    private fun formatCoordinate(value: Double): String = String.format(Locale.US, "%1$.4f", value)
 }
 

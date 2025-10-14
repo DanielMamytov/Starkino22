@@ -235,11 +235,40 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            tools:listitem="@layout/item_point" />
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="4dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Description: "
+                                    android:textColor="#A2A2A2"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_description"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="Take a small snack with you; there are no snack bars on the way. "
+                                    android:layout_marginBottom="15dp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+
+                        </com.google.android.material.card.MaterialCardView>
+
 
 
 
