@@ -37,5 +37,5 @@
         android:contentDescription="@string/content_description_remove_item"
         android:padding="4dp"
         android:src="@android:drawable/ic_menu_delete"
-        android:tint="@color/white" />
+        />
 </LinearLayout>
