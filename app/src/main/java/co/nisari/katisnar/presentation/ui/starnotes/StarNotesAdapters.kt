@@ -58,8 +58,8 @@ class StarChecklistsAdapter(
         fun bind(item: ChecklistListItem) {
             with(binding) {
                 txtCityLocation.text = item.title
-                txtDate.text = item.summary
-                txtTime.text = item.secondary
+                txtDate.text = item.date
+                txtTime.text = item.time
                 root.setOnClickListener { onClick(item) }
             }
         }

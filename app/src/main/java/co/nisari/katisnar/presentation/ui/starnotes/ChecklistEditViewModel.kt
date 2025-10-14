@@ -31,7 +31,8 @@ class ChecklistEditViewModel @Inject constructor(
     data class UiState(
         val id: Long? = null,
         val title: String = "",
-        val items: List<EditableChecklistItem> = emptyList()
+        val items: List<EditableChecklistItem> = emptyList(),
+        val createdAt: Long = System.currentTimeMillis()
     ) {
         val isExisting: Boolean get() = id != null
     }
@@ -62,7 +63,8 @@ class ChecklistEditViewModel @Inject constructor(
                                     text = item.text,
                                     isChecked = item.isChecked
                                 )
-                            }
+                            },
+                            createdAt = checklist.checklist.createdAt
                         )
                     }
                 }
@@ -119,9 +121,9 @@ class ChecklistEditViewModel @Inject constructor(
 
         viewModelScope.launch {
             if (current.id == null) {
-                repository.insertChecklist(title, preparedItems)
+                repository.insertChecklist(title, preparedItems, createdAt = current.createdAt)
             } else {
-                repository.updateChecklist(current.id, title, preparedItems)
+                repository.updateChecklist(current.id, title, current.createdAt, preparedItems)
             }
             _events.send(UiEvent.CloseScreen)
         }
