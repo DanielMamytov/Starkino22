@@ -3,6 +3,7 @@ package co.nisari.katisnar.presentation.ui.admiral
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -303,17 +304,30 @@ class AdmiralRouteEditFragment : Fragment() {
     private fun showAddPointDialog(onConfirm: (String, String, String) -> Unit) {
         val dialogBinding = DialogPointBinding.inflate(layoutInflater)
 
-        MaterialAlertDialogBuilder(requireContext())
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(dialogBinding.root)
-            .setPositiveButton(R.string.add_point) { _, _ ->
-                val lat = dialogBinding.etLatitude1.text?.toString().orEmpty().trim()
-                val lng = dialogBinding.etLongitude1.text?.toString().orEmpty().trim()
-                val location = dialogBinding.etLocation1.text?.toString().orEmpty().trim()
-                onConfirm(lat, lng, location)
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+            .create()
+
+        // 🔹 Убираем стандартный фон
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.show()
+
+        dialogBinding.btnSave.setOnClickListener {
+            val lat = dialogBinding.etLatitude1.text?.toString().orEmpty().trim()
+            val lng = dialogBinding.etLongitude1.text?.toString().orEmpty().trim()
+            val location = dialogBinding.etLocation1.text?.toString().orEmpty().trim()
+
+            onConfirm(lat, lng, location)
+            dialog.dismiss()
+        }
+
+        dialogBinding.root.findViewById<View?>(R.id.btnCancel)?.setOnClickListener {
+            dialog.dismiss()
+        }
     }
+
+
 
     private fun showDescriptionDialog() {
         val et = EditText(requireContext()).apply {

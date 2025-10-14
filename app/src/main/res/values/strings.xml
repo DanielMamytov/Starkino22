@@ -5,6 +5,8 @@
     <string name="checklist_tab_title">Checklist</string>
     <string name="add_note">Add Note</string>
     <string name="add_checklist">Add Checklist</string>
+    <string name="point_title_placeholder">Point %1$d</string>
+    <string name="save_point">Save Point</string>
     <string name="notes_empty_state">Empty notes. Add your first</string>
     <string name="checklists_empty_state">No lists yet. Add your first</string>
     <string name="note_hint">Type your star thoughts ...</string>

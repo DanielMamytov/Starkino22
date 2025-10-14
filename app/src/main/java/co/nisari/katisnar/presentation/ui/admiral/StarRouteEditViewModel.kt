@@ -73,12 +73,12 @@ class StarRouteEditViewModel @Inject constructor(
             viewModelScope.launch {
                 _ui.send(UiEvent.ShowToast("Check latitude and longitude values before adding point"))
             }
-            return false
+//            return false
         }
         state.update { s ->
             s.copy(points = s.points + PointItem(latStr, lngStr, locationStr))
         }
-        return true
+//        return true
     }
 
     fun onPointSave(index: Int) {

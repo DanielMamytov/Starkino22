@@ -145,24 +145,47 @@
                 android:imeOptions="actionDone"
                 android:inputType="textCapWords"
                 android:maxLines="1"
-                android:textSize="14sp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
 
-
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Save"
-        android:layout_gravity="center"
-        android:paddingHorizontal="40dp"
-        android:textSize="18sp"
-        android:backgroundTint="#FF0000"/>
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FF0000"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Save"
+            android:textSize="18sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FF0000"
+            android:fontFamily="@font/poppins_medium"
+
+            android:paddingHorizontal="24dp"
+            android:text="@android:string/cancel"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
 </LinearLayout>
