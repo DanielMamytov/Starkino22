@@ -47,7 +47,7 @@ class StarArticleDetailFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.article.collectLatest { state ->
                 state?.let {
-                    binding.txtTitle.text = it.title
+//                    binding.txtTitle.text = it.title
                     binding.txtContent.text = it.content
                     binding.imgCover.setImageResource(it.coverResId)
                 }

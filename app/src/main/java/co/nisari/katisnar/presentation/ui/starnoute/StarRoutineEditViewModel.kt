@@ -73,17 +73,12 @@ class StarRoutineEditViewModel @Inject constructor(
         _state.update { it.copy(notes = notes) }
     }
 
-    fun onSaveClicked(emptyNameMessage: String, emptyNotesMessage: String) {
+    fun onSaveClicked(emptyMessage: String) {
         val current = _state.value
         val name = current.name.trim()
         val notes = current.notes.trim()
-        if (name.isBlank()) {
-            viewModelScope.launch { _events.send(UiEvent.ShowToast(emptyNameMessage)) }
-            return
-        }
-
-        if (notes.isBlank()) {
-            viewModelScope.launch { _events.send(UiEvent.ShowToast(emptyNotesMessage)) }
+        if (name.isBlank() && notes.isBlank()) {
+            viewModelScope.launch { _events.send(UiEvent.ShowToast(emptyMessage)) }
             return
         }
 

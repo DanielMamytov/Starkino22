@@ -48,10 +48,7 @@ class StarRoutineEditFragment : Fragment() {
             btnBack.setOnClickListener { findNavController().popBackStack() }
             btnCancel.setOnClickListener { findNavController().popBackStack() }
             btnSave.setOnClickListener {
-                viewModel.onSaveClicked(
-                    emptyNameMessage = getString(R.string.toast_write_name_before_saving),
-                    emptyNotesMessage = getString(R.string.toast_write_notes_before_saving)
-                )
+                viewModel.onSaveClicked(getString(R.string.toast_write_before_saving))
             }
             btnDelete.setOnClickListener { showDeleteDialog() }
 

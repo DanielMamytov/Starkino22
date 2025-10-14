@@ -125,7 +125,7 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="20dp"
                         app:cardBackgroundColor="#330200"
@@ -149,6 +149,7 @@
                             <EditText
                                 android:id="@+id/txt_notes"
                                 android:layout_width="match_parent"
+                                android:layout_marginBottom="20dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
                                 android:background="@android:color/transparent"

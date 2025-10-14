@@ -17,8 +17,6 @@
     <string name="checklist_item_hint">Checklist item</string>
     <string name="add_item">Add Item</string>
     <string name="toast_write_before_saving">Write something before saving</string>
-    <string name="toast_write_name_before_saving">Name cannot be empty</string>
-    <string name="toast_write_notes_before_saving">Description cannot be empty</string>
     <string name="toast_note_not_found">Note not found</string>
     <string name="toast_enter_checklist_name">Enter checklist name to save</string>
     <string name="toast_add_checklist_item">Add at least one checklist item</string>
@@ -39,4 +37,9 @@
     <string name="privacy_policy_title">Privacy Policy</string>
     <string name="terms_of_use_title">Terms of Use</string>
     <string name="placeholder_content_coming_soon">Content coming soon</string>
+    <string name="starkino_articles_title">Starkino Articles</string>
+    <string name="article_cover_content_description">Article cover preview</string>
+    <string name="article_more_details_content_description">Open article details</string>
+    <string name="article_detail_cover_content_description">Cover illustration for the article</string>
+    <string name="article_not_found">Article not found</string>
 </resources>

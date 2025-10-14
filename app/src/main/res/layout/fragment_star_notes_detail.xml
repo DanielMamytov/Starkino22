@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,168 +7,172 @@
     android:background="@drawable/background_star_notes_detail"
     tools:context=".presentation.ui.starnoute.StarRoutineDetailFragment">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="66dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/btn_back" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/btn_edit"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_gravity="start|top"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/btn_edit" />
-
-            <ImageView
-                android:id="@+id/btn_delete"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_gravity="start|top"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="40dp"
-                android:src="@drawable/btn_delete" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/route_detail_header"
-            android:gravity="center"
-            android:padding="20dp">
-
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_extrabold"
-                android:text="Star location detail"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="66dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/btn_back" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="20dp">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/btn_edit"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="start|top"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/btn_edit" />
+
+                <ImageView
+                    android:id="@+id/btn_delete"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="start|top"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:src="@drawable/btn_delete" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/route_detail_header"
+                android:gravity="center"
+                android:padding="20dp">
 
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:text="Star location detail"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="30dp">
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp">
 
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_bottom_round_white_9"
-                    android:orientation="vertical"
-                    android:paddingBottom="40dp">
+                    android:paddingBottom="30dp">
 
-                    <com.google.android.material.card.MaterialCardView
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_marginHorizontal="20dp"
-                        app:cardBackgroundColor="#330200"
-                        android:layout_marginTop="20dp"
-                        app:cardCornerRadius="4dp"
-                        app:cardElevation="4dp"
-                        >
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_bottom_round_white_9"
+                        android:orientation="vertical"
+                        android:paddingBottom="40dp">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="4dp"
+                            app:cardElevation="4dp">
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:text="Name: "
-                                android:textColor="#9E9E9E"
-                                android:textStyle="bold" />
+                                android:layout_height="wrap_content">
 
-                            <TextView
-                                android:id="@+id/txt_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:text="Hiking along the valley"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Name: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
 
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/txt_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Hiking along the valley"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
 
-                    </com.google.android.material.card.MaterialCardView>
+                            </LinearLayout>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="20dp"
-                        app:cardBackgroundColor="#330200"
-                        app:cardCornerRadius="4dp"
-                        app:cardElevation="4dp"
-                        >
+                        </com.google.android.material.card.MaterialCardView>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#330200"
+                            app:cardCornerRadius="4dp"
+                            app:cardElevation="4dp">
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:text="Notes: "
-                                android:textColor="#9E9E9E"
-                                android:textStyle="bold" />
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/txt_notes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:text="Lorem ipsum dolor sit amet consectetur. Rutrum pellentesque tellus in phasellus quam aliquam. Rutrum in dignissim egestas purus consequat at curabitur. Sem cras nunc tempus mauris vestibulum donec eu aliquet. Leo aliquam turpis lectus ut quis aliquam. Aenean eu praesent leo sed. "
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Notes: "
+                                    android:textColor="#9E9E9E"
+                                    android:textStyle="bold" />
 
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/txt_notes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:text="Lorem ipsum dolor sit amet consectetur. Rutrum pellentesque tellus in phasellus quam aliquam. Rutrum in dignissim egestas purus consequat at curabitur. Sem cras nunc tempus mauris vestibulum donec eu aliquet. Leo aliquam turpis lectus ut quis aliquam. Aenean eu praesent leo sed. "
+                                    android:layout_marginBottom="30dp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
 
-                    </com.google.android.material.card.MaterialCardView>
+                            </LinearLayout>
 
-                </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </FrameLayout>
+
+
             </FrameLayout>
+        </LinearLayout>
+
+    </FrameLayout>
 
 
-        </FrameLayout>
-    </LinearLayout>
-
-
-
-</FrameLayout>
+</ScrollView>
