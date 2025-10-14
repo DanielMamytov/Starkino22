@@ -154,18 +154,6 @@
 
 
     </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_save_point"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#FF0000"
-        android:fontFamily="@font/poppins_extrabold"
-        android:minWidth="140dp"
-        android:text="save point"
-        android:textAllCaps="true"
-        android:textSize="14sp" />
 
     <View
         android:layout_width="100dp"
