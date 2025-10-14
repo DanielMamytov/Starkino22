@@ -1,60 +1,106 @@
 package co.nisari.katisnar.presentation.ui.starnoute
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
+import co.nisari.katisnar.databinding.FragmentStarNotesDetailBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [StarRoutineDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class StarRoutineDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentStarNotesDetailBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: StarRoutineDetailViewModel by viewModels()
+
+    private var currentNoteId: Long? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentStarNotesDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupUi()
+        observeState()
+        observeEvents()
+    }
+
+    private fun setupUi() {
+        with(binding) {
+            btnBack.setOnClickListener { findNavController().popBackStack() }
+            btnDelete.setOnClickListener { showDeleteDialog() }
+            btnEdit.setOnClickListener { navigateToNoteEditor() }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_star_notes_detail, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StarRoutineDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StarRoutineDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun observeState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    currentNoteId = state.id
+                    binding.txtName.text = state.name
+                    binding.txtNotes.text = state.notes
                 }
             }
+        }
+    }
+
+    private fun observeEvents() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        StarRoutineDetailViewModel.UiEvent.NoteNotFound ->
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.toast_note_not_found,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        StarRoutineDetailViewModel.UiEvent.CloseScreen ->
+                            findNavController().popBackStack()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun navigateToNoteEditor() {
+        val noteId = currentNoteId ?: return
+        val args = bundleOf("noteId" to noteId)
+        findNavController().navigate(R.id.action_starRoutineDetailFragment_to_noteEditFragment, args)
+    }
+
+    private fun showDeleteDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.dialog_delete_title)
+            .setPositiveButton(R.string.dialog_delete_confirm) { _, _ ->
+                viewModel.onDeleteConfirmed()
+            }
+            .setNegativeButton(R.string.dialog_delete_cancel, null)
+            .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
