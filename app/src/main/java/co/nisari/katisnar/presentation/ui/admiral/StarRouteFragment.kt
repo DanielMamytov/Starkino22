@@ -13,6 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import android.graphics.Typeface
 import android.view.Gravity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
@@ -34,11 +35,16 @@ class StarRouteFragment : Fragment() {
     }
 
     // простейший «пустой стейт» поверх лейаута без правок XML
+// простейший «пустой стейт» поверх лейаута без привязки к типу корня
     private var emptyView: TextView? = null
+
     private fun showEmpty(show: Boolean) {
+        val parent = binding.root as ViewGroup
+
         if (show) {
             if (emptyView == null) {
                 emptyView = TextView(requireContext()).apply {
+                    id = View.generateViewId()
                     text = "No routes yet. Add your first route"
                     setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
                     textSize = 16f
@@ -46,20 +52,45 @@ class StarRouteFragment : Fragment() {
                     gravity = Gravity.CENTER
                     setPadding(24, 24, 24, 24)
                 }
-                // Корневой фрейм — это сам FragmentStarRoutineBinding.root
-                (binding.root as FrameLayout).addView(
-                    emptyView,
-                    FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
-                    ).apply { gravity = Gravity.CENTER }
-                )
+
+                // гарантируем id у родителя для констрейнтов
+                ensureHasId(parent)
+
+                // корректные LayoutParams под тип контейнера
+                val lp: ViewGroup.LayoutParams = when (parent) {
+                    is ConstraintLayout -> {
+                        ConstraintLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
+                        ).apply {
+                            topToTop = parent.id
+                            bottomToBottom = parent.id
+                            startToStart = parent.id
+                            endToEnd = parent.id
+                        }
+                    }
+                    else -> {
+                        ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
+                        )
+                    }
+                }
+
+                parent.addView(emptyView, lp)
             }
             emptyView?.visibility = View.VISIBLE
         } else {
             emptyView?.visibility = View.GONE
         }
     }
+
+    private fun ensureHasId(vg: ViewGroup) {
+        if (vg.id == View.NO_ID) {
+            vg.id = View.generateViewId()
+        }
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentStarRoutineBinding.inflate(inflater, container, false)

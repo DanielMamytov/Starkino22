@@ -2,6 +2,7 @@ package co.nisari.katisnar.presentation.ui.admiral
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -79,9 +81,13 @@ class AdmiralRouteEditFragment : Fragment() {
 
     // Цвета обводки
     private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") } // полупрозрачный белый
-    private val errorStrokeColor  by lazy { Color.parseColor("#FF0000") }   // красный
+    private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }   // красный
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentAdmiralRouteEditBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -135,8 +141,7 @@ class AdmiralRouteEditFragment : Fragment() {
         }
         binding.txtTime.setOnClickListener { openTimePicker() }
 
-        // DESCRIPTION (по клику редактируем через диалог)
-        binding.cvDescription.setOnClickListener { showDescriptionDialog() }
+
 
         // Кнопки
         binding.btnBack.setOnClickListener { vm.onBack() }
@@ -145,6 +150,23 @@ class AdmiralRouteEditFragment : Fragment() {
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnSave.setOnClickListener { onSaveClicked() }
 
+        binding.cvDescription.setOnClickListener {
+            // 1) фокус на EditText
+            binding.txtDescription.requestFocus()
+            // курсор в конец
+            binding.txtDescription.setSelection(binding.txtDescription.text?.length ?: 0)
+            // 2) имитируем клик по самому EditText (если на нём есть свои обработчики)
+            binding.txtDescription.performClick()
+            // 3) показать клавиатуру
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.txtDescription, InputMethodManager.SHOW_IMPLICIT)
+            // 4) проскроллить, чтобы поле не было скрыто
+            binding.root.post {
+                (binding.root as? View)?.let {
+                    it.parent?.requestChildFocus(it, binding.txtDescription)
+                }
+            }
+        }
         // ==== Подписки ====
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.state.collectLatest { s ->
@@ -157,7 +179,14 @@ class AdmiralRouteEditFragment : Fragment() {
                 if (binding.txtTime.text?.toString() != timeStr) binding.txtTime.setText(timeStr)
 
                 // description
-                binding.txtDescription.text = s.description
+                binding.txtDescription.doOnTextChanged { t, _, _, _ ->
+                    vm.onDescChange(t?.toString().orEmpty())
+                    markDescriptionIfFilled()
+                }
+                // description  ← было: binding.txtDescription.text = s.description
+                if (binding.txtDescription.text?.toString() != s.description) {
+                    binding.txtDescription.setText(s.description)
+                }
 
                 // points
                 pointsAdapter.submit(s.points)
@@ -171,7 +200,12 @@ class AdmiralRouteEditFragment : Fragment() {
             vm.ui.collectLatest { e ->
                 when (e) {
                     is UiEvent.NavigateBack -> findNavController().popBackStack()
-                    is UiEvent.ShowToast -> Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    is UiEvent.ShowToast -> Toast.makeText(
+                        requireContext(),
+                        e.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                     is UiEvent.ShowDeleteDialog -> {
                         MaterialAlertDialogBuilder(requireContext())
                             .setMessage("Please confirm deletion")
@@ -179,6 +213,7 @@ class AdmiralRouteEditFragment : Fragment() {
                             .setNegativeButton("Cancel", null)
                             .show()
                     }
+
                     else -> Unit
                 }
             }
@@ -206,31 +241,37 @@ class AdmiralRouteEditFragment : Fragment() {
         val nameEmpty = binding.etName.text?.toString()?.trim().isNullOrEmpty()
         val dateEmpty = binding.txtDate.text?.toString()?.trim().isNullOrEmpty()
         val timeEmpty = binding.txtTime.text?.toString()?.trim().isNullOrEmpty()
-        val descriptionEmpty = binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
+        val descriptionEmpty =
+            binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()   // ← CHANGED
 
         if (validationActivated) {
             setNameError(nameEmpty)
             setDateError(dateEmpty)
             setTimeError(timeEmpty)
-            setDescriptionError(descriptionEmpty)   // ← ВСЕГДА меняем рамку у description
+            setDescriptionError(descriptionEmpty)
         } else {
-            setNameError(false)
-            setDateError(false)
-            setTimeError(false)
-            setDescriptionError(false)
+            setNameError(false); setDateError(false); setTimeError(false); setDescriptionError(false)
         }
-
-        // ← Учитываем descriptionEmpty в результате (раз он обязателен)
         return nameEmpty || dateEmpty || timeEmpty || descriptionEmpty
     }
-
 
     private fun syncErrorMasks() {
         if (!validationActivated) return
         setNameError(binding.etName.text?.toString()?.trim().isNullOrEmpty())
         setDateError(binding.txtDate.text?.toString()?.trim().isNullOrEmpty())
         setTimeError(binding.txtTime.text?.toString()?.trim().isNullOrEmpty())
-        setDescriptionError(binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()) // ← всегда
+        setDescriptionError(
+            binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
+        )     // ← CHANGED
+    }
+
+    private fun markDescriptionIfFilled() {
+        if (!validationActivated) return
+        if (!binding.txtDescription.text?.toString()?.trim()
+                .isNullOrEmpty()
+        ) {                  // ← CHANGED
+            setDescriptionError(false)
+        }
     }
 
 
@@ -239,12 +280,6 @@ class AdmiralRouteEditFragment : Fragment() {
         if (!binding.etName.text?.toString()?.trim().isNullOrEmpty()) setNameError(false)
     }
 
-    private fun markDescriptionIfFilled() {
-        if (!validationActivated) return
-        if (!binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()) {
-            setDescriptionError(false)   // ← именно description, не name
-        }
-    }
 
     private fun markDateIfFilled() {
         if (!validationActivated) return
