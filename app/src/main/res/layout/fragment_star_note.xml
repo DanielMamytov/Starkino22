@@ -41,7 +41,7 @@
             android:background="@drawable/seg_container_bg"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="6dp">
+            android:padding="4dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNotes"
@@ -57,7 +57,6 @@
                 android:textSize="18sp"
                 app:backgroundTint="@color/seg_bg_tint"
                 app:cornerRadius="12dp"
-                app:strokeColor="@color/seg_stroke_tint"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -74,7 +73,6 @@
                 android:textSize="18sp"
                 app:backgroundTint="@color/seg_bg_tint"
                 app:cornerRadius="12dp"
-                app:strokeColor="@color/seg_stroke_tint"
                 app:strokeWidth="1dp" />
         </LinearLayout>
 

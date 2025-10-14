@@ -3,7 +3,7 @@
     <!-- Внешнее "свечение" и рамка -->
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="12dp"/>
+            <corners android:radius="14dp"/>
             <stroke android:width="2dp" android:color="@color/seg_border"/>
             <solid android:color="#19000000"/>
         </shape>
@@ -12,7 +12,7 @@
     <!-- Внутренний фон (тёмно-синий #00133C) -->
     <item android:left="3dp" android:top="3dp" android:right="3dp" android:bottom="3dp">
         <shape android:shape="rectangle">
-            <corners android:radius="12dp"/>
+            <corners android:radius="14dp"/>
             <solid android:color="#00133C"/>
         </shape>
     </item>

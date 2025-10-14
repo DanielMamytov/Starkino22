@@ -99,8 +99,7 @@
         tools:layout="@layout/fragment_checklist_edit">
         <argument
             android:name="checklistId"
-            app:argType="long"
-            android:defaultValue="-1" />
+            app:argType="long" />
     </fragment>
 
     <fragment

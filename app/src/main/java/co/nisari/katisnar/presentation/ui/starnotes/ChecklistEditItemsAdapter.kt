@@ -47,7 +47,7 @@ class ChecklistEditItemsAdapter(
                 onTextChanged(item.localId, editable?.toString().orEmpty())
             }
 
-            binding.btnRemove.setOnClickListener { onRemove(item.localId) }
+//            binding.btnRemove.setOnClickListener { onRemove(item.localId) }
             binding.root.setOnLongClickListener {
                 onRemove(item.localId)
                 true
