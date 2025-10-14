@@ -26,42 +26,72 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/img_settings" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_share_the_app"
-        android:layout_width="231dp"
-        android:layout_height="61dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="80dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FF0000"
+        android:text="Share the app"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:fontFamily="@font/poppins_extrabold"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/btn_share_the_app" />
+        android:layout_marginTop="50dp"
+        android:src="@drawable/btn_clear_data" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_rate_us"
-        android:layout_width="231dp"
-        android:layout_height="61dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="80dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FF0000"
+        android:text="Rate us"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:fontFamily="@font/poppins_extrabold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:src="@drawable/btn_rate_us" />
+        android:src="@drawable/btn_clear_data" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_privacy_policy"
-        android:layout_width="231dp"
-        android:layout_height="61dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="80dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FF0000"
+        android:text="Privacy policy"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:fontFamily="@font/poppins_extrabold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:src="@drawable/btn_privacy_policy" />
+        android:src="@drawable/btn_clear_data" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_terms_of_use"
-        android:layout_width="231dp"
-        android:layout_height="61dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="80dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FF0000"
+        android:text="terms of use"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:fontFamily="@font/poppins_extrabold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:src="@drawable/btn_terms_of_use" />
+        android:src="@drawable/btn_clear_data" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_clear_data"
-        android:layout_width="231dp"
-        android:layout_height="61dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="80dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FF0000"
+        android:text="Clear data"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:fontFamily="@font/poppins_extrabold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:src="@drawable/btn_clear_data" />
