@@ -46,7 +46,6 @@ class StarRoutineDetailViewModel @Inject constructor(
                 _events.send(UiEvent.NoteNotFound)
                 _events.send(UiEvent.CloseScreen)
             }
-            return
         }
 
         viewModelScope.launch {

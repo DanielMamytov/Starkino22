@@ -90,7 +90,7 @@
         <argument
             android:name="noteId"
             app:argType="long"
-            android:defaultValue="-1" />
+            />
     </fragment>
 
     <fragment

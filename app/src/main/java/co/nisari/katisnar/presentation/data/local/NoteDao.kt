@@ -9,7 +9,7 @@ interface NoteDao {
     fun getAll(): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE id = :id")
-    fun getById(id: Long): Flow<NoteEntity?>
+    fun getById(id: Long?): Flow<NoteEntity?>
 
     @Insert
     suspend fun insert(note: NoteEntity): Long
