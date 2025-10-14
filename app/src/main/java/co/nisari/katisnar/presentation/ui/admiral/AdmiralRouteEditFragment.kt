@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
@@ -19,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
+import co.nisari.katisnar.databinding.DialogPointBinding
 import co.nisari.katisnar.databinding.FragmentAdmiralRouteEditBinding
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.card.MaterialCardView
@@ -140,7 +140,9 @@ class AdmiralRouteEditFragment : Fragment() {
         // Кнопки
         binding.btnBack.setOnClickListener { vm.onBack() }
         binding.btnDelete.setOnClickListener { vm.requestDelete() }
-        binding.btnAddPoint.setOnClickListener { showAddPointDialog { la, lo -> vm.addPoint(la, lo) } }
+        binding.btnAddPoint.setOnClickListener {
+            showAddPointDialog { la, lo, location -> vm.addPoint(la, lo, location) }
+        }
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnSave.setOnClickListener { onSaveClicked() }
 
@@ -296,33 +298,18 @@ class AdmiralRouteEditFragment : Fragment() {
         }, t.hour, t.minute, true).show()
     }
 
-    private fun showAddPointDialog(onConfirm: (String, String) -> Unit) {
-        val container = LinearLayout(requireContext()).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(32, 8, 32, 8)
-        }
-        val etLat = EditText(requireContext()).apply {
-            hint = "Latitude (−90..90)"
-            inputType = InputType.TYPE_CLASS_NUMBER or
-                    InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    InputType.TYPE_NUMBER_FLAG_SIGNED
-        }
-        val etLng = EditText(requireContext()).apply {
-            hint = "Longitude (−180..180)"
-            inputType = InputType.TYPE_CLASS_NUMBER or
-                    InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    InputType.TYPE_NUMBER_FLAG_SIGNED
-        }
-        container.addView(etLat)
-        container.addView(etLng)
+    private fun showAddPointDialog(onConfirm: (String, String, String) -> Unit) {
+        val dialogBinding = DialogPointBinding.inflate(layoutInflater)
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Add Point")
-            .setView(container)
-            .setPositiveButton("Add") { _, _ ->
-                onConfirm(etLat.text.toString().trim(), etLng.text.toString().trim())
+            .setView(dialogBinding.root)
+            .setPositiveButton(R.string.add_point) { _, _ ->
+                val lat = dialogBinding.etLatitude1.text?.toString().orEmpty().trim()
+                val lng = dialogBinding.etLongitude1.text?.toString().orEmpty().trim()
+                val location = dialogBinding.etLocation1.text?.toString().orEmpty().trim()
+                onConfirm(lat, lng, location)
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
 
