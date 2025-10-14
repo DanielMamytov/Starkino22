@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarLocationBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,12 +37,14 @@ class StarLocationFragment : Fragment() {
             viewModel.onLocationClick(location.id)
         }
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_locations)
-        recyclerView.adapter = adapter
+        binding.rvLocations.adapter = adapter
 
         // подписка на список
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.locations.collect { adapter.submitList(it) }
+            viewModel.locations.collect { locations ->
+                adapter.submitList(locations)
+                binding.tvEmptyState.isVisible = locations.isEmpty()
+            }
         }
 
         // подписка на события UI
@@ -76,6 +78,10 @@ class StarLocationFragment : Fragment() {
 
         binding.btnAddLog.setOnClickListener {
             viewModel.onAddClick()
+        }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 }

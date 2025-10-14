@@ -3,6 +3,7 @@ package co.nisari.katisnar.presentation.ui.starlocation
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -157,6 +159,12 @@ class StarLocationEditFragment : Fragment() {
             vm.onLngChanged(t?.toString().orEmpty())
             markLongitudeIfValid()
         }
+
+        binding.boxName.setOnClickListener { focusAndShowKeyboard(binding.etName) }
+        binding.boxLocation.setOnClickListener { focusAndShowKeyboard(binding.txtLocation) }
+        binding.boxLatitude.setOnClickListener { focusAndShowKeyboard(binding.txtLatitude) }
+        binding.boxLongitude.setOnClickListener { focusAndShowKeyboard(binding.txtLongitude) }
+        binding.boxNotes.setOnClickListener { focusAndShowKeyboard(binding.etNotes) }
 
         binding.txtLatitude.filters = arrayOf(RangeInputFilter(-90.0, 90.0))
         binding.txtLongitude.filters = arrayOf(RangeInputFilter(-180.0, 180.0))
@@ -391,6 +399,15 @@ class StarLocationEditFragment : Fragment() {
 
     private fun toast(msg: String) =
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+
+    private fun focusAndShowKeyboard(editText: EditText) {
+        editText.requestFocus()
+        editText.post {
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+            editText.setSelection(editText.text?.length ?: 0)
+        }
+    }
 
     private fun TextView.setTextIfDifferent(value: CharSequence?) {
         val newText = value?.toString().orEmpty()
