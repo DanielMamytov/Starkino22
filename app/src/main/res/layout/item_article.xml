@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="170dp"
+    android:layout_height="180dp"
     android:layout_marginVertical="10dp">
 
     <LinearLayout
         android:id="@+id/cardArticle"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/round_item">
+        android:background="@drawable/round_item"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_cover"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/img_night_city" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="5dp"
+            android:paddingEnd="20dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtTitle"                android:layout_width="wrap_content"
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+
                 android:text="THE CITY THAT NEVER SLEEPS UNDER THE STARS"
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtPreview"                android:layout_width="198dp"
+                android:id="@+id/txtPreview"
+                android:layout_width="198dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:paddingEnd="10dp"
                 android:text="There is a moment each evening when the city begins to glow with the light of thousands of stars, both above and around you. Neon reflections ripple on wet streets, music drifts from rooftop bars, and every building seems to hum with hidden stories. This is the true pulse of the night, and Starkino invites you to capture it. Every coordinate you save becomes a portal to memory, a digital echo of where you once stood.
 The modern traveler is not guided by maps alone. Instead, we navigate emotions, experiences, and atmosphere. The street corner where you shared a secret, the terrace where the skyline felt infinite, the park where the wind whispered something only you could understand. Each of these deserves a place in your personal constellation of memories.
 Technology often distances us from reality, but in this context it draws us closer. With each pin you drop, you are claiming a star for yourself. The map becomes a reflection of your journey, a story told through light and space.
@@ -44,13 +55,6 @@ As you explore, remember to look up once in a while. The same stars above your c
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/img_cover"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/img_night_city" />
 
     <ImageView
         android:id="@+id/btnMoreDetails"

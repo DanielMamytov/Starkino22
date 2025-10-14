@@ -27,7 +27,7 @@ class StarArticleAdapter(
             with(binding) {
                 txtTitle.text = item.title
                 txtPreview.text = item.preview
-                imgCover.setImageResource(R.drawable.img_star_article)
+                imgCover.setImageResource(R.drawable.img_night_city)
                 root.setOnClickListener { onArticleClick(item) }
                 btnMoreDetails.setOnClickListener { onArticleClick(item) }
             }
