@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -32,13 +33,14 @@
                     android:src="@drawable/ic_point" />
 
                 <TextView
+                    android:id="@+id/tv_point_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/poppins_extrabold"
-                    android:text="1 Point"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Point 1" />
             </LinearLayout>
 
             <!-- Latitude -->
@@ -152,10 +154,23 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_point"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF0000"
+        android:fontFamily="@font/poppins_extrabold"
+        android:minWidth="140dp"
+        android:text="@string/save_point"
+        android:textAllCaps="true"
+        android:textSize="14sp" />
+
     <View
         android:layout_width="100dp"
         android:layout_height="2dp"
-        android:background="#FF0000"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:background="#FF0000" />
 </LinearLayout>

@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.DialogPointBinding
 import co.nisari.katisnar.databinding.FragmentAdmiralRouteEditBinding
+import co.nisari.katisnar.databinding.ItemPointBinding
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -67,6 +68,7 @@ class AdmiralRouteEditFragment : Fragment() {
                     vm.state.update { it.copy(points = cur) }
                 }
             },
+            onSave = { index -> vm.onPointSave(index) },
             onRemove = { index -> vm.removePoint(index) }
         )
     }
