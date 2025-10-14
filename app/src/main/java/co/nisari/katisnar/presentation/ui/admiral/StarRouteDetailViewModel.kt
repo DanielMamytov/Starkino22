@@ -24,6 +24,8 @@ class StarRouteDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow<StarRouteWithPoints?>(null)
     val state: StateFlow<StarRouteWithPoints?> = _state
 
+    private var currentRouteId: Long? = null
+
     private val _ui = Channel<UiEvent>(Channel.BUFFERED)
     val ui = _ui.receiveAsFlow()
 
@@ -33,20 +35,26 @@ class StarRouteDetailViewModel @Inject constructor(
     val timeFmt: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     fun load(id: Long) {
+        currentRouteId = id
         viewModelScope.launch {
-            repo.getRouteWithPoints(id).collect { _state.value = it }
+            repo.getRouteWithPoints(id).collect { loaded ->
+                if (loaded != null) {
+                    currentRouteId = loaded.route.id
+                }
+                _state.value = loaded
+            }
         }
     }
 
     fun onBack() = viewModelScope.launch { _ui.send(UiEvent.NavigateBack) }
 
     fun onEdit() {
-        val id = _state.value?.route?.id ?: return
+        val id = currentRouteId ?: _state.value?.route?.id ?: return
         viewModelScope.launch { _ui.send(UiEvent.NavigateToEdit(id)) }
     }
 
     fun onDelete() {
-        val id = _state.value?.route?.id ?: return
+        val id = currentRouteId ?: _state.value?.route?.id ?: return
         viewModelScope.launch { _ui.send(UiEvent.ShowDeleteDialog(id)) }
     }
 
@@ -59,8 +67,7 @@ class StarRouteDetailViewModel @Inject constructor(
         val data = _state.value ?: return
         val pts = data.points
 
-        // Должно быть минимум 2 точки, чтобы построить маршрут
-        if (pts.size < 2) {
+        if (pts.isEmpty()) {
             viewModelScope.launch {
                 _ui.send(UiEvent.ShowToast("Add point of route to create new route"))
             }
@@ -71,23 +78,30 @@ class StarRouteDetailViewModel @Inject constructor(
         // Ограничим на всякий случай, чтобы не было слишком длинной ссылки.
         val limited = pts.take(25)
 
-        val origin = "${limited.first().lat},${limited.first().lng}"
-        val destination = "${limited.last().lat},${limited.last().lng}"
+        val uri = if (limited.size == 1) {
+            val destination = "${limited.first().lat},${limited.first().lng}"
+            Uri.parse(buildString {
+                append("https://www.google.com/maps/dir/?api=1")
+                append("&destination=").append(destination)
+                append("&travelmode=driving")
+            })
+        } else {
+            val origin = "${limited.first().lat},${limited.first().lng}"
+            val destination = "${limited.last().lat},${limited.last().lng}"
 
-        val waypoints = if (limited.size > 2) {
-            // между первой и последней — «промежуточные»
-            limited.subList(1, limited.lastIndex)
-                .joinToString("|") { "${it.lat},${it.lng}" }
-        } else null
+            val waypoints = if (limited.size > 2) {
+                limited.subList(1, limited.lastIndex)
+                    .joinToString("|") { "${it.lat},${it.lng}" }
+            } else null
 
-        // Формируем directions-URI c api=1 (Maps URLs)
-        val uri = Uri.parse(buildString {
-            append("https://www.google.com/maps/dir/?api=1")
-            append("&origin=").append(origin)
-            append("&destination=").append(destination)
-            waypoints?.let { append("&waypoints=").append(it) }
-            append("&travelmode=driving") // можно walking/bicycling/transit
-        })
+            Uri.parse(buildString {
+                append("https://www.google.com/maps/dir/?api=1")
+                append("&origin=").append(origin)
+                append("&destination=").append(destination)
+                waypoints?.let { append("&waypoints=").append(it) }
+                append("&travelmode=driving")
+            })
+        }
 
         viewModelScope.launch { _ui.send(UiEvent.OpenMaps1(uri)) }
     }
