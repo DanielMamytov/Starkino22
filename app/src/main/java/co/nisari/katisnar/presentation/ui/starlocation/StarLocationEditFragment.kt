@@ -3,8 +3,6 @@ package co.nisari.katisnar.presentation.ui.starlocation
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.graphics.Shader
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
@@ -14,13 +12,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewOutlineProvider
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.view.ViewCompat
-import androidx.core.view.doOnPreDraw
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,9 +24,6 @@ import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarLocationEditBinding
 import co.nisari.katisnar.presentation.data.model.Weather
 import dagger.hilt.android.AndroidEntryPoint
-import eightbitlab.com.blurview.BlurTarget
-import eightbitlab.com.blurview.BlurView
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -42,6 +34,9 @@ class StarLocationEditFragment : Fragment() {
     private lateinit var binding: FragmentStarLocationEditBinding
     private val vm: StarLocationEditViewModel by viewModels()
 
+    /** Включать подсветку ошибок только после первого нажатия Save */
+    private var validationActivated = false
+
     @RequiresApi(Build.VERSION_CODES.O)
     private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -50,6 +45,7 @@ class StarLocationEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentStarLocationEditBinding.inflate(inflater, container, false)
+        validationActivated = false
         return binding.root
     }
 
@@ -113,40 +109,65 @@ class StarLocationEditFragment : Fragment() {
                 // notes
                 if (binding.etNotes.text.toString() != s.notes)
                     binding.etNotes.setText(s.notes)
+
+                syncErrorMasks()
             }
         }
 
         // 3) Слушатели ввода
-        binding.etName.doOnTextChanged { t, _, _, _ -> vm.onNameChanged(t?.toString().orEmpty()) }
-        binding.etNotes.doOnTextChanged { t, _, _, _ -> vm.onNotesChanged(t?.toString().orEmpty()) }
+        binding.etName.doOnTextChanged { t, _, _, _ ->
+            vm.onNameChanged(t?.toString().orEmpty())
+            markNameIfFilled()
+        }
+        binding.etNotes.doOnTextChanged { t, _, _, _ ->
+            vm.onNotesChanged(t?.toString().orEmpty())
+            markNotesIfFilled()
+        }
         binding.txtTime.doOnTextChanged { t, _, _, _ ->
             vm.onTimeTextChanged(
                 t?.toString().orEmpty()
             )
+            markTimeIfFilled()
         }
 
         // 4) Выбор даты
-        binding.txtDate.setOnClickListener { showDatePicker() }
-        binding.icArrowDate.setOnClickListener { showDatePicker() }
+        val openDate = {
+            showDatePicker()
+        }
+        binding.txtDate.setOnClickListener { openDate() }
+        binding.icArrowDate.setOnClickListener { openDate() }
 
         // 5) Выбор времени
-        binding.txtTime.setOnClickListener { showTimePicker() }
-        binding.icArrowTime.setOnClickListener { showTimePicker() }
+        val openTime = {
+            showTimePicker()
+        }
+        binding.txtTime.setOnClickListener { openTime() }
+        binding.icArrowTime.setOnClickListener { openTime() }
 
         // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
-        binding.txtLocation.doOnTextChanged { t, _, _, _ -> vm.onLocationChanged(t?.toString().orEmpty()) }
-        binding.txtLatitude.doOnTextChanged { t, _, _, _ -> vm.onLatChanged(t?.toString().orEmpty()) }
-        binding.txtLongitude.doOnTextChanged { t, _, _, _ -> vm.onLngChanged(t?.toString().orEmpty()) }
+        binding.txtLocation.doOnTextChanged { t, _, _, _ ->
+            vm.onLocationChanged(t?.toString().orEmpty())
+            markLocationIfFilled()
+        }
+        binding.txtLatitude.doOnTextChanged { t, _, _, _ ->
+            vm.onLatChanged(t?.toString().orEmpty())
+            markLatitudeIfValid()
+        }
+        binding.txtLongitude.doOnTextChanged { t, _, _, _ ->
+            vm.onLngChanged(t?.toString().orEmpty())
+            markLongitudeIfValid()
+        }
 
         binding.txtLatitude.filters = arrayOf(RangeInputFilter(-90.0, 90.0))
         binding.txtLongitude.filters = arrayOf(RangeInputFilter(-180.0, 180.0))
         // 7) Выбор погоды
-        binding.txtWeather.setOnClickListener { showWeatherDialog() }
-        binding.icDropdown.setOnClickListener { showWeatherDialog() }
-        binding.icWeather.setOnClickListener { showWeatherDialog() }
+        val openWeather = { showWeatherDialog() }
+        binding.txtWeather.setOnClickListener { openWeather() }
+        binding.icDropdown.setOnClickListener { openWeather() }
+        binding.icWeather.setOnClickListener { openWeather() }
 
         // 8) Кнопки
-        binding.btnSave.setOnClickListener { vm.onSave() }
+        binding.btnSave.setOnClickListener { onSaveClicked() }
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnBack.setOnClickListener { vm.onBack() }
         binding.btnDelete.setOnClickListener { vm.requestDelete() }
@@ -162,6 +183,143 @@ class StarLocationEditFragment : Fragment() {
                 }
             }
         }
+
+        setNameError(false)
+        setLocationError(false)
+        setDateError(false)
+        setTimeError(false)
+        setLatitudeError(false)
+        setLongitudeError(false)
+        setWeatherError(false)
+        setNotesError(false)
+    }
+
+    private fun onSaveClicked() {
+        if (!validationActivated) validationActivated = true
+        validateAndMark()
+        vm.onSave()
+    }
+
+    private fun validateAndMark() {
+        val state = vm.state.value
+        val nameEmpty = state.name.trim().isEmpty()
+        val locationEmpty = state.location.trim().isEmpty()
+        val dateEmpty = state.date == null
+        val timeEmpty = state.time == null
+        val latText = state.lat.trim()
+        val lngText = state.lng.trim()
+        val latValue = latText.toDoubleOrNull()
+        val lngValue = lngText.toDoubleOrNull()
+        val latInvalid = latValue == null || latValue !in -90.0..90.0
+        val lngInvalid = lngValue == null || lngValue !in -180.0..180.0
+        val weatherEmpty = state.weather == null
+        val notesEmpty = state.notes.trim().isEmpty()
+
+        if (validationActivated) {
+            setNameError(nameEmpty)
+            setLocationError(locationEmpty)
+            setDateError(dateEmpty)
+            setTimeError(timeEmpty)
+            setLatitudeError(latText.isEmpty() || latInvalid)
+            setLongitudeError(lngText.isEmpty() || lngInvalid)
+            setWeatherError(weatherEmpty)
+            setNotesError(notesEmpty)
+        }
+    }
+
+    private fun syncErrorMasks() {
+        if (!validationActivated) return
+        val state = vm.state.value
+        setNameError(state.name.trim().isEmpty())
+        setLocationError(state.location.trim().isEmpty())
+        setDateError(state.date == null)
+        setTimeError(state.time == null)
+        val latValue = state.lat.trim().toDoubleOrNull()
+        val lngValue = state.lng.trim().toDoubleOrNull()
+        setLatitudeError(state.lat.trim().isEmpty() || latValue == null || latValue !in -90.0..90.0)
+        setLongitudeError(state.lng.trim().isEmpty() || lngValue == null || lngValue !in -180.0..180.0)
+        setWeatherError(state.weather == null)
+        setNotesError(state.notes.trim().isEmpty())
+    }
+
+    private fun markNameIfFilled() {
+        if (!validationActivated) return
+        if (!binding.etName.text?.toString()?.trim().isNullOrEmpty()) setNameError(false)
+    }
+
+    private fun markLocationIfFilled() {
+        if (!validationActivated) return
+        if (!binding.txtLocation.text?.toString()?.trim().isNullOrEmpty()) setLocationError(false)
+    }
+
+    private fun markDateIfFilled() {
+        if (!validationActivated) return
+        if (!binding.txtDate.text?.toString()?.trim().isNullOrEmpty()) setDateError(false)
+    }
+
+    private fun markTimeIfFilled() {
+        if (!validationActivated) return
+        if (!binding.txtTime.text?.toString()?.trim().isNullOrEmpty()) setTimeError(false)
+    }
+
+    private fun markLatitudeIfValid() {
+        if (!validationActivated) return
+        val text = binding.txtLatitude.text?.toString()?.trim()
+        val value = text?.toDoubleOrNull()
+        if (!text.isNullOrEmpty() && value != null && value in -90.0..90.0) {
+            setLatitudeError(false)
+        }
+    }
+
+    private fun markLongitudeIfValid() {
+        if (!validationActivated) return
+        val text = binding.txtLongitude.text?.toString()?.trim()
+        val value = text?.toDoubleOrNull()
+        if (!text.isNullOrEmpty() && value != null && value in -180.0..180.0) {
+            setLongitudeError(false)
+        }
+    }
+
+    private fun markWeatherIfFilled() {
+        if (!validationActivated) return
+        if (vm.state.value.weather != null) setWeatherError(false)
+    }
+
+    private fun markNotesIfFilled() {
+        if (!validationActivated) return
+        if (!binding.etNotes.text?.toString()?.trim().isNullOrEmpty()) setNotesError(false)
+    }
+
+    private fun setNameError(error: Boolean) {
+        binding.boxName.setBackgroundResource(if (error) R.drawable.edittext_border_error_bg else R.drawable.edittext_border_bg)
+    }
+
+    private fun setLocationError(error: Boolean) {
+        binding.boxLocation.setBackgroundResource(if (error) R.drawable.edittext_border_error_bg else R.drawable.edittext_border_bg)
+    }
+
+    private fun setDateError(error: Boolean) {
+        binding.boxDate.setBackgroundResource(if (error) R.drawable.text_border_error else R.drawable.text_border)
+    }
+
+    private fun setTimeError(error: Boolean) {
+        binding.boxTime.setBackgroundResource(if (error) R.drawable.text_border_error else R.drawable.text_border)
+    }
+
+    private fun setLatitudeError(error: Boolean) {
+        binding.boxLatitude.setBackgroundResource(if (error) R.drawable.edittext_border_error_bg else R.drawable.edittext_border_bg)
+    }
+
+    private fun setLongitudeError(error: Boolean) {
+        binding.boxLongitude.setBackgroundResource(if (error) R.drawable.edittext_border_error_bg else R.drawable.edittext_border_bg)
+    }
+
+    private fun setWeatherError(error: Boolean) {
+        binding.boxWeather.setBackgroundResource(if (error) R.drawable.edittext_border_error_bg else R.drawable.edittext_border_bg)
+    }
+
+    private fun setNotesError(error: Boolean) {
+        binding.boxNotes.setBackgroundResource(if (error) R.drawable.edittext_border_error_bg else R.drawable.edittext_border_bg)
     }
 
     // ---------- helpers ----------
@@ -172,6 +330,7 @@ class StarLocationEditFragment : Fragment() {
         DatePickerDialog(
             requireContext(), { _, y, m, d ->
                 vm.onDatePicked(LocalDate.of(y, m + 1, d))
+                markDateIfFilled()
             }, now.year, now.monthValue - 1, now.dayOfMonth
         ).show()
     }
@@ -181,7 +340,10 @@ class StarLocationEditFragment : Fragment() {
         val now = vm.state.value.time ?: LocalTime.now().withSecond(0).withNano(0)
         TimePickerDialog(
             requireContext(),
-            { _, hh, mm -> vm.onTimePicked(LocalTime.of(hh, mm)) },
+            { _, hh, mm ->
+                vm.onTimePicked(LocalTime.of(hh, mm))
+                markTimeIfFilled()
+            },
             now.hour, now.minute, true
         ).show()
     }
@@ -195,6 +357,7 @@ class StarLocationEditFragment : Fragment() {
             .setTitle("Weather")
             .setItems(items) { _, which ->
                 vm.onWeatherSelected(Weather.values()[which])
+                markWeatherIfFilled()
             }
             .show()
     }
@@ -212,6 +375,7 @@ class StarLocationEditFragment : Fragment() {
             .setView(input)
             .setPositiveButton("OK") { _, _ ->
                 vm.onLocationChanged(input.text?.toString().orEmpty())
+                markLocationIfFilled()
             }
             .setNegativeButton("Cancel", null)
             .show()

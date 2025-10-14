@@ -1,6 +1,7 @@
 package co.nisari.katisnar.presentation.ui.starnoute
 
 import android.os.Bundle
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarNotesDetailBinding
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,6 +30,9 @@ class StarRoutineDetailFragment : Fragment() {
 
     private var currentNoteId: Long? = null
 
+    private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") }
+    private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +44,7 @@ class StarRoutineDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        resetValidation()
         setupUi()
         observeState()
         observeEvents()
@@ -59,6 +65,7 @@ class StarRoutineDetailFragment : Fragment() {
                     currentNoteId = state.id
                     binding.txtName.text = state.name
                     binding.txtNotes.text = state.notes
+                    applyValidation(state)
                 }
             }
         }
@@ -97,6 +104,21 @@ class StarRoutineDetailFragment : Fragment() {
             }
             .setNegativeButton(R.string.dialog_delete_cancel, null)
             .show()
+    }
+
+    private fun resetValidation() {
+        setCardStroke(binding.cardName, false)
+        setCardStroke(binding.cardNotes, false)
+    }
+
+    private fun applyValidation(state: StarRoutineDetailViewModel.UiState) {
+        setCardStroke(binding.cardName, state.name.trim().isEmpty())
+        setCardStroke(binding.cardNotes, state.notes.trim().isEmpty())
+    }
+
+    private fun setCardStroke(card: MaterialCardView, error: Boolean) {
+        card.strokeWidth = resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+        card.strokeColor = if (error) errorStrokeColor else normalStrokeColor
     }
 
     override fun onDestroyView() {

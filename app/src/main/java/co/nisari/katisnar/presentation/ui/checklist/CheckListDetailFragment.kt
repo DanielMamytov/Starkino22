@@ -1,6 +1,7 @@
 package co.nisari.katisnar.presentation.ui.checklist
 
 import android.os.Bundle
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentCheckListDetailBinding
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,6 +30,9 @@ class CheckListDetailFragment : Fragment() {
 
     private val args: CheckListDetailFragmentArgs by navArgs()
     private val viewModel: CheckListDetailViewModel by viewModels()
+
+    private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") }
+    private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }
 
     private val adapter by lazy {
         ChecklistDetailItemsAdapter { id, checked -> viewModel.onItemChecked(id, checked) }
@@ -44,6 +49,7 @@ class CheckListDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        resetValidation()
         setupUi()
         observeState()
         observeEvents()
@@ -73,6 +79,7 @@ class CheckListDetailFragment : Fragment() {
                 viewModel.state.collect { state ->
                     binding.txtName.text = state.title
                     adapter.submitList(state.items)
+                    applyValidation(state)
                 }
             }
         }
@@ -107,6 +114,22 @@ class CheckListDetailFragment : Fragment() {
             }
             .setNegativeButton(R.string.dialog_delete_cancel, null)
             .show()
+    }
+
+    private fun resetValidation() {
+        setCardStroke(binding.cardName, false)
+        setCardStroke(binding.cardGoals, false)
+    }
+
+    private fun applyValidation(state: CheckListDetailViewModel.UiState) {
+        setCardStroke(binding.cardName, state.title.trim().isEmpty())
+        val hasItems = state.items.any { it.text.trim().isNotEmpty() }
+        setCardStroke(binding.cardGoals, !hasItems)
+    }
+
+    private fun setCardStroke(card: MaterialCardView, error: Boolean) {
+        card.strokeWidth = resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+        card.strokeColor = if (error) errorStrokeColor else normalStrokeColor
     }
 
     override fun onDestroyView() {

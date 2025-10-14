@@ -3,6 +3,7 @@ package co.nisari.katisnar.presentation.ui.starlocation
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -22,6 +23,8 @@ import co.nisari.katisnar.databinding.FragmentStarLocationDetailBinding
 import co.nisari.katisnar.presentation.ui.starlocation.StarLocationDetailViewModel
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.card.MaterialCardView
+import co.nisari.katisnar.presentation.data.local.StarLocation
 import eightbitlab.com.blurview.BlurTarget
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
@@ -35,6 +38,9 @@ class StarLocationDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentStarLocationDetailBinding
     private val viewModel: StarLocationDetailViewModel by viewModels()
+
+    private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") }
+    private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,6 +77,8 @@ class StarLocationDetailFragment : Fragment() {
 
 
         // Подписка на данные
+        resetValidation()
+
         lifecycleScope.launchWhenStarted {
             viewModel.location
                 .drop(1)
@@ -93,6 +101,8 @@ class StarLocationDetailFragment : Fragment() {
                 binding.txtWeather.text =
                     loc.weather.name.lowercase().replaceFirstChar { it.uppercase() }
                 binding.txtNotes.text = loc.notes
+
+                applyValidation(loc)
 
                 // Кнопка показать на карте
                 binding.root.findViewById<View>(R.id.btn_show_map).setOnClickListener {
@@ -152,6 +162,7 @@ class StarLocationDetailFragment : Fragment() {
                 }
             }
         }
+
     }
 
 
@@ -161,6 +172,33 @@ class StarLocationDetailFragment : Fragment() {
             .setPositiveButton("Confirm") { _, _ -> viewModel.confirmDelete(id) }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    private fun resetValidation() {
+        listOf(
+            binding.cardName,
+            binding.cardLocation,
+            binding.cardDatetime,
+            binding.cardLatitude,
+            binding.cardLongitude,
+            binding.cardWeather,
+            binding.cardNotes
+        ).forEach { setCardError(it, false) }
+    }
+
+    private fun applyValidation(loc: StarLocation) {
+        setCardError(binding.cardName, loc.name.trim().isEmpty())
+        setCardError(binding.cardLocation, loc.location.trim().isEmpty())
+        setCardError(binding.cardDatetime, loc.date == null || loc.time == null)
+        setCardError(binding.cardLatitude, loc.lat !in -90.0..90.0)
+        setCardError(binding.cardLongitude, loc.lng !in -180.0..180.0)
+        setCardError(binding.cardWeather, loc.weather == null)
+        setCardError(binding.cardNotes, loc.notes.trim().isEmpty())
+    }
+
+    private fun setCardError(card: MaterialCardView, error: Boolean) {
+        card.strokeWidth = resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+        card.strokeColor = if (error) errorStrokeColor else normalStrokeColor
     }
 
     private fun openMaps(lat: Double, lng: Double, name: String) {
