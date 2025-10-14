@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
@@ -19,7 +18,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
+import co.nisari.katisnar.databinding.DialogPointBinding
 import co.nisari.katisnar.databinding.FragmentAdmiralRouteEditBinding
+import co.nisari.katisnar.databinding.ItemPointBinding
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -67,6 +68,7 @@ class AdmiralRouteEditFragment : Fragment() {
                     vm.state.update { it.copy(points = cur) }
                 }
             },
+            onSave = { index -> vm.onPointSave(index) },
             onRemove = { index -> vm.removePoint(index) }
         )
     }
@@ -140,7 +142,9 @@ class AdmiralRouteEditFragment : Fragment() {
         // Кнопки
         binding.btnBack.setOnClickListener { vm.onBack() }
         binding.btnDelete.setOnClickListener { vm.requestDelete() }
-        binding.btnAddPoint.setOnClickListener { showAddPointDialog { la, lo -> vm.addPoint(la, lo) } }
+        binding.btnAddPoint.setOnClickListener {
+            showAddPointDialog { la, lo, location -> vm.addPoint(la, lo, location) }
+        }
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnSave.setOnClickListener { onSaveClicked() }
 
@@ -296,34 +300,50 @@ class AdmiralRouteEditFragment : Fragment() {
         }, t.hour, t.minute, true).show()
     }
 
-    private fun showAddPointDialog(onConfirm: (String, String) -> Unit) {
-        val container = LinearLayout(requireContext()).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(32, 8, 32, 8)
-        }
-        val etLat = EditText(requireContext()).apply {
-            hint = "Latitude (−90..90)"
-            inputType = InputType.TYPE_CLASS_NUMBER or
-                    InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    InputType.TYPE_NUMBER_FLAG_SIGNED
-        }
-        val etLng = EditText(requireContext()).apply {
-            hint = "Longitude (−180..180)"
-            inputType = InputType.TYPE_CLASS_NUMBER or
-                    InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    InputType.TYPE_NUMBER_FLAG_SIGNED
-        }
-        container.addView(etLat)
-        container.addView(etLng)
+    private fun showAddPointDialog(onConfirm: (String, String, String) -> Boolean) {
+        val dialogBinding = DialogPointBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogBinding.root)
+            .create()
 
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Add Point")
-            .setView(container)
-            .setPositiveButton("Add") { _, _ ->
-                onConfirm(etLat.text.toString().trim(), etLng.text.toString().trim())
+        fun renumberForms() {
+            for (i in 0 until dialogBinding.layoutPointContainer.childCount) {
+                val child = dialogBinding.layoutPointContainer.getChildAt(i)
+                val itemBinding = ItemPointBinding.bind(child)
+                itemBinding.tvPointTitle.text = getString(R.string.point_title_placeholder, i + 1)
             }
-            .setNegativeButton("Cancel", null)
-            .show()
+        }
+
+        fun addPointForm() {
+            val itemBinding = ItemPointBinding.inflate(layoutInflater, dialogBinding.layoutPointContainer, false)
+            itemBinding.btnSavePoint.setOnClickListener {
+                val lat = itemBinding.etLatitude1.text?.toString().orEmpty().trim()
+                val lng = itemBinding.etLongitude1.text?.toString().orEmpty().trim()
+                val location = itemBinding.etLocation1.text?.toString().orEmpty().trim()
+                val success = onConfirm(lat, lng, location)
+                if (success) {
+                    dialogBinding.layoutPointContainer.removeView(itemBinding.root)
+                    if (dialogBinding.layoutPointContainer.childCount == 0) {
+                        addPointForm()
+                    } else {
+                        renumberForms()
+                    }
+                }
+            }
+            dialogBinding.layoutPointContainer.addView(itemBinding.root)
+            renumberForms()
+        }
+
+        dialogBinding.btnAddForm.setOnClickListener {
+            addPointForm()
+        }
+
+        dialogBinding.btnCloseDialog.setOnClickListener { dialog.dismiss() }
+        dialogBinding.btnDoneDialog.setOnClickListener { dialog.dismiss() }
+
+        addPointForm()
+
+        dialog.show()
     }
 
     private fun showDescriptionDialog() {

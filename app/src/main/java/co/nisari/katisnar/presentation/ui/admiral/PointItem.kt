@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
@@ -19,6 +20,7 @@ class PointAdapter(
     private val onLatChanged: (index: Int, value: String) -> Unit,
     private val onLngChanged: (index: Int, value: String) -> Unit,
     private val onLocationChanged: (index: Int, value: String) -> Unit,
+    private val onSave: (index: Int) -> Unit = {},
     private val onRemove: (index: Int) -> Unit = {}
 ) : RecyclerView.Adapter<PointAdapter.VH>() {
 
@@ -50,6 +52,8 @@ class PointAdapter(
         private val etLat: EditText = view.findViewById(R.id.et_latitude1)
         private val etLng: EditText = view.findViewById(R.id.et_longitude1)
         private val etLocation: EditText = view.findViewById(R.id.et_location1)
+        private val tvTitle: TextView = view.findViewById(R.id.tv_point_title)
+        private val btnSave: View = view.findViewById(R.id.btn_save_point)
 
         private var latWatcher: TextWatcher? = null
         private var lngWatcher: TextWatcher? = null
@@ -57,6 +61,8 @@ class PointAdapter(
 
         fun bind(position: Int) {
             val item = items[position]
+
+            tvTitle.text = itemView.context.getString(R.string.point_title_placeholder, position + 1)
 
             // --- LAT ---
             latWatcher?.let { etLat.removeTextChangedListener(it) }
@@ -88,6 +94,13 @@ class PointAdapter(
                 if (items.getOrNull(bindingAdapterPosition)?.location != v) {
                     items[bindingAdapterPosition].location = v
                     onLocationChanged(bindingAdapterPosition, v)
+                }
+            }
+
+            btnSave.setOnClickListener {
+                val idx = bindingAdapterPosition
+                if (idx in items.indices) {
+                    onSave(idx)
                 }
             }
 

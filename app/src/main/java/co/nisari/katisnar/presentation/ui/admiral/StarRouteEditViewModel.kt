@@ -66,19 +66,34 @@ class StarRouteEditViewModel @Inject constructor(
     fun onTimePick(v: LocalTime) = state.update { it.copy(time = v) }
     fun onDescChange(v: String) = state.update { it.copy(description = v) }
 
-    fun addPoint(latStr: String, lngStr: String) {
+    fun addPoint(latStr: String, lngStr: String, locationStr: String): Boolean {
         val lat = latStr.toDoubleOrNull()
         val lng = lngStr.toDoubleOrNull()
         if (lat == null || lng == null || lat !in -90.0..90.0 || lng !in -180.0..180.0) {
             viewModelScope.launch {
                 _ui.send(UiEvent.ShowToast("Check latitude and longitude values before adding point"))
             }
-            return
+            return false
         }
         state.update { s ->
-            s.copy(points = s.points + PointItem(latStr, lngStr))
+            s.copy(points = s.points + PointItem(latStr, lngStr, locationStr))
         }
+        return true
+    }
 
+    fun onPointSave(index: Int) {
+        val point = state.value.points.getOrNull(index) ?: return
+        val lat = point.lat.toDoubleOrNull()
+        val lng = point.lng.toDoubleOrNull()
+        if (lat == null || lng == null || lat !in -90.0..90.0 || lng !in -180.0..180.0) {
+            viewModelScope.launch {
+                _ui.send(UiEvent.ShowToast("Check latitude and longitude values before saving point"))
+            }
+        } else {
+            viewModelScope.launch {
+                _ui.send(UiEvent.ShowToast("Point saved"))
+            }
+        }
     }
 
     fun removePoint(index: Int) {
