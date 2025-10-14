@@ -59,8 +59,7 @@ class StarRouteDetailViewModel @Inject constructor(
         val data = _state.value ?: return
         val pts = data.points
 
-        // Должно быть минимум 2 точки, чтобы построить маршрут
-        if (pts.size < 2) {
+        if (pts.isEmpty()) {
             viewModelScope.launch {
                 _ui.send(UiEvent.ShowToast("Add point of route to create new route"))
             }
@@ -71,23 +70,30 @@ class StarRouteDetailViewModel @Inject constructor(
         // Ограничим на всякий случай, чтобы не было слишком длинной ссылки.
         val limited = pts.take(25)
 
-        val origin = "${limited.first().lat},${limited.first().lng}"
-        val destination = "${limited.last().lat},${limited.last().lng}"
+        val uri = if (limited.size == 1) {
+            val destination = "${limited.first().lat},${limited.first().lng}"
+            Uri.parse(buildString {
+                append("https://www.google.com/maps/dir/?api=1")
+                append("&destination=").append(destination)
+                append("&travelmode=driving")
+            })
+        } else {
+            val origin = "${limited.first().lat},${limited.first().lng}"
+            val destination = "${limited.last().lat},${limited.last().lng}"
 
-        val waypoints = if (limited.size > 2) {
-            // между первой и последней — «промежуточные»
-            limited.subList(1, limited.lastIndex)
-                .joinToString("|") { "${it.lat},${it.lng}" }
-        } else null
+            val waypoints = if (limited.size > 2) {
+                limited.subList(1, limited.lastIndex)
+                    .joinToString("|") { "${it.lat},${it.lng}" }
+            } else null
 
-        // Формируем directions-URI c api=1 (Maps URLs)
-        val uri = Uri.parse(buildString {
-            append("https://www.google.com/maps/dir/?api=1")
-            append("&origin=").append(origin)
-            append("&destination=").append(destination)
-            waypoints?.let { append("&waypoints=").append(it) }
-            append("&travelmode=driving") // можно walking/bicycling/transit
-        })
+            Uri.parse(buildString {
+                append("https://www.google.com/maps/dir/?api=1")
+                append("&origin=").append(origin)
+                append("&destination=").append(destination)
+                waypoints?.let { append("&waypoints=").append(it) }
+                append("&travelmode=driving")
+            })
+        }
 
         viewModelScope.launch { _ui.send(UiEvent.OpenMaps1(uri)) }
     }
