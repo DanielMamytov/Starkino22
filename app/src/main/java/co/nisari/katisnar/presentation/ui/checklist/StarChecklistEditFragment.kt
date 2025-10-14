@@ -9,20 +9,20 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.nisari.katisnar.R
-import co.nisari.katisnar.databinding.FragmentCheckListEditBinding
+import co.nisari.katisnar.databinding.FragmentChecklistEditBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class StarChecklistEditFragment : Fragment() {
 
-    private lateinit var binding: FragmentCheckListEditBinding
+    private lateinit var binding: FragmentChecklistEditBinding
     private lateinit var adapter: ChecklistAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCheckListEditBinding.inflate(inflater,container,false)
+        binding = FragmentChecklistEditBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -36,7 +36,7 @@ class StarChecklistEditFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
-        binding.btnAddGoal.setOnClickListener {
+        binding.btnAddItem.setOnClickListener {
             showAddDialog { text ->
                 if (text.isNotBlank()) adapter.add(text)
             }
