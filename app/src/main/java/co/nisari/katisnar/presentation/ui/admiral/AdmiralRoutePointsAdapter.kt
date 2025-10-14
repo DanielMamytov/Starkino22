@@ -7,7 +7,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
-import java.util.Locale
 
 class AdmiralRoutePointsAdapter : RecyclerView.Adapter<AdmiralRoutePointsAdapter.PointViewHolder>() {
 
@@ -47,19 +46,10 @@ class AdmiralRoutePointsAdapter : RecyclerView.Adapter<AdmiralRoutePointsAdapter
 
         fun bind(point: RoutePoint, index: Int) {
             title.text = itemView.context.getString(R.string.point_title_placeholder, index)
-            setTextIfDifferent(latitude, formatCoordinate(point.lat))
-            setTextIfDifferent(longitude, formatCoordinate(point.lng))
-            setTextIfDifferent(
-                location,
-                itemView.context.getString(
-                    R.string.route_detail_location_single,
-                    point.lat,
-                    point.lng
-                )
-            )
+            setTextIfDifferent(latitude, point.lat.toString())
+            setTextIfDifferent(longitude, point.lng.toString())
+            setTextIfDifferent(location, "")
         }
-
-        private fun formatCoordinate(value: Double): String = String.format(Locale.US, "%1$.4f", value)
 
         private fun setTextIfDifferent(editText: EditText, value: String) {
             if (editText.text.toString() != value) {

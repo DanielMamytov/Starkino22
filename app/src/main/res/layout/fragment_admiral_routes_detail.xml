@@ -218,133 +218,17 @@
 
                         </LinearLayout>
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/card_point_summary"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_points"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="20dp"
-                            app:cardBackgroundColor="#330200"
-                            app:cardCornerRadius="4dp"
-                            app:cardElevation="4dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginStart="10dp"
-                                        android:layout_marginTop="10dp"
-                                        android:src="@drawable/ic_point" />
-
-                                    <TextView
-                                        android:id="@+id/txt_points_title"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:text="1 Point"
-                                        android:textColor="@color/white"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="15dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="Latitude: "
-                                        android:textColor="#A2A2A2"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/txt_latitude"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="20dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="34.0522 "
-                                        android:textColor="@color/white"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="15dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="Longitude: "
-                                        android:textColor="#A2A2A2"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/txt_longitude"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="20dp"
-                                        android:layout_marginTop="10dp"
-                                        android:text="34.0522"
-                                        android:textColor="@color/white"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
-                            app:cardBackgroundColor="#330200"
-                            app:cardCornerRadius="4dp"
-                            app:cardElevation="4dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Location: "
-                                    android:textColor="#A2A2A2"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/txt_location2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Island"
-                                    android:textColor="@color/white"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
+                            android:layout_marginBottom="20dp"
+                            tools:itemCount="1"
+                            android:clipToPadding="false"
+                            android:overScrollMode="never"
+                            tools:listitem="@layout/item_point" />
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_description"
@@ -386,16 +270,7 @@
 
                         </com.google.android.material.card.MaterialCardView>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_points"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            tools:listitem="@layout/item_point" />
+
 
                     </LinearLayout>
 

@@ -25,7 +25,6 @@ class StarRouteDetailViewModel @Inject constructor(
     val state: StateFlow<StarRouteWithPoints?> = _state
 
     private var currentRouteId: Long? = null
-    private var lastEmissionWasNull: Boolean = false
 
     private val _ui = Channel<UiEvent>(Channel.BUFFERED)
     val ui = _ui.receiveAsFlow()
@@ -37,21 +36,12 @@ class StarRouteDetailViewModel @Inject constructor(
 
     fun load(id: Long) {
         currentRouteId = id
-        lastEmissionWasNull = false
         viewModelScope.launch {
             repo.getRouteWithPoints(id).collect { loaded ->
-                if (loaded == null) {
-                    if (!lastEmissionWasNull) {
-                        _ui.send(UiEvent.ShowToast("Item not found"))
-                        _ui.send(UiEvent.NavigateBack)
-                    }
-                    lastEmissionWasNull = true
-                    _state.value = null
-                } else {
-                    lastEmissionWasNull = false
+                if (loaded != null) {
                     currentRouteId = loaded.route.id
-                    _state.value = loaded
                 }
+                _state.value = loaded
             }
         }
     }
