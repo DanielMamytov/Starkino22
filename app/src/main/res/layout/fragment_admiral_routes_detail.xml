@@ -157,11 +157,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
                                     android:gravity="center"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <ImageView
@@ -195,11 +197,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
                                     android:gravity="center"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <ImageView
@@ -351,6 +355,11 @@
                             app:cardCornerRadius="4dp"
                             app:cardElevation="4dp">
 
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -365,11 +374,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:layout_marginTop="30dp"
+                                android:layout_marginTop="5dp"
                                 android:text="Take a small snack with you; there are no snack bars on the way. "
                                 android:layout_marginBottom="15dp"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
+                            </LinearLayout>
+
 
                         </com.google.android.material.card.MaterialCardView>
 

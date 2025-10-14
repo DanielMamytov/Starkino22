@@ -74,20 +74,21 @@
             <!--                android:layout_marginTop="90dp"-->
             <!--             />-->
 
+
             <FrameLayout
                 android:id="@+id/btn_star_location"
-                android:layout_marginTop="10dp"
-                android:paddingHorizontal="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:elevation="1dp"
                     android:layout_marginStart="6dp"
+                    android:elevation="1dp"
                     android:src="@drawable/korona_img" />
 
 
@@ -125,17 +126,17 @@
                 android:id="@+id/btn_star_routes"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:paddingHorizontal="10dp"
-
                 android:layout_marginVertical="8dp"
-                android:orientation="horizontal">
+
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center_vertical"
-                    android:elevation="1dp"
                     android:layout_marginStart="6dp"
+                    android:elevation="1dp"
                     android:src="@drawable/almas_img" />
 
                 <FrameLayout
@@ -171,15 +172,15 @@
                 android:id="@+id/btn_star_notes"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:paddingHorizontal="10dp"
+                android:orientation="horizontal"
 
-                android:orientation="horizontal">
+                android:paddingHorizontal="10dp">
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:elevation="1dp"
                     android:layout_marginStart="5dp"
+                    android:elevation="1dp"
                     android:src="@drawable/sunduk_img" />
 
                 <FrameLayout
@@ -214,15 +215,15 @@
                 android:id="@+id/btn_starkino_articles"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:paddingHorizontal="10dp"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:elevation="1dp"
                     android:layout_marginStart="5dp"
+                    android:elevation="1dp"
                     android:src="@drawable/moneta_img" />
 
                 <FrameLayout
@@ -257,15 +258,15 @@
                 android:id="@+id/btn_setting"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:paddingHorizontal="10dp"
                 android:layout_marginVertical="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:elevation="1dp"
                     android:layout_marginStart="5dp"
+                    android:elevation="1dp"
                     android:src="@drawable/settings_img" />
 
                 <FrameLayout
@@ -298,6 +299,6 @@
 
         </LinearLayout>
 
-
     </FrameLayout>
-</ScrollView>
+
+    </ScrollView>
