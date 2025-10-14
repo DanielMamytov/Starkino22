@@ -66,7 +66,7 @@ class StarRouteEditViewModel @Inject constructor(
     fun onTimePick(v: LocalTime) = state.update { it.copy(time = v) }
     fun onDescChange(v: String) = state.update { it.copy(description = v) }
 
-    fun addPoint(latStr: String, lngStr: String) {
+    fun addPoint(latStr: String, lngStr: String, locationStr: String) {
         val lat = latStr.toDoubleOrNull()
         val lng = lngStr.toDoubleOrNull()
         if (lat == null || lng == null || lat !in -90.0..90.0 || lng !in -180.0..180.0) {
@@ -76,7 +76,7 @@ class StarRouteEditViewModel @Inject constructor(
             return
         }
         state.update { s ->
-            s.copy(points = s.points + PointItem(latStr, lngStr))
+            s.copy(points = s.points + PointItem(latStr, lngStr, locationStr))
         }
 
     }
