@@ -25,6 +25,7 @@ class StarRouteDetailViewModel @Inject constructor(
     val state: StateFlow<StarRouteWithPoints?> = _state
 
     private var currentRouteId: Long? = null
+    private var routeDeleted = false
 
     private val _ui = Channel<UiEvent>(Channel.BUFFERED)
     val ui = _ui.receiveAsFlow()
@@ -59,8 +60,15 @@ class StarRouteDetailViewModel @Inject constructor(
     }
 
     fun confirmDelete(id: Long) = viewModelScope.launch {
+        routeDeleted = true
         repo.deleteById(id)
         _ui.send(UiEvent.NavigateBack)
+    }
+
+    fun isRouteDeleted(): Boolean = routeDeleted
+
+    fun onRouteDeletionHandled() {
+        routeDeleted = false
     }
 
     fun onShowOnMaps() {
