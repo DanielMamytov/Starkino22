@@ -1,55 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_star_location_screen"
     tools:context=".presentation.ui.settings.SettingsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:paddingBottom="40dp">
 
         <ImageView
             android:id="@+id/btn_back"
             android:layout_width="66dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="20dp"
             android:layout_height="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="50dp"
             android:contentDescription="@string/content_description_back"
-            android:src="@drawable/btn_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/btn_back" />
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="250dp"
-            android:layout_marginTop="20dp"
             android:layout_height="45dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/img_settings"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_back" />
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img_settings" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            android:layout_marginTop="50dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_share_the_app"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="80dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="#FF0000"
                 android:fontFamily="@font/poppins_extrabold"
                 android:text="@string/share_the_app"
@@ -58,11 +50,9 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_rate_us"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="80dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="#FF0000"
                 android:fontFamily="@font/poppins_extrabold"
                 android:text="@string/rate_us"
@@ -71,11 +61,9 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_privacy_policy"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="80dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="#FF0000"
                 android:fontFamily="@font/poppins_extrabold"
                 android:text="@string/privacy_policy"
@@ -84,11 +72,9 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_terms_of_use"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="80dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="#FF0000"
                 android:fontFamily="@font/poppins_extrabold"
                 android:text="@string/terms_of_use"
@@ -97,18 +83,16 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_clear_data"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="80dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="#FF0000"
                 android:fontFamily="@font/poppins_extrabold"
                 android:text="@string/clear_data"
                 android:textAllCaps="false"
                 android:textSize="17sp" />
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </LinearLayout>
 
-</FrameLayout>
+</ScrollView>
