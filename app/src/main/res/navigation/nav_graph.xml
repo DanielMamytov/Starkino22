@@ -205,7 +205,14 @@
         android:id="@+id/starLocationEditFragment"
         android:name="co.nisari.katisnar.presentation.ui.starlocation.StarLocationEditFragment"
         android:label="fragment_star_location_edit"
-        tools:layout="@layout/fragment_star_location_edit" />
+        tools:layout="@layout/fragment_star_location_edit" >
+        <action
+            android:id="@+id/action_starLocationEditFragment_to_starLocationFragment"
+            app:destination="@id/starLocationFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/starLocationFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
     <fragment
         android:id="@+id/admiralRouteEditFragment"
         android:name="co.nisari.katisnar.presentation.ui.admiral.AdmiralRouteEditFragment"

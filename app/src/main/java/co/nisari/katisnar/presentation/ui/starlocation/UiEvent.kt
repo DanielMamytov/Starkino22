@@ -5,6 +5,7 @@ import android.net.Uri
 
 sealed class UiEvent {
     object NavigateBack : UiEvent()
+    object NavigateToList : UiEvent()
 
     // Список/карточка → детали
     data class NavigateToDetail(val id: Long) : UiEvent()

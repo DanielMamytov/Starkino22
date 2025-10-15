@@ -136,7 +136,7 @@ class StarLocationEditViewModel @Inject constructor(
         val id = state.value.id ?: return
         viewModelScope.launch {
             repo.deleteById(id)
-            _events.send(UiEvent.NavigateBack)
+            _events.send(UiEvent.NavigateToList)
         }
     }
 

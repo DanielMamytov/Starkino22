@@ -186,6 +186,13 @@ class StarLocationEditFragment : Fragment() {
                 when (e) {
                     is UiEvent.ShowToast -> toast(e.message)
                     is UiEvent.NavigateBack -> findNavController().popBackStack()
+                    is UiEvent.NavigateToList -> {
+                        val controller = findNavController()
+                        val popped = controller.popBackStack(R.id.starLocationFragment, false)
+                        if (!popped) {
+                            controller.navigate(R.id.action_starLocationEditFragment_to_starLocationFragment)
+                        }
+                    }
                     is UiEvent.ShowDeleteDialog -> showDeleteDialog()
                     else -> Unit
                 }
