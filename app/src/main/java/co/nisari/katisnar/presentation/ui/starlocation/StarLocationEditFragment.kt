@@ -6,9 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.text.InputFilter
 import android.text.InputType
-import android.text.Spanned
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarLocationEditBinding
 import co.nisari.katisnar.presentation.data.model.Weather
+import co.nisari.katisnar.presentation.util.DoubleRangeInputFilter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalTime
@@ -166,8 +165,8 @@ class StarLocationEditFragment : Fragment() {
         binding.boxLongitude.setOnClickListener { focusAndShowKeyboard(binding.txtLongitude) }
         binding.boxNotes.setOnClickListener { focusAndShowKeyboard(binding.etNotes) }
 
-        binding.txtLatitude.filters = arrayOf(RangeInputFilter(-90.0, 90.0))
-        binding.txtLongitude.filters = arrayOf(RangeInputFilter(-180.0, 180.0))
+        binding.txtLatitude.filters = arrayOf(DoubleRangeInputFilter(-90.0, 90.0))
+        binding.txtLongitude.filters = arrayOf(DoubleRangeInputFilter(-180.0, 180.0))
         // 7) Выбор погоды
         val openWeather = { showWeatherDialog() }
         binding.txtWeather.setOnClickListener { openWeather() }
@@ -415,39 +414,4 @@ class StarLocationEditFragment : Fragment() {
             setText(newText)
         }
     }
-
-
-    private class RangeInputFilter(
-        private val min: Double,
-        private val max: Double
-    ) : InputFilter {
-
-        override fun filter(
-            source: CharSequence?,
-            start: Int,
-            end: Int,
-            dest: Spanned?,
-            dstart: Int,
-            dend: Int
-        ): CharSequence? {
-            val destLen = dest?.length ?: 0
-            val safeStart = dstart.coerceIn(0, destLen)
-            val safeEnd = dend.coerceIn(0, destLen)
-
-            val prefix = dest?.subSequence(0, safeStart)?.toString() ?: ""
-            val middle = source?.subSequence(start, end)?.toString() ?: ""
-            val suffix = dest?.subSequence(safeEnd, destLen)?.toString() ?: ""
-
-            val newValue = prefix + middle + suffix
-
-            // Разрешаем промежуточные состояния ввода
-            if (newValue.isBlank() || newValue == "-" || newValue == "." || newValue == "-.") {
-                return null
-            }
-
-            val number = newValue.toDoubleOrNull() ?: return ""
-            return if (number in min..max) null else ""
-        }
-    }
-
-    }
+}
