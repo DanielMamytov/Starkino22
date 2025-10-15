@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/dashBoardFragment">
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/dashBoardFragment"
         android:name="co.nisari.katisnar.presentation.ui.main.DashBoardFragment"
@@ -175,12 +175,23 @@
         android:id="@+id/splashFragment"
         android:name="co.nisari.katisnar.presentation.ui.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_onboardFragment"
+            app:destination="@id/onboardFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_dashBoardFragment"
+            app:destination="@id/dashBoardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/onboardFragment"
         android:name="co.nisari.katisnar.presentation.ui.onboarding.OnboardFragment"
         android:label="fragment_onboard"
-        tools:layout="@layout/fragment_onboard" />
+        tools:layout="@layout/fragment_onboard">
+        <action
+            android:id="@+id/action_onboardFragment_to_dashBoardFragment"
+            app:destination="@id/dashBoardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/starLocationDetailFragment"
         android:name="co.nisari.katisnar.presentation.ui.starlocation.StarLocationDetailFragment"
