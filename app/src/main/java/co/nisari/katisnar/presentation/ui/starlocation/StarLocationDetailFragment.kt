@@ -159,6 +159,7 @@ class StarLocationDetailFragment : Fragment() {
 
                     is UiEvent.NavigateToDetail -> TODO()
                     is UiEvent.OpenMaps1 -> TODO()
+                    is UiEvent.NavigateToList -> Unit
                 }
             }
         }
