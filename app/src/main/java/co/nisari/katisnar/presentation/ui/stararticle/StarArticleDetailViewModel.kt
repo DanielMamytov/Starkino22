@@ -49,7 +49,7 @@ class StarArticleDetailViewModel @Inject constructor(
                     _article.value = ArticleDetailUiState(
                         title = entity.title,
                         content = entity.content,
-                        coverResId = R.drawable.img_article
+                        coverResId = entity.coverUri ?: DEFAULT_DETAIL_COVER_RES
                     )
                 }
             }
@@ -64,5 +64,9 @@ class StarArticleDetailViewModel @Inject constructor(
 
     sealed interface ArticleDetailEvent {
         object ArticleNotFound : ArticleDetailEvent
+    }
+
+    companion object {
+        private const val DEFAULT_DETAIL_COVER_RES = R.drawable.img_article
     }
 }

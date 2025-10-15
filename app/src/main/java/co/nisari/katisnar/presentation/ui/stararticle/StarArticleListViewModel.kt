@@ -1,6 +1,5 @@
 package co.nisari.katisnar.presentation.ui.stararticle
 
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nisari.katisnar.R
@@ -54,7 +53,7 @@ class StarArticleListViewModel @Inject constructor(
             repository.insert(
                 ArticleEntity(
                     title = seed.title,
-                    coverUri = null,
+                    coverUri = seed.image,
                     content = seed.content
                 )
             )
@@ -75,7 +74,8 @@ class StarArticleListViewModel @Inject constructor(
         return ArticleListItem(
             id = id,
             title = title,
-            preview = preview
+            preview = preview,
+            coverResId = coverUri ?: DEFAULT_LIST_COVER_RES
         )
     }
 
@@ -87,6 +87,7 @@ class StarArticleListViewModel @Inject constructor(
 
     companion object {
         private const val PREVIEW_LIMIT = 180
+        private const val DEFAULT_LIST_COVER_RES = R.drawable.img_night_city
 
         private val DEFAULT_ARTICLES = listOf(
             ArticleSeed(
