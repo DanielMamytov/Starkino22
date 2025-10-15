@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
+import co.nisari.katisnar.presentation.util.DoubleRangeInputFilter
 
 data class PointItem(
     var lat: String = "",
@@ -58,6 +59,11 @@ class PointAdapter(
         private var latWatcher: TextWatcher? = null
         private var lngWatcher: TextWatcher? = null
         private var locWatcher: TextWatcher? = null
+
+        init {
+            etLat.filters = arrayOf(DoubleRangeInputFilter(-90.0, 90.0))
+            etLng.filters = arrayOf(DoubleRangeInputFilter(-180.0, 180.0))
+        }
 
         fun bind(position: Int) {
             val item = items[position]
