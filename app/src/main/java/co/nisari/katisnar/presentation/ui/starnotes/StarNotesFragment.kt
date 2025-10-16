@@ -44,8 +44,20 @@ class StarNotesFragment : Fragment() {
 
     private fun setupUi() {
         with(binding) {
-            btnNotes.setOnClickListener { viewModel.onTabSelected(StarNotesViewModel.Tab.NOTES) }
-            btnChecklist.setOnClickListener { viewModel.onTabSelected(StarNotesViewModel.Tab.CHECKLIST) }
+            btnNotes.setOnClickListener {
+                if (!btnNotes.isChecked) {
+                    btnNotes.isChecked = true
+                    return@setOnClickListener
+                }
+                viewModel.onTabSelected(StarNotesViewModel.Tab.NOTES)
+            }
+            btnChecklist.setOnClickListener {
+                if (!btnChecklist.isChecked) {
+                    btnChecklist.isChecked = true
+                    return@setOnClickListener
+                }
+                viewModel.onTabSelected(StarNotesViewModel.Tab.CHECKLIST)
+            }
             btnAddGoal.setOnClickListener { viewModel.onAddClicked() }
             btnBack.setOnClickListener { findNavController().popBackStack() }
 
