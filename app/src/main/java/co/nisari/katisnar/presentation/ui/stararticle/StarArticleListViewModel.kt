@@ -73,10 +73,6 @@ class StarArticleListViewModel @Inject constructor(
                     return@collectLatest
                 }
 
-                if (backfillDefaultCovers(entities)) {
-                    return@collectLatest
-                }
-
                 _state.update {
                     it.copy(
                         isLoading = false,
@@ -95,24 +91,12 @@ class StarArticleListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun backfillDefaultCovers(entities: List<ArticleEntity>): Boolean {
-        var didUpdate = false
-        entities.forEach { entity ->
-            val defaultCover = DEFAULT_ARTICLES_BY_TITLE[entity.title]?.image ?: return@forEach
-            if (entity.coverUri != defaultCover) {
-                repository.updateCover(entity.id, defaultCover)
-                didUpdate = true
-            }
-        }
-        return didUpdate
-    }
-
     private fun ArticleEntity.toListItem(): ArticleListItem {
         return ArticleListItem(
             id = id,
             title = title,
             preview = content.createPreview(),
-            coverResId = coverUri ?: DEFAULT_ARTICLES_BY_TITLE[title]?.image ?: DEFAULT_LIST_COVER_RES
+            coverResId = coverUri ?: DEFAULT_LIST_COVER_RES
         )
     }
 
