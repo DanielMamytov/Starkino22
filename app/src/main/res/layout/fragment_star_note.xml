@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="40dp"
+        android:paddingTop="30dp"
         android:paddingBottom="96dp">
 
         <ImageView
@@ -36,9 +36,10 @@
             android:background="@drawable/seg_container_bg"
             android:layout_marginHorizontal="24dp"
             android:gravity="center"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingVertical="5dp"
-            android:paddingHorizontal="8dp">
+            android:paddingVertical="2dp"
+            android:paddingHorizontal="5dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNotes"

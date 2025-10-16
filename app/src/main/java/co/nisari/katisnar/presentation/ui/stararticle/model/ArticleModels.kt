@@ -19,10 +19,6 @@ private data class ArticleSeed(
 
 object StarArticleDataSource {
 
-    val articles: List<ArticleListItem> = seeds
-        .mapIndexed { index, seed -> seed.toListItem(index.toLong() + 1) }
-
-    fun getArticleById(id: Long): ArticleListItem? = articles.firstOrNull { it.id == id }
 
     private val seeds = listOf(
         ArticleSeed(
@@ -157,6 +153,14 @@ object StarArticleDataSource {
             coverResId = R.drawable.article_img9,
         ),
     )
+    val articles: List<ArticleListItem> by lazy {
+        seeds.mapIndexed { index, seed ->
+            seed.toListItem(index.toLong() + 1)
+        }
+    }
+
+    fun getArticleById(id: Long): ArticleListItem? =
+        articles.firstOrNull { it.id == id }
 
     private fun ArticleSeed.toListItem(id: Long): ArticleListItem {
         val trimmedContent = content.trim()
@@ -166,7 +170,7 @@ object StarArticleDataSource {
             title = title,
             preview = preview,
             content = trimmedContent,
-            coverResId = coverResId,
+            coverResId = coverResId
         )
     }
 }

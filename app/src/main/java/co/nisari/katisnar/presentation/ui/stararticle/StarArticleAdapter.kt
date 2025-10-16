@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.ItemArticleBinding
+import co.nisari.katisnar.presentation.ui.stararticle.model.ArticleListItem
 
 class StarArticleAdapter(
     private val onArticleClick: (ArticleListItem) -> Unit

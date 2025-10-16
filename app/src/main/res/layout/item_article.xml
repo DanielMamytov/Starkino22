@@ -62,12 +62,16 @@ As you explore, remember to look up once in a while. The same stars above your c
     </LinearLayout>
 
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMoreDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FF0000"
+        android:text="More details"
+        android:textAllCaps="true"
+        android:fontFamily="@font/poppins_extrabold"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginStart="30dp"
-        android:src="@drawable/btn_more_details" />
+    />
 
 </FrameLayout>
