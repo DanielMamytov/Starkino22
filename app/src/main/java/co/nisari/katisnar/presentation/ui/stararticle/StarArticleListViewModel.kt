@@ -101,7 +101,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     As you explore, remember to look up once in a while. The same stars above your city shimmer over oceans and deserts. They have seen civilizations rise and fade, and now they illuminate your path. The beauty of night is not only in its mystery but in its infinite capacity for rediscovery. With Starkino, your story joins that timeless sky.
                 """.trimIndent(),
-                R.drawable.article_im1
+                R.drawable.article_img1
             ),
             ArticleSeed(
                 title = "Luxury of the Moment",
@@ -114,7 +114,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     Luxury today is connected. To the world, to oneself, to memory. When you travel, do not rush through the experience. Breathe, record, observe. The beauty of this era lies in the ability to blend technology with emotion, to build a collection of luminous memories that reflect who you are.
                 """.trimIndent(),
-                R.drawable.article_im2
+                R.drawable.article_img2
             ),
             ArticleSeed(
                 title = "The Hidden Geometry of Travel",
@@ -129,7 +129,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     Travel is not about distance. It is about awareness. With Starkino, you can turn your life into a living map, filled with the geometry of experience.
                 """.trimIndent(),
-                R.drawable.article_im3
+                R.drawable.article_img3
             ),
             ArticleSeed(
                 title = "Digital Constellations",
@@ -144,7 +144,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     When you share stories with others, show them your sky. Each star is a reminder that life is not measured by destinations but by the light you leave behind.
                 """.trimIndent(),
-                R.drawable.article_im4
+                R.drawable.article_img4
 
             ),
             ArticleSeed(
@@ -160,7 +160,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     Silence is not emptiness. It is clear. It is the sound of presence. Use Starkino to find and preserve those rare moments when the world slows down enough for you to hear yourself again.
                 """.trimIndent(),
-                R.drawable.article_im5
+                R.drawable.article_img5
             ),
             ArticleSeed(
                 title = "Stars, Stories, and Screens",
@@ -175,7 +175,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     Your story deserves to shine. The sky has room for infinite stars, and your digital map is no different. Let it glow.
                 """.trimIndent(),
-                R.drawable.article_im6
+                R.drawable.article_img6
             ),
             ArticleSeed(
                 title = "The Light of Privacy",
@@ -190,7 +190,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     In this way, Starkino represents more than technology. It represents freedom. A space where your story shines privately, like a single light in the vast night sky.
                 """.trimIndent(),
-                R.drawable.article_im7
+                R.drawable.article_img7
             ),
             ArticleSeed(
                 title = "Modern Nomads and Digital Maps",
@@ -205,7 +205,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     Technology is often criticized for making us detached. Yet when used with purpose, it deepens our connection. Starkino helps modern nomads rediscover the art of presence in motion.
                 """.trimIndent(),
-                R.drawable.article_im8
+                R.drawable.article_img8
             ),
             ArticleSeed(
                 title = "The Eternal Glow of Memory",
@@ -220,7 +220,7 @@ class StarArticleListViewModel @Inject constructor(
                     
                     In the end, technology cannot replace memory, but it can preserve it. Starkino gives you the tools to protect your light. And in doing so, it ensures that your story continues to shine, even when the night grows long.
                 """.trimIndent(),
-                R.drawable.article_im9
+                R.drawable.article_img9
             )
         )
     }
