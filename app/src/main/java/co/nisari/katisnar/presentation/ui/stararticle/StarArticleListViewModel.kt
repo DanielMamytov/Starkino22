@@ -20,64 +20,6 @@ class StarArticleListViewModel @Inject constructor(
     private val repository: ArticleRepository
 ) : ViewModel() {
 
-    private val _articles = MutableStateFlow<List<ArticleListItem>>(emptyList())
-    val articles: StateFlow<List<ArticleListItem>> = _articles.asStateFlow()
-
-    private val _events = MutableSharedFlow<StarArticleUiEvent>()
-    val events = _events.asSharedFlow()
-
-    private val seeded = AtomicBoolean(false)
-
-    init {
-        viewModelScope.launch {
-            repository.getAll().collect { entities ->
-                if (entities.isEmpty()) {
-                    if (seeded.compareAndSet(false, true)) {
-                        seedArticles()
-                    }
-                } else {
-                    _articles.value = entities.map { it.toListItem() }
-                }
-            }
-        }
-    }
-
-    fun onArticleClick(id: Long) {
-        viewModelScope.launch {
-            _events.emit(StarArticleUiEvent.NavigateToDetail(id))
-        }
-    }
-
-    private suspend fun seedArticles() {
-        DEFAULT_ARTICLES.forEach { seed ->
-            repository.insert(
-                ArticleEntity(
-                    title = seed.title,
-                    coverUri = seed.image,
-                    content = seed.content
-                )
-            )
-        }
-    }
-
-    private fun ArticleEntity.toListItem(): ArticleListItem {
-        val firstParagraph = content
-            .split("\n\n")
-            .firstOrNull { it.isNotBlank() }
-            ?.trim()
-            .orEmpty()
-        val preview = if (firstParagraph.length > PREVIEW_LIMIT) {
-            firstParagraph.take(PREVIEW_LIMIT).trimEnd() + "…"
-        } else {
-            firstParagraph
-        }
-        return ArticleListItem(
-            id = id,
-            title = title,
-            preview = preview,
-            coverResId = coverUri ?: DEFAULT_LIST_COVER_RES
-        )
-    }
 
     private data class ArticleSeed(
         val title: String,

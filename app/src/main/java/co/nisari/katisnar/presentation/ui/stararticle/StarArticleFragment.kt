@@ -19,8 +19,6 @@ class StarArticleFragment : Fragment() {
 
     private var _binding: FragmentStarArticleBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: StarArticleListViewModel by viewModels()
-    private lateinit var adapter: StarArticleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,35 +32,6 @@ class StarArticleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = StarArticleAdapter { article ->
-            viewModel.onArticleClick(article.id)
-        }
 
-        binding.rvArticles.adapter = adapter
-        binding.btnBack.setOnClickListener { findNavController().popBackStack() }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.articles.collectLatest { articles ->
-                adapter.submitList(articles)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
-                when (event) {
-                    is StarArticleUiEvent.NavigateToDetail -> {
-                        findNavController().navigate(
-                            R.id.action_starArticleFragment_to_starArticleDetailFragment,
-                            bundleOf("articleId" to event.id)
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
