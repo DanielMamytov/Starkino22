@@ -126,7 +126,7 @@ class StarLocationEditViewModel @Inject constructor(
                         notes = s.notes
                     )
                     if (s.id == null) repo.insert(item) else repo.update(item)
-                    _events.send(UiEvent.NavigateBack)
+                    _events.send(UiEvent.NavigateToList)
                 }
             }
         }
