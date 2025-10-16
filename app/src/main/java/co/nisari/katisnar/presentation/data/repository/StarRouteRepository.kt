@@ -8,6 +8,12 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+data class RoutePointDraft(
+    val lat: Double,
+    val lng: Double,
+    val location: String
+)
+
 @Singleton
 class StarRouteRepository @Inject constructor(
     private val dao: StarRouteDao
@@ -17,23 +23,33 @@ class StarRouteRepository @Inject constructor(
     fun getRouteWithPoints(id: Long): Flow<StarRouteWithPoints?> =
         dao.getRouteWithPoints(id)
 
-    suspend fun insert(route: StarRoute, points: List<Pair<Double, Double>>): Long {
+    suspend fun insert(route: StarRoute, points: List<RoutePointDraft>): Long {
         val id = dao.insertRoute(route)
         if (points.isNotEmpty()) {
-            val list = points.map { (lat, lng) ->
-                RoutePoint(routeId = id, lat = lat, lng = lng)
+            val list = points.map { point ->
+                RoutePoint(
+                    routeId = id,
+                    lat = point.lat,
+                    lng = point.lng,
+                    location = point.location
+                )
             }
             dao.insertPoints(list)
         }
         return id
     }
 
-    suspend fun update(route: StarRoute, points: List<Pair<Double, Double>>) {
+    suspend fun update(route: StarRoute, points: List<RoutePointDraft>) {
         dao.updateRoute(route)
         dao.deletePointsByRoute(route.id)
         if (points.isNotEmpty()) {
-            val list = points.map { (lat, lng) ->
-                RoutePoint(routeId = route.id, lat = lat, lng = lng)
+            val list = points.map { point ->
+                RoutePoint(
+                    routeId = route.id,
+                    lat = point.lat,
+                    lng = point.lng,
+                    location = point.location
+                )
             }
             dao.insertPoints(list)
         }

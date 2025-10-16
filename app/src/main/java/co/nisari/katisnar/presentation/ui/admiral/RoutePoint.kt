@@ -16,5 +16,7 @@ data class RoutePoint(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val routeId: Long,
     val lat: Double,
-    val lng: Double
+    val lng: Double,
+    @ColumnInfo(defaultValue = "")
+    val location: String = ""
 )

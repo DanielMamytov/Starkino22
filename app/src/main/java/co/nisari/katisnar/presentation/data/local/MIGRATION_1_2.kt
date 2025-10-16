@@ -21,6 +21,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
                 `routeId` INTEGER NOT NULL,
                 `lat` REAL NOT NULL,
                 `lng` REAL NOT NULL,
+                `location` TEXT NOT NULL DEFAULT '',
                 FOREIGN KEY(`routeId`) REFERENCES `star_routes`(`id`) ON DELETE CASCADE
             )
         """.trimIndent())
