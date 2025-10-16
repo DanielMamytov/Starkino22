@@ -6,20 +6,30 @@ import co.nisari.katisnar.R
 import co.nisari.katisnar.presentation.data.local.ArticleEntity
 import co.nisari.katisnar.presentation.data.repository.ArticleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.concurrent.atomic.AtomicBoolean
 
 @HiltViewModel
 class StarArticleListViewModel @Inject constructor(
     private val repository: ArticleRepository
 ) : ViewModel() {
 
+    data class UiState(
+        val isLoading: Boolean = true,
+        val articles: List<ArticleListItem> = emptyList()
+    )
+
+    sealed interface UiEvent {
+        data class NavigateToArticle(val articleId: Long) : UiEvent
+    }
 
     private data class ArticleSeed(
         val title: String,
@@ -27,9 +37,87 @@ class StarArticleListViewModel @Inject constructor(
         val image: Int
     )
 
-    companion object {
+    private val isSeeding = AtomicBoolean(false)
+
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
+
+    private val _events = MutableSharedFlow<UiEvent>()
+    val events = _events.asSharedFlow()
+
+    init {
+        observeArticles()
+    }
+
+    fun onArticleClicked(item: ArticleListItem) {
+        viewModelScope.launch {
+            _events.emit(UiEvent.NavigateToArticle(item.id))
+        }
+    }
+
+    private fun observeArticles() {
+        viewModelScope.launch {
+            repository.getAll().collectLatest { entities ->
+                if (entities.isEmpty()) {
+                    if (isSeeding.compareAndSet(false, true)) {
+                        val seededEntities = seedDefaultArticles()
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                articles = seededEntities.map(ArticleEntity::toListItem)
+                            )
+                        }
+                    } else {
+                        _state.update { it.copy(isLoading = false, articles = emptyList()) }
+                    }
+                    return@collectLatest
+                }
+
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        articles = entities.map(ArticleEntity::toListItem)
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun seedDefaultArticles(): List<ArticleEntity> {
+        return DEFAULT_ARTICLES.map { seed ->
+            val entity = seed.toEntity()
+            val id = repository.insert(entity)
+            entity.copy(id = id)
+        }
+    }
+
+    private fun ArticleEntity.toListItem(): ArticleListItem {
+        return ArticleListItem(
+            id = id,
+            title = title,
+            preview = content.createPreview(),
+            coverResId = coverUri ?: DEFAULT_LIST_COVER_RES
+        )
+    }
+
+    private fun ArticleSeed.toEntity(): ArticleEntity = ArticleEntity(
+        title = title,
+        content = content,
+        coverUri = image
+    )
+
+    private fun String.createPreview(): String {
+        val normalized = trim()
+        if (normalized.length <= PREVIEW_LIMIT) {
+            return normalized
+        }
+        val truncated = normalized.take(PREVIEW_LIMIT).trimEnd()
+        return "$truncated\u2026"
+    }
+
+    private companion object {
         private const val PREVIEW_LIMIT = 180
-        private  val DEFAULT_LIST_COVER_RES = R.drawable.img_night_city
+        private val DEFAULT_LIST_COVER_RES = R.drawable.img_night_city
 
         private val DEFAULT_ARTICLES = listOf(
             ArticleSeed(
@@ -167,3 +255,10 @@ class StarArticleListViewModel @Inject constructor(
         )
     }
 }
+
+data class ArticleListItem(
+    val id: Long,
+    val title: String,
+    val preview: String,
+    val coverResId: Int,
+)
