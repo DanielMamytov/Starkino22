@@ -102,7 +102,7 @@
                             app:cardElevation="4dp">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center|start">
 
@@ -119,6 +119,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:text="Hiking along the valley"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
