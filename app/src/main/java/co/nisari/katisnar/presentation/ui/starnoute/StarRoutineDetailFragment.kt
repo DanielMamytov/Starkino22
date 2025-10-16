@@ -82,10 +82,26 @@ class StarRoutineDetailFragment : Fragment() {
                                 R.string.toast_note_not_found,
                                 Toast.LENGTH_SHORT
                             ).show()
-                        StarRoutineDetailViewModel.UiEvent.CloseScreen ->
-                            findNavController().popBackStack()
+                        StarRoutineDetailViewModel.UiEvent.NoteDeleted ->
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.toast_note_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        StarRoutineDetailViewModel.UiEvent.NavigateToNotes ->
+                            navigateToNotes()
                     }
                 }
+            }
+        }
+    }
+
+    private fun navigateToNotes() {
+        val controller = findNavController()
+        if (controller.currentDestination?.id == R.id.starRoutineDetailFragment) {
+            val popped = controller.popBackStack(R.id.starNoteFragment, false)
+            if (!popped) {
+                controller.popBackStack()
             }
         }
     }
