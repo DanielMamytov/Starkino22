@@ -253,6 +253,8 @@ class StarArticleListViewModel @Inject constructor(
                 R.drawable.article_img9
             )
         )
+
+        private val DEFAULT_ARTICLES_BY_TITLE = DEFAULT_ARTICLES.associateBy { it.title }
     }
 }
 
