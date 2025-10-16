@@ -136,6 +136,7 @@ class StarLocationEditViewModel @Inject constructor(
         val id = state.value.id ?: return
         viewModelScope.launch {
             repo.deleteById(id)
+            _events.send(UiEvent.ShowToast("Star location deleted"))
             _events.send(UiEvent.NavigateToList)
         }
     }
