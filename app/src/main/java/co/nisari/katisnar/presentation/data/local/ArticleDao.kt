@@ -15,4 +15,7 @@ interface ArticleDao {
 
     @Insert
     suspend fun insert(article: ArticleEntity): Long
+
+    @Query("UPDATE articles SET coverUri = :coverRes WHERE id = :id")
+    suspend fun updateCover(id: Long, coverRes: Int)
 }
