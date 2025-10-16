@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_extrabold"
-            android:text="Star location edit"
+            android:text="Star Checklist edit"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="22sp" />
@@ -93,8 +93,9 @@
                     app:cardElevation="4dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:gravity="center_vertical"
+                        android:paddingEnd="10dp"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -162,7 +163,7 @@
                             android:id="@+id/recyclerView"
                             android:layout_width="match_parent"
                             android:minHeight="300dp"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="match_parent"/>
 
 
                         <com.google.android.material.button.MaterialButton

@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
         android:paddingTop="40dp"
         android:paddingBottom="96dp">
 
         <ImageView
             android:id="@+id/btn_back"
             android:layout_width="70dp"
+            android:layout_marginStart="24dp"
             android:layout_height="50dp"
             android:src="@drawable/btn_back"
             android:contentDescription="@string/content_description_back"
@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/seg_container_bg"
+            android:layout_marginHorizontal="24dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingVertical="5dp"

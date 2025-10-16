@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
+import com.google.android.material.button.MaterialButton
 import java.time.format.DateTimeFormatter
 
 class StarRouteAdapter(
@@ -32,7 +33,7 @@ class StarRouteAdapter(
         private val name: TextView = itemView.findViewById(R.id.txt_city_location)
         private val date: TextView = itemView.findViewById(R.id.txt_date)
         private val time: TextView = itemView.findViewById(R.id.txt_time)
-        private val more: ImageView = itemView.findViewById(R.id.btn_more_details)
+        private val more: MaterialButton = itemView.findViewById(R.id.btn_more_details)
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(item: StarRoute) {
@@ -49,5 +50,6 @@ class StarRouteAdapter(
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_star_route, parent, false)
         return VH(v)
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: VH, position: Int) = holder.bind(getItem(position))
 }
