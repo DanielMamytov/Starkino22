@@ -11,4 +11,5 @@ class ArticleRepository @Inject constructor(
     fun getAll(): Flow<List<ArticleEntity>> = dao.getAll()
     fun getById(id: Long): Flow<ArticleEntity?> = dao.getById(id)
     suspend fun insert(article: ArticleEntity): Long = dao.insert(article)
+    suspend fun updateCover(id: Long, coverRes: Int) = dao.updateCover(id, coverRes)
 }
