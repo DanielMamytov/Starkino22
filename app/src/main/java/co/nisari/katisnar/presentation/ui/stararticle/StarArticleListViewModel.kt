@@ -64,7 +64,7 @@ class StarArticleListViewModel @Inject constructor(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                articles = seededEntities.map(ArticleEntity::toListItem)
+                                articles = seededEntities.map { e -> e.toListItem() }
                             )
                         }
                     } else {
@@ -76,7 +76,7 @@ class StarArticleListViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        articles = entities.map(ArticleEntity::toListItem)
+                        articles = entities.map { e -> e.toListItem() }
                     )
                 }
             }
