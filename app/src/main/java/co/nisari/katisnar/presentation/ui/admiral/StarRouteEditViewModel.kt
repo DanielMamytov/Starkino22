@@ -2,6 +2,7 @@ package co.nisari.katisnar.presentation.ui.admiral
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.nisari.katisnar.presentation.data.repository.RoutePointDraft
 import co.nisari.katisnar.presentation.data.repository.StarRouteRepository
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,8 +49,7 @@ class StarRouteEditViewModel @Inject constructor(
                             PointItem(
                                 lat = p.lat.toString(),
                                 lng = p.lng.toString(),
-                                // если в entity нет location — просто не заполняем:
-                                location = ""
+                                location = p.location
                             )
                         }.ifEmpty { listOf(PointItem()) }
 
@@ -126,10 +126,14 @@ class StarRouteEditViewModel @Inject constructor(
             return
         }
 
-        val points: List<Pair<Double, Double>> = s.points.map { pi ->
-            (pi.lat.toDoubleOrNull() ?: Double.NaN) to (pi.lng.toDoubleOrNull() ?: Double.NaN)
+        val routePoints: List<RoutePointDraft> = s.points.map { pi ->
+            RoutePointDraft(
+                lat = pi.lat.toDoubleOrNull() ?: Double.NaN,
+                lng = pi.lng.toDoubleOrNull() ?: Double.NaN,
+                location = pi.location.trim()
+            )
         }
-        if (points.any { it.first.isNaN() || it.second.isNaN() }) {
+        if (routePoints.any { it.lat.isNaN() || it.lng.isNaN() }) {
             viewModelScope.launch {
                 _ui.send(UiEvent.ShowToast("Check latitude and longitude values before adding point"))
             }
@@ -143,7 +147,7 @@ class StarRouteEditViewModel @Inject constructor(
                 time = s.time!!,
                 description = s.description
             )
-            if (s.id == null) repo.insert(route, points) else repo.update(route, points)
+            if (s.id == null) repo.insert(route, routePoints) else repo.update(route, routePoints)
             _ui.send(UiEvent.NavigateBack)
         }
     }

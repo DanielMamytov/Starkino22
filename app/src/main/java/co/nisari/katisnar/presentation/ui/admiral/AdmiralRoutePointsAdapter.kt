@@ -48,7 +48,7 @@ class AdmiralRoutePointsAdapter : RecyclerView.Adapter<AdmiralRoutePointsAdapter
             title.text = itemView.context.getString(R.string.point_title_placeholder, index)
             setTextIfDifferent(latitude, point.lat.toString())
             setTextIfDifferent(longitude, point.lng.toString())
-            setTextIfDifferent(location, "")
+            setTextIfDifferent(location, point.location)
         }
 
         private fun setTextIfDifferent(editText: EditText, value: String) {
