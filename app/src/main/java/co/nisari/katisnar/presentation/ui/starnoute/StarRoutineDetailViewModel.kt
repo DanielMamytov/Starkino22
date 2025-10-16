@@ -29,7 +29,8 @@ class StarRoutineDetailViewModel @Inject constructor(
 
     sealed interface UiEvent {
         data object NoteNotFound : UiEvent
-        data object CloseScreen : UiEvent
+        data object NoteDeleted : UiEvent
+        data object NavigateToNotes : UiEvent
     }
 
     private val noteId = savedStateHandle.get<Long>("noteId")?.takeIf { it > 0 }
@@ -40,20 +41,30 @@ class StarRoutineDetailViewModel @Inject constructor(
     private val _events = Channel<UiEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
+    private var hasLoadedNote = false
+
     init {
         if (noteId == null) {
             viewModelScope.launch {
                 _events.send(UiEvent.NoteNotFound)
-                _events.send(UiEvent.CloseScreen)
+                _events.send(UiEvent.NavigateToNotes)
             }
+            return
         }
 
         viewModelScope.launch {
             repository.getById(noteId).collectLatest { entity ->
                 if (entity == null) {
-                    _events.send(UiEvent.NoteNotFound)
-                    _events.send(UiEvent.CloseScreen)
+                    val event = if (hasLoadedNote) {
+                        UiEvent.NoteDeleted
+                    } else {
+                        UiEvent.NoteNotFound
+                    }
+                    _events.send(event)
+                    _events.send(UiEvent.NavigateToNotes)
+                    return@collectLatest
                 } else {
+                    hasLoadedNote = true
                     val (name, notes) = NoteTextMapper.split(entity.text)
                     _state.update { it.copy(id = entity.id, name = name, notes = notes) }
                 }
@@ -65,7 +76,6 @@ class StarRoutineDetailViewModel @Inject constructor(
         val id = _state.value.id ?: return
         viewModelScope.launch {
             repository.deleteById(id)
-            _events.send(UiEvent.CloseScreen)
         }
     }
 }

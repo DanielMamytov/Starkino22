@@ -69,7 +69,11 @@ class StarLocationDetailFragment : Fragment() {
 
 
         val id = arguments?.getLong("id") ?: run {
-            Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.toast_star_location_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
             findNavController().popBackStack()
             return
         }
@@ -79,51 +83,68 @@ class StarLocationDetailFragment : Fragment() {
         // Подписка на данные
         resetValidation()
 
+        var hasLoadedLocation = false
+
         lifecycleScope.launchWhenStarted {
             viewModel.location
                 .drop(1)
                 .collectLatest { loc ->
                     if (loc == null) {
-                        Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack()
+                        val messageRes = if (hasLoadedLocation) {
+                            R.string.toast_star_location_deleted
+                        } else {
+                            R.string.toast_star_location_not_found
+                        }
+                        Toast.makeText(requireContext(), getString(messageRes), Toast.LENGTH_SHORT)
+                            .show()
+
+                        val controller = findNavController()
+                        if (controller.currentDestination?.id == R.id.starLocationDetailFragment) {
+                            val popped = controller.popBackStack(R.id.starLocationFragment, false)
+                            if (!popped) {
+                                controller.popBackStack()
+                            }
+                        }
                         return@collectLatest
                     }
 
-                val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+                    hasLoadedLocation = true
 
-                binding.txtName.text = loc.name
-                binding.txtLocation.text = loc.location
-                binding.txtDate.text = loc.date.format(dateFormatter)
-                binding.txtTime.text = loc.time.format(timeFormatter)
-                binding.txtLatitude.text = String.format("%.4f", loc.lat)
-                binding.txtLongitude.text = String.format("%.4f", loc.lng)
-                binding.txtWeather.text =
-                    loc.weather.name.lowercase().replaceFirstChar { it.uppercase() }
-                binding.txtNotes.text = loc.notes
+                    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-                applyValidation(loc)
+                    binding.txtName.text = loc.name
+                    binding.txtLocation.text = loc.location
+                    binding.txtDate.text = loc.date.format(dateFormatter)
+                    binding.txtTime.text = loc.time.format(timeFormatter)
+                    binding.txtLatitude.text = String.format("%.4f", loc.lat)
+                    binding.txtLongitude.text = String.format("%.4f", loc.lng)
+                    binding.txtWeather.text =
+                        loc.weather.name.lowercase().replaceFirstChar { it.uppercase() }
+                    binding.txtNotes.text = loc.notes
 
-                // Кнопка показать на карте
-                binding.root.findViewById<View>(R.id.btn_show_map).setOnClickListener {
-                    viewModel.onShowOnMap(loc.lat, loc.lng, loc.location)
+                    applyValidation(loc)
+
+                    // Кнопка показать на карте
+                    binding.root.findViewById<View>(R.id.btn_show_map).setOnClickListener {
+                        viewModel.onShowOnMap(loc.lat, loc.lng, loc.location)
+                    }
+
+                    // Edit
+                    binding.btnEdit.setOnClickListener {
+                        viewModel.onEditClick(loc.id)
+                    }
+
+                    // Delete
+                    binding.btnDelete.setOnClickListener {
+                        viewModel.onDeleteClick(loc.id)
+                    }
+
+                    // Back
+                    binding.btnBack.setOnClickListener {
+                        viewModel.onBackClick()
+                    }
                 }
-
-                // Edit
-                binding.btnEdit.setOnClickListener {
-                    viewModel.onEditClick(loc.id)
-                }
-
-                // Delete
-                binding.btnDelete.setOnClickListener {
-                    viewModel.onDeleteClick(loc.id)
-                }
-
-                // Back
-                binding.btnBack.setOnClickListener {
-                    viewModel.onBackClick()
-                }
-            }
         }
 
         lifecycleScope.launchWhenStarted {
@@ -169,9 +190,11 @@ class StarLocationDetailFragment : Fragment() {
 
     private fun showDeleteDialog(id: Long) {
         AlertDialog.Builder(requireContext())
-            .setMessage("Please confirm deletion")
-            .setPositiveButton("Confirm") { _, _ -> viewModel.confirmDelete(id) }
-            .setNegativeButton("Cancel", null)
+            .setMessage(R.string.dialog_delete_title)
+            .setPositiveButton(R.string.dialog_delete_confirm) { _, _ ->
+                viewModel.confirmDelete(id)
+            }
+            .setNegativeButton(R.string.dialog_delete_cancel, null)
             .show()
     }
 

@@ -397,9 +397,9 @@ class StarLocationEditFragment : Fragment() {
 
     private fun showDeleteDialog() {
         AlertDialog.Builder(requireContext())
-            .setMessage("Please confirm deletion")
-            .setPositiveButton("Confirm") { _, _ -> vm.onDeleteConfirm() }
-            .setNegativeButton("Cancel", null)
+            .setMessage(R.string.dialog_delete_title)
+            .setPositiveButton(R.string.dialog_delete_confirm) { _, _ -> vm.onDeleteConfirm() }
+            .setNegativeButton(R.string.dialog_delete_cancel, null)
             .show()
     }
 

@@ -26,12 +26,15 @@
     <string name="toast_fill_all_fields">Fill in both name and notes before saving</string>
     <string name="error_required_field">Required</string>
     <string name="toast_note_not_found">Note not found</string>
+    <string name="toast_note_deleted">Note deleted</string>
     <string name="toast_enter_checklist_name">Enter checklist name to save</string>
     <string name="toast_add_checklist_item">Add at least one checklist item</string>
     <string name="checklist_deleted_toast">Checklist deleted</string>
     <string name="dialog_delete_title">Please confirm deletion</string>
     <string name="dialog_delete_confirm">Confirm</string>
     <string name="dialog_delete_cancel">Cancel</string>
+    <string name="toast_star_location_not_found">Star location not found</string>
+    <string name="toast_star_location_deleted">Star location deleted</string>
     <string name="content_description_back">Back</string>
     <string name="content_description_checklist_item_toggle">Toggle checklist item</string>
     <string name="content_description_remove_item">Remove checklist item</string>
