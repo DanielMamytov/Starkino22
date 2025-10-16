@@ -12,7 +12,7 @@ import co.nisari.katisnar.presentation.ui.admiral.StarRoute
         ChecklistEntity::class,
         ChecklistItemEntity::class,
         ArticleEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(StarLocationConverters::class)

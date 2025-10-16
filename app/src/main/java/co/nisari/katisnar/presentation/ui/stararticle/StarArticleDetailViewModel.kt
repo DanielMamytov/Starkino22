@@ -67,6 +67,6 @@ class StarArticleDetailViewModel @Inject constructor(
     }
 
     companion object {
-        private const val DEFAULT_DETAIL_COVER_RES = R.drawable.img_article
+        private val DEFAULT_DETAIL_COVER_RES = R.drawable.img_article
     }
 }

@@ -6,4 +6,19 @@
     </style>
 
     <style name="Theme.Starkino" parent="Base.Theme.Starkino" />
+
+    <style name="CircleImageStyle">
+        <item name="shapeAppearanceOverlay">@style/CircleShapeAppearance</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="CircleShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="Rounded12Shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
 </resources>

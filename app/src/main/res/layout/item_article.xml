@@ -12,8 +12,10 @@
         android:background="@drawable/round_item"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_cover"
+            style="@style/CircleImageStyle"
+
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/img_night_city" />
@@ -22,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 

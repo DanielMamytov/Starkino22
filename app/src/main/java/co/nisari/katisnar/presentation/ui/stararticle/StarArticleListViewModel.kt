@@ -87,7 +87,7 @@ class StarArticleListViewModel @Inject constructor(
 
     companion object {
         private const val PREVIEW_LIMIT = 180
-        private const val DEFAULT_LIST_COVER_RES = R.drawable.img_night_city
+        private  val DEFAULT_LIST_COVER_RES = R.drawable.img_night_city
 
         private val DEFAULT_ARTICLES = listOf(
             ArticleSeed(
