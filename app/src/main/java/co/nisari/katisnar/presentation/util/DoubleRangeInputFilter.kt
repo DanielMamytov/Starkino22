@@ -9,7 +9,8 @@ import android.text.Spanned
  */
 class DoubleRangeInputFilter(
     private val min: Double,
-    private val max: Double
+    private val max: Double,
+    private val onInvalidInput: (() -> Unit)? = null
 ) : InputFilter {
 
     override fun filter(
@@ -35,6 +36,11 @@ class DoubleRangeInputFilter(
         }
 
         val number = newValue.toDoubleOrNull() ?: return ""
-        return if (number in min..max) null else ""
+        return if (number in min..max) {
+            null
+        } else {
+            onInvalidInput?.invoke()
+            ""
+        }
     }
 }

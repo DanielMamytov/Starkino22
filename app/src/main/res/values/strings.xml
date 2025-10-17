@@ -30,6 +30,8 @@
     <string name="toast_enter_checklist_name">Enter checklist name to save</string>
     <string name="toast_add_checklist_item">Add at least one checklist item</string>
     <string name="checklist_deleted_toast">Checklist deleted</string>
+    <string name="toast_latitude_range">Latitude must be between -90 and 90</string>
+    <string name="toast_longitude_range">Longitude must be between -180 and 180</string>
     <string name="dialog_delete_title">Please confirm deletion</string>
     <string name="dialog_delete_confirm">Confirm</string>
     <string name="dialog_delete_cancel">Cancel</string>

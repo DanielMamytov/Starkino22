@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
@@ -61,8 +62,25 @@ class PointAdapter(
         private var locWatcher: TextWatcher? = null
 
         init {
-            etLat.filters = arrayOf(DoubleRangeInputFilter(-90.0, 90.0))
-            etLng.filters = arrayOf(DoubleRangeInputFilter(-180.0, 180.0))
+            val context = itemView.context
+            etLat.filters = arrayOf(
+                DoubleRangeInputFilter(-90.0, 90.0) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_latitude_range),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
+            etLng.filters = arrayOf(
+                DoubleRangeInputFilter(-180.0, 180.0) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_longitude_range),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
         }
 
         fun bind(position: Int) {
