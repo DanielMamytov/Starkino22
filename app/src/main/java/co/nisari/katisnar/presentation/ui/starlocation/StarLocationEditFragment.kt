@@ -165,8 +165,16 @@ class StarLocationEditFragment : Fragment() {
         binding.boxLongitude.setOnClickListener { focusAndShowKeyboard(binding.txtLongitude) }
         binding.boxNotes.setOnClickListener { focusAndShowKeyboard(binding.etNotes) }
 
-        binding.txtLatitude.filters = arrayOf(DoubleRangeInputFilter(-90.0, 90.0))
-        binding.txtLongitude.filters = arrayOf(DoubleRangeInputFilter(-180.0, 180.0))
+        binding.txtLatitude.filters = arrayOf(
+            DoubleRangeInputFilter(-90.0, 90.0) {
+                toast(getString(R.string.toast_latitude_range))
+            }
+        )
+        binding.txtLongitude.filters = arrayOf(
+            DoubleRangeInputFilter(-180.0, 180.0) {
+                toast(getString(R.string.toast_longitude_range))
+            }
+        )
         // 7) Выбор погоды
         val openWeather = { showWeatherDialog() }
         binding.txtWeather.setOnClickListener { openWeather() }
