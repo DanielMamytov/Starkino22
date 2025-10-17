@@ -16,7 +16,8 @@ import java.time.format.DateTimeFormatter
 
 class StarRouteAdapter(
     private val onCardClick: (StarRoute) -> Unit,
-    private val onMoreClick: (StarRoute) -> Unit
+    private val onMoreClick: (StarRoute) -> Unit,
+    private val onLongClick: (StarRoute) -> Unit
 ) : ListAdapter<StarRoute, StarRouteAdapter.VH>(Diff) {
 
     object Diff : DiffUtil.ItemCallback<StarRoute>() {
@@ -42,6 +43,10 @@ class StarRouteAdapter(
             time.text = item.time.format(timeFmt)
 
             itemView.setOnClickListener { onCardClick(item) }
+            itemView.setOnLongClickListener {
+                onLongClick(item)
+                true
+            }
             more.setOnClickListener { onMoreClick(item) }
         }
     }
