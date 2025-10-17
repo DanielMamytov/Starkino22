@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarRoutineBinding
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +31,8 @@ class StarRouteFragment : Fragment() {
     private val adapter by lazy {
         StarRouteAdapter(
             onCardClick = { vm.onItemClick(it.id) },
-            onMoreClick = { vm.onMoreDetailsClick(it.id) }
+            onMoreClick = { vm.onMoreDetailsClick(it.id) },
+            onLongClick = { vm.onItemLongClick(it.id) }
         )
     }
 
@@ -146,9 +148,20 @@ class StarRouteFragment : Fragment() {
                         }
                     }
                     is UiEvent.ShowToast -> Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    is UiEvent.ShowDeleteDialog -> showDeleteDialog(e.id)
                     else -> Unit
                 }
             }
         }
+    }
+
+    private fun showDeleteDialog(routeId: Long) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(getString(R.string.dialog_delete_title))
+            .setPositiveButton(R.string.dialog_delete_confirm) { _, _ ->
+                vm.onDeleteConfirmed(routeId)
+            }
+            .setNegativeButton(R.string.dialog_delete_cancel, null)
+            .show()
     }
 }

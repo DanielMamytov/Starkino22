@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StarRouteListViewModel @Inject constructor(
-    repo: StarRouteRepository
+    private val repo: StarRouteRepository
 ) : ViewModel() {
 
     val routes: StateFlow<List<StarRoute>> = repo.getAll()
@@ -28,5 +28,10 @@ class StarRouteListViewModel @Inject constructor(
     fun onAddRouteClick() = viewModelScope.launch { _ui.send(UiEvent.NavigateToEdit(null)) }
     fun onItemClick(id: Long) = viewModelScope.launch { _ui.send(UiEvent.NavigateToDetail(id)) }
     fun onMoreDetailsClick(id: Long) = onItemClick(id)
+    fun onItemLongClick(id: Long) = viewModelScope.launch { _ui.send(UiEvent.ShowDeleteDialog(id)) }
+    fun onDeleteConfirmed(id: Long) = viewModelScope.launch {
+        repo.deleteById(id)
+        _ui.send(UiEvent.ShowToast("Route deleted"))
+    }
 }
 
