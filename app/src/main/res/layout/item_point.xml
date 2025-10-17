@@ -34,13 +34,27 @@
 
                 <TextView
                     android:id="@+id/tv_point_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
+                    android:layout_weight="1"
                     android:fontFamily="@font/poppins_extrabold"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     tools:text="Point 1" />
+
+                <ImageButton
+                    android:id="@+id/btn_delete_point"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/delete"
+                    android:padding="6dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/btn_delete"
+                    android:tint="@color/white"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Latitude -->

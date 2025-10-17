@@ -37,11 +37,13 @@ class AdmiralRoutePointsAdapter : RecyclerView.Adapter<AdmiralRoutePointsAdapter
         private val latitude: EditText = itemView.findViewById(R.id.et_latitude1)
         private val longitude: EditText = itemView.findViewById(R.id.et_longitude1)
         private val location: EditText = itemView.findViewById(R.id.et_location1)
+        private val deleteButton: View? = itemView.findViewById(R.id.btn_delete_point)
 
         init {
             disableEditing(latitude)
             disableEditing(longitude)
             disableEditing(location)
+            deleteButton?.visibility = View.GONE
         }
 
         fun bind(point: RoutePoint, index: Int) {
