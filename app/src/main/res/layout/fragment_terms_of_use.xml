@@ -12,7 +12,7 @@
         android:layout_width="66dp"
         android:layout_height="30dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/content_description_back"
         android:src="@drawable/btn_back"
         app:layout_constraintStart_toStartOf="parent"
