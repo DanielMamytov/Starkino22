@@ -75,7 +75,7 @@
         android:id="@+id/noteEditFragment"
         android:name="co.nisari.katisnar.presentation.ui.starnotes.NoteEditFragment"
         android:label="fragment_note_edit"
-        tools:layout="@layout/fragment_note_edit">
+        tools:layout="@layout/fragment_star_notes_edit">
         <argument
             android:name="noteId"
             app:argType="long"
