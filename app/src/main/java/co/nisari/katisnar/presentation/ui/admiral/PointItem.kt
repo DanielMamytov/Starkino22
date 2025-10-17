@@ -55,7 +55,7 @@ class PointAdapter(
         private val etLng: EditText = view.findViewById(R.id.et_longitude1)
         private val etLocation: EditText = view.findViewById(R.id.et_location1)
         private val tvTitle: TextView = view.findViewById(R.id.tv_point_title)
-//        private val btnSave: View = view.findViewById(R.id.btn_save_point)
+        private val btnDelete: View = view.findViewById(R.id.btn_delete_point)
 
         private var latWatcher: TextWatcher? = null
         private var lngWatcher: TextWatcher? = null
@@ -121,20 +121,12 @@ class PointAdapter(
                 }
             }
 
-//            btnSave.setOnClickListener {
-//                val idx = bindingAdapterPosition
-//                if (idx in items.indices) {
-//                    onSave(idx)
-//                }
-//            }
-
-            // Удаление по длинному тапу (опционально)
-            itemView.setOnLongClickListener {
+            btnDelete.visibility = View.VISIBLE
+            btnDelete.setOnClickListener {
                 val idx = bindingAdapterPosition
                 if (idx in items.indices) {
                     onRemove(idx)
                 }
-                true
             }
         }
     }
