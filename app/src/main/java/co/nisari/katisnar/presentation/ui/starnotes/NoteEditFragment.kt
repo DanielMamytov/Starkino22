@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
-import co.nisari.katisnar.databinding.FragmentNoteEditBinding
+import co.nisari.katisnar.databinding.FragmentStarNotesEditBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class NoteEditFragment : Fragment() {
 
-    private var _binding: FragmentNoteEditBinding? = null
+    private var _binding: FragmentStarNotesEditBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: NoteEditViewModel by viewModels()
@@ -30,7 +30,7 @@ class NoteEditFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNoteEditBinding.inflate(inflater, container, false)
+        _binding = FragmentStarNotesEditBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,12 +44,16 @@ class NoteEditFragment : Fragment() {
     private fun setupUi() {
         with(binding) {
             btnBack.setOnClickListener { findNavController().popBackStack() }
+            btnCancel.setOnClickListener { findNavController().popBackStack() }
             btnSave.setOnClickListener {
                 viewModel.onSaveClicked(getString(R.string.toast_write_before_saving))
             }
             btnDelete.setOnClickListener { showDeleteDialog() }
-            etNote.doAfterTextChanged { editable ->
-                viewModel.onTextChanged(editable?.toString().orEmpty())
+            txtName.doAfterTextChanged { editable ->
+                viewModel.onNameChanged(editable?.toString().orEmpty())
+            }
+            txtNotes.doAfterTextChanged { editable ->
+                viewModel.onNotesChanged(editable?.toString().orEmpty())
             }
         }
     }
@@ -59,9 +63,13 @@ class NoteEditFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     binding.btnDelete.isVisible = state.isExisting
-                    if (binding.etNote.text.toString() != state.text) {
-                        binding.etNote.setText(state.text)
-                        binding.etNote.setSelection(binding.etNote.text?.length ?: 0)
+                    if (binding.txtName.text.toString() != state.name) {
+                        binding.txtName.setText(state.name)
+                        binding.txtName.setSelection(binding.txtName.text?.length ?: 0)
+                    }
+                    if (binding.txtNotes.text.toString() != state.notes) {
+                        binding.txtNotes.setText(state.notes)
+                        binding.txtNotes.setSelection(binding.txtNotes.text?.length ?: 0)
                     }
                 }
             }

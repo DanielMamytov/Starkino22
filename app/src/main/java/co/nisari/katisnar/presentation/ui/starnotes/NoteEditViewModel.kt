@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nisari.katisnar.presentation.data.local.NoteEntity
 import co.nisari.katisnar.presentation.data.repository.NoteRepository
+import co.nisari.katisnar.presentation.ui.starnoute.NoteTextMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +25,8 @@ class NoteEditViewModel @Inject constructor(
 
     data class UiState(
         val id: Long? = null,
-        val text: String = "",
+        val name: String = "",
+        val notes: String = "",
         val createdAt: Long = System.currentTimeMillis()
     ) {
         val isExisting: Boolean get() = id != null
@@ -47,23 +49,37 @@ class NoteEditViewModel @Inject constructor(
         if (noteId != null) {
             viewModelScope.launch {
                 repository.getById(noteId).filterNotNull().collect { entity ->
-                    _state.update { it.copy(text = entity.text, createdAt = entity.createdAt) }
+                    val (name, notes) = NoteTextMapper.split(entity.text)
+                    _state.update {
+                        it.copy(
+                            name = name,
+                            notes = notes,
+                            createdAt = entity.createdAt
+                        )
+                    }
                 }
             }
         }
     }
 
-    fun onTextChanged(text: String) {
-        _state.update { it.copy(text = text) }
+    fun onNameChanged(name: String) {
+        _state.update { it.copy(name = name) }
+    }
+
+    fun onNotesChanged(notes: String) {
+        _state.update { it.copy(notes = notes) }
     }
 
     fun onSaveClicked(emptyMessage: String) {
         val current = _state.value
-        val text = current.text.trim()
-        if (text.isBlank()) {
+        val name = current.name.trim()
+        val notes = current.notes.trim()
+        if (name.isBlank() && notes.isBlank()) {
             viewModelScope.launch { _events.send(UiEvent.ShowToast(emptyMessage)) }
             return
         }
+
+        val text = NoteTextMapper.combine(name, notes)
 
         viewModelScope.launch {
             if (current.id == null) {
