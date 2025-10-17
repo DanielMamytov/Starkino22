@@ -161,7 +161,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="10dp"
                                     android:text="Lorem ipsum dolor sit amet consectetur. Rutrum pellentesque tellus in phasellus quam aliquam. Rutrum in dignissim egestas purus consequat at curabitur. Sem cras nunc tempus mauris vestibulum donec eu aliquet. Leo aliquam turpis lectus ut quis aliquam. Aenean eu praesent leo sed. "
-                                    android:layout_marginBottom="30dp"
+                                    android:layout_marginBottom="20dp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
 
