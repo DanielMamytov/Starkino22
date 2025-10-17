@@ -121,10 +121,12 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:layout_weight="1"
+                            android:hint="Enter name"
+                            android:fontFamily="@font/poppins_medium"
                             android:background="@android:color/transparent"
                             android:inputType="textPersonName"
                             android:padding="0dp"
-                            android:text="Hiking along the valley"
+                            android:textColorHint="#A2A2A2"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -160,7 +162,6 @@
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
                             android:hint="Enter location"
-                            android:text="Island"
                             android:textColor="@color/white"
                             android:textColorHint="#A2A2A2"
                             android:textSize="16sp"
@@ -405,7 +406,6 @@
                         android:orientation="vertical"
                         android:padding="12dp">
 
-                        <!-- Метка -->
                         <TextView
                             android:id="@+id/label_notes"
                             android:layout_width="wrap_content"
@@ -416,7 +416,6 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <!-- Поле для ввода текста -->
                         <EditText
                             android:id="@+id/et_notes"
                             android:layout_width="match_parent"
@@ -424,18 +423,19 @@
                             android:layout_marginTop="6dp"
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/poppins_bold"
-                            android:gravity="start"
+                            android:gravity="top|start"
                             android:hint="Write your note..."
                             android:inputType="textMultiLine"
-                            android:maxLines="5"
-                            android:minHeight="80dp"
-                            android:padding="0dp"
-                            android:scrollbars="vertical"
+                            android:minLines="4"
+                            android:scrollbars="none"
+                            android:overScrollMode="never"
+                            android:scrollHorizontally="false"
                             android:textColor="@color/white"
-                            android:textColorHint="@color/white"
+                            android:textColorHint="#A2A2A2"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
+
 
                 </LinearLayout>
 

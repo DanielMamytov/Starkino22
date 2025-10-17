@@ -165,11 +165,11 @@
                                 android:textSize="16sp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:inputType="textMultiLine"
-                                android:gravity="start"
+                                android:gravity="top|start"
                                 android:minHeight="100dp"
-                                android:maxLines="8"
-                                android:scrollbars="vertical"
-                                android:padding="0dp" />
+                                android:scrollbars="none"
+                                android:overScrollMode="never"
+                             />
 
                         </LinearLayout>
 

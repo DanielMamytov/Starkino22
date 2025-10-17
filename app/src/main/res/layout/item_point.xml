@@ -76,7 +76,7 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="#A2A2A2"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -115,7 +115,7 @@
                     android:inputType="numberDecimal|numberSigned"
                     android:maxLines="1"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="#A2A2A2"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -161,7 +161,7 @@
                 android:maxLines="1"
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppins_medium"
-                android:textColorHint="@color/white"
+                android:textColorHint="#A2A2A2"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </LinearLayout>
