@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentAdmiralRouteEditBinding
 import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
@@ -108,8 +109,12 @@ class AdmiralRouteEditFragment : Fragment() {
         }
 
         // список точек
-        binding.recyclerView.adapter = pointsAdapter
 
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = pointsAdapter
+            isNestedScrollingEnabled = false
+        }
         // ==== ЛИСТЕНЕРЫ ДЛЯ ПОЛЕЙ ====
         // NAME
         binding.etName.doOnTextChanged { t, _, _, _ ->

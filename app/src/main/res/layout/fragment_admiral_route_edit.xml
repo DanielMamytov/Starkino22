@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -215,12 +215,12 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_view"
                             android:layout_width="match_parent"
-                            android:layout_height="280dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
 
                             android:layout_marginTop="10dp"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:itemCount="2"
+                            tools:itemCount="4"
                             tools:listitem="@layout/item_point" />
 
                         <com.google.android.material.button.MaterialButton
@@ -252,7 +252,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_marginStart="5dp"
                                 android:orientation="vertical">
 
@@ -269,23 +269,24 @@
                                 <EditText
                                     android:id="@+id/txt_description"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
+
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="5dp"
                                     android:layout_marginEnd="10dp"
                                     android:layout_marginBottom="20dp"
                                     android:background="@android:color/transparent"
                                     android:fontFamily="@font/poppins_medium"
-                                    android:gravity="start|top"
+                                    android:gravity="start"
                                     android:imeOptions="actionDone"
                                     android:inputType="textMultiLine"
+                                    android:maxLines="6"
                                     android:textColor="@color/white"
                                     android:textColorHint="@color/white"
-                                    android:textStyle="bold"
-                                    android:scrollbars="none"
-                                    android:overScrollMode="never" />
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
+
                         </com.google.android.material.card.MaterialCardView>
 
 
@@ -339,4 +340,4 @@
 
 
     </FrameLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
