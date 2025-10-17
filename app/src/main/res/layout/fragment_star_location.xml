@@ -47,7 +47,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:text="На данный момент ничего не добавлено"
+            android:text="At the moment, nothing has been added."
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
