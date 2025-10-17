@@ -91,6 +91,14 @@ class StarRouteFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        emptyView?.let { view ->
+            (view.parent as? ViewGroup)?.removeView(view)
+        }
+        emptyView = null
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentStarRoutineBinding.inflate(inflater, container, false)
