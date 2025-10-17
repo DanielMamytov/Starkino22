@@ -252,7 +252,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
                                 android:orientation="vertical">
 
@@ -269,24 +269,23 @@
                                 <EditText
                                     android:id="@+id/txt_description"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-
+                                    android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="5dp"
                                     android:layout_marginEnd="10dp"
                                     android:layout_marginBottom="20dp"
                                     android:background="@android:color/transparent"
                                     android:fontFamily="@font/poppins_medium"
-                                    android:gravity="start"
+                                    android:gravity="start|top"
                                     android:imeOptions="actionDone"
                                     android:inputType="textMultiLine"
-                                    android:maxLines="6"
                                     android:textColor="@color/white"
                                     android:textColorHint="@color/white"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:scrollbars="none"
+                                    android:overScrollMode="never" />
 
                             </LinearLayout>
-
                         </com.google.android.material.card.MaterialCardView>
 
 

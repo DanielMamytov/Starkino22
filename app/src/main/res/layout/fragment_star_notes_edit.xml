@@ -155,7 +155,6 @@
                                 android:id="@+id/txt_notes"
                                 android:layout_width="match_parent"
                                 android:layout_marginBottom="20dp"
-                                android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
                                 android:background="@android:color/transparent"
                                 android:hint="Enter notes"
@@ -169,7 +168,7 @@
                                 android:minHeight="100dp"
                                 android:scrollbars="none"
                                 android:overScrollMode="never"
-                             />
+                                android:layout_height="wrap_content" /> <!-- Убрали maxLines и поставили wrap_content для высоты -->
 
                         </LinearLayout>
 
