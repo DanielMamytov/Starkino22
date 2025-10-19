@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
@@ -98,7 +99,7 @@ class PointAdapter(
         private val cardCoordinates: MaterialCardView = view.findViewById(R.id.card_coordinates)
         private val cardLocation: MaterialCardView = view.findViewById(R.id.card_location)
 
-        private val errorStrokeColor = Color.parseColor("#FF0000")
+        private val errorStrokeColor = ContextCompat.getColor(view.context, R.color.seg_border)
         private val errorStrokeWidth = view.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
         private val normalStrokeColor = Color.parseColor("#B8FFFFFF")
         private val normalStrokeWidth = TypedValue.applyDimension(
@@ -229,15 +230,6 @@ class PointAdapter(
             } else {
                 cardLocation.strokeWidth = normalStrokeWidth
                 cardLocation.strokeColor = normalStrokeColor
-            }
-        }
-
-        private fun clearCoordinateErrorIfResolved(position: Int) {
-            if (position == RecyclerView.NO_POSITION) return
-            if (!coordinateErrorPositions.contains(position)) return
-            val item = items.getOrNull(position) ?: return
-            if (item.lat.isNotBlank() && item.lng.isNotBlank()) {
-                coordinateErrorPositions = coordinateErrorPositions - position
             }
         }
 
