@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import co.nisari.katisnar.databinding.FragmentAdmiralRoutesDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.drop
-
+import kotlinx.coroutines.flow.filterNotNull
 
 @AndroidEntryPoint
 class AdmiralRoutesDetailFragment : Fragment() {
@@ -73,7 +72,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
         // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.state
-                .drop(1)
+                .filterNotNull()
                 .collectLatest { data ->
                     if (data == null) {
                         if (navigatingAfterDelete || vm.isRouteDeleted()) {
