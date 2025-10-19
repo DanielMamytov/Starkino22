@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
@@ -63,6 +64,27 @@ class PointAdapter(
         }
     }
 
+    fun showLocationErrors(indices: Set<Int>) {
+        val filtered = indices.filter { it in items.indices }.toSet()
+        val previous = locationErrorPositions
+        locationErrorPositions = filtered
+        val changed = (previous union filtered) - (previous intersect filtered)
+        changed.forEach { index ->
+            if (index in items.indices) notifyItemChanged(index)
+        }
+    }
+
+    fun showCoordinateErrors(indices: Set<Int>) {
+        val filtered = indices.filter { it in items.indices }.toSet()
+        val previous = coordinateErrorPositions
+        coordinateErrorPositions = filtered
+        val changed = (previous union filtered) - (previous intersect filtered)
+        changed.forEach { index ->
+            if (index in items.indices) notifyItemChanged(index)
+        }
+    }
+
+
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
         private val etLat: EditText = view.findViewById(R.id.et_latitude1)
         private val etLng: EditText = view.findViewById(R.id.et_longitude1)
@@ -72,7 +94,7 @@ class PointAdapter(
         private val cardCoordinates: MaterialCardView = view.findViewById(R.id.card_coordinates)
         private val cardLocation: MaterialCardView = view.findViewById(R.id.card_location)
 
-        private val errorStrokeColor = Color.parseColor("#FF0000")
+        private val errorStrokeColor = ContextCompat.getColor(view.context, R.color.seg_border)
         private val errorStrokeWidth = view.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
         private val normalStrokeColor = Color.parseColor("#B8FFFFFF")
         private val normalStrokeWidth = TypedValue.applyDimension(
@@ -152,7 +174,8 @@ class PointAdapter(
                     items[idx].lat = v
                     onLatChanged(idx, v)
                 }
-                applyCoordinateUI(idx)
+                clearCoordinateErrorIfResolved(idx)
+                applyCoordinateErrorState(idx)
             }
 
             // --- LNG ---
@@ -165,7 +188,8 @@ class PointAdapter(
                     items[idx].lng = v
                     onLngChanged(idx, v)
                 }
-                applyCoordinateUI(idx)
+                clearCoordinateErrorIfResolved(idx)
+                applyCoordinateErrorState(idx)
             }
 
             // --- LOCATION ---
@@ -178,7 +202,18 @@ class PointAdapter(
                     items[idx].location = v
                     onLocationChanged(idx, v)
                 }
-                applyLocationUI(idx)
+                if (locationErrorPositions.contains(idx)) {
+                    etLocation.error = if (v.isBlank()) {
+                        itemView.context.getString(R.string.error_location_required)
+                    } else {
+                        null
+                    }
+                }
+                if (!locationErrorPositions.contains(idx)) {
+                    etLocation.error = null
+                }
+                clearLocationErrorIfResolved(idx)
+                applyLocationErrorState(idx)
             }
 
             btnDelete.visibility = View.VISIBLE
@@ -189,8 +224,64 @@ class PointAdapter(
                 }
             }
 
-            applyCoordinateUI(position)
-            applyLocationUI(position)
+            etLocation.error = if (locationErrorPositions.contains(position)) {
+                itemView.context.getString(R.string.error_location_required)
+            } else {
+                null
+            }
+
+            applyCoordinateErrorState(position)
+            applyLocationErrorState(position)
+        }
+
+        private fun applyCoordinateErrorState(position: Int) {
+            if (position == RecyclerView.NO_POSITION) return
+            val showError = coordinateErrorPositions.contains(position)
+            if (showError) {
+                cardCoordinates.strokeWidth = errorStrokeWidth
+                cardCoordinates.strokeColor = errorStrokeColor
+            } else {
+                cardCoordinates.strokeWidth = normalStrokeWidth
+                cardCoordinates.strokeColor = normalStrokeColor
+            }
+        }
+
+        private fun applyLocationErrorState(position: Int) {
+            if (position == RecyclerView.NO_POSITION) return
+            val showError = locationErrorPositions.contains(position)
+            if (showError) {
+                cardLocation.strokeWidth = errorStrokeWidth
+                cardLocation.strokeColor = errorStrokeColor
+            } else {
+                cardLocation.strokeWidth = normalStrokeWidth
+                cardLocation.strokeColor = normalStrokeColor
+            }
+        }
+
+        private fun clearLocationErrorIfResolved(position: Int) {
+            if (position == RecyclerView.NO_POSITION) return
+            if (!locationErrorPositions.contains(position)) return
+            val item = items.getOrNull(position) ?: return
+            if (item.location.isNotBlank()) {
+                locationErrorPositions = locationErrorPositions - position
+            }
+        }
+    }
+    private fun clearCoordinateErrorIfResolved(position: Int) {
+        if (position == RecyclerView.NO_POSITION) return
+        if (!coordinateErrorPositions.contains(position)) return
+        val item = items.getOrNull(position) ?: return
+        if (item.lat.isNotBlank() && item.lng.isNotBlank()) {
+            coordinateErrorPositions = coordinateErrorPositions - position
+        }
+    }
+
+    private fun clearLocationErrorIfResolved(position: Int) {
+        if (position == RecyclerView.NO_POSITION) return
+        if (!locationErrorPositions.contains(position)) return
+        val item = items.getOrNull(position) ?: return
+        if (item.location.isNotBlank()) {
+            locationErrorPositions = locationErrorPositions - position
         }
     }
 
