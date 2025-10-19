@@ -325,7 +325,7 @@ class AdmiralRouteEditFragment : Fragment() {
     }
 
     private fun getEmptyLocationIndices(): Set<Int> {
-        return vm.state.value.points.mapIndexedNotNull { index, item ->
+        return pointsAdapter.snapshotItems().mapIndexedNotNull { index, item ->
             if (item.location.trim().isEmpty()) index else null
         }.toSet()
     }
