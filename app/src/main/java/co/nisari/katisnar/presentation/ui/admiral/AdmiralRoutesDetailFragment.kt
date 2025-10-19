@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+
 @AndroidEntryPoint
 class AdmiralRoutesDetailFragment : Fragment() {
 
@@ -30,7 +31,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
     private val vm: StarRouteDetailViewModel by viewModels()
     private val pointsAdapter = AdmiralRoutePointsAdapter()
     private var navigatingAfterDelete = false
-    private var hasLoadedRoute = false
+    private var initialRouteLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -77,14 +78,27 @@ class AdmiralRoutesDetailFragment : Fragment() {
 
         // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.state.collectLatest { data ->
-                if (data == null) {
-                    if (!hasLoadedRoute) {
+            vm.state
+                .collectLatest { data ->
+                    if (data == null) {
+                        if (!initialRouteLoaded) {
+                            return@collectLatest
+                        }
+                        if (navigatingAfterDelete || vm.isRouteDeleted()) {
+                            navigatingAfterDelete = true
+                            return@collectLatest
+                        }
+                        Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
                         return@collectLatest
                     }
-                    if (navigatingAfterDelete || vm.isRouteDeleted()) {
-                        navigatingAfterDelete = true
-                        return@collectLatest
+                    initialRouteLoaded = true
+                    val route = data.route
+                    binding.txtName.text = route.name
+                    binding.txtDate.text = route.date.format(dateFmt)
+                    val timeFormatted = route.time.format(timeFmt)
+                    if (binding.txtTime.text?.toString() != timeFormatted) {
+                        binding.txtTime.setText(timeFormatted)
                     }
                     Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
