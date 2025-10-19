@@ -267,7 +267,7 @@ class AdmiralRouteEditFragment : Fragment() {
         Toast.makeText(requireContext(), "Enter Latitude, Enter longitude", Toast.LENGTH_SHORT).show()
     }
 
-    private fun computeValidation(): ValidationResult {
+    private fun computeValidation(): Boolean {
         val nameEmpty = binding.etName.text?.toString()?.trim().isNullOrEmpty()
         val dateEmpty = binding.txtDate.text?.toString()?.trim().isNullOrEmpty()
         val timeEmpty = binding.txtTime.text?.toString()?.trim().isNullOrEmpty()
