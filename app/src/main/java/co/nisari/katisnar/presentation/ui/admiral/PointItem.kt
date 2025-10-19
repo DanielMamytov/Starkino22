@@ -242,6 +242,23 @@ class PointAdapter(
             }
         }
     }
+    private fun clearCoordinateErrorIfResolved(position: Int) {
+        if (position == RecyclerView.NO_POSITION) return
+        if (!coordinateErrorPositions.contains(position)) return
+        val item = items.getOrNull(position) ?: return
+        if (item.lat.isNotBlank() && item.lng.isNotBlank()) {
+            coordinateErrorPositions = coordinateErrorPositions - position
+        }
+    }
+
+    private fun clearLocationErrorIfResolved(position: Int) {
+        if (position == RecyclerView.NO_POSITION) return
+        if (!locationErrorPositions.contains(position)) return
+        val item = items.getOrNull(position) ?: return
+        if (item.location.isNotBlank()) {
+            locationErrorPositions = locationErrorPositions - position
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_point, parent, false)
