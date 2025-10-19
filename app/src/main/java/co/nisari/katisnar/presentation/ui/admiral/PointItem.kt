@@ -1,5 +1,6 @@
 package co.nisari.katisnar.presentation.ui.admiral
 
+import android.graphics.Color
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
 import co.nisari.katisnar.presentation.util.DoubleRangeInputFilter
+import com.google.android.material.card.MaterialCardView
 
 data class PointItem(
     var lat: String = "",
@@ -67,6 +70,10 @@ class PointAdapter(
         private val etLocation: EditText = view.findViewById(R.id.et_location1)
         private val tvTitle: TextView = view.findViewById(R.id.tv_point_title)
         private val btnDelete: View = view.findViewById(R.id.btn_delete_point)
+        private val cardCoordinates: MaterialCardView = view.findViewById(R.id.card_coordinates)
+        private val cardLocation: MaterialCardView = view.findViewById(R.id.card_location)
+
+        private val errorStrokeColor = ContextCompat.getColor(view.context, R.color.seg_border)
 
         private var latWatcher: TextWatcher? = null
         private var lngWatcher: TextWatcher? = null
@@ -108,6 +115,7 @@ class PointAdapter(
                     items[bindingAdapterPosition].lat = v
                     onLatChanged(bindingAdapterPosition, v)
                 }
+                applyCoordinateErrorState(bindingAdapterPosition)
             }
 
             // --- LNG ---
@@ -119,6 +127,7 @@ class PointAdapter(
                     items[bindingAdapterPosition].lng = v
                     onLngChanged(bindingAdapterPosition, v)
                 }
+                applyCoordinateErrorState(bindingAdapterPosition)
             }
 
             // --- LOCATION ---
