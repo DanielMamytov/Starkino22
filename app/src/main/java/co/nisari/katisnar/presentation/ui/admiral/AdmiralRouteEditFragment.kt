@@ -271,42 +271,41 @@ class AdmiralRouteEditFragment : Fragment() {
         val nameEmpty = binding.etName.text?.toString()?.trim().isNullOrEmpty()
         val dateEmpty = binding.txtDate.text?.toString()?.trim().isNullOrEmpty()
         val timeEmpty = binding.txtTime.text?.toString()?.trim().isNullOrEmpty()
-        val descriptionEmpty = binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
+        val descriptionEmpty =
+            binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()   // ← CHANGED
+        val emptyLocationIndices = getEmptyLocationIndices()
+        val emptyCoordinateIndices = getEmptyCoordinateIndices()
 
-        val snapshot = pointsAdapter.snapshotItems()
-        val emptyLocationIndices = snapshot.mapIndexedNotNull { index, item ->
-            if (item.location.trim().isEmpty()) index else null
-        }.toSet()
-        val emptyCoordinateIndices = snapshot.mapIndexedNotNull { index, item ->
-            if (item.lat.trim().isEmpty() || item.lng.trim().isEmpty()) index else null
-        }.toSet()
-
-        return ValidationResult(
-            nameEmpty = nameEmpty,
-            dateEmpty = dateEmpty,
-            timeEmpty = timeEmpty,
-            descriptionEmpty = descriptionEmpty,
-            emptyLocationIndices = emptyLocationIndices,
-            emptyCoordinateIndices = emptyCoordinateIndices
-        )
-    }
-
-    private fun applyValidationToUI(result: ValidationResult, adapterWasActive: Boolean = true) {
-        if (!validationActivated) return
-
-        setNameError(result.nameEmpty)
-        setDateError(result.dateEmpty)
-        setTimeError(result.timeEmpty)
-        setDescriptionError(result.descriptionEmpty)
-
-        if (adapterWasActive) {
-            pointsAdapter.notifyDataSetChanged()
+        if (validationActivated) {
+            setNameError(nameEmpty)
+            setDateError(dateEmpty)
+            setTimeError(timeEmpty)
+            setDescriptionError(descriptionEmpty)
+            pointsAdapter.showLocationErrors(emptyLocationIndices)
+            pointsAdapter.showCoordinateErrors(emptyCoordinateIndices)
+        } else {
+            setNameError(false); setDateError(false); setTimeError(false); setDescriptionError(false)
+            pointsAdapter.showLocationErrors(emptySet())
+            pointsAdapter.showCoordinateErrors(emptySet())
         }
+        return nameEmpty ||
+            dateEmpty ||
+            timeEmpty ||
+            descriptionEmpty ||
+            emptyLocationIndices.isNotEmpty() ||
+            emptyCoordinateIndices.isNotEmpty()
     }
 
     private fun syncErrorMasks() {
         if (!validationActivated) return
-        applyValidationToUI(computeValidation())
+        setNameError(binding.etName.text?.toString()?.trim().isNullOrEmpty())
+        setDateError(binding.txtDate.text?.toString()?.trim().isNullOrEmpty())
+        setTimeError(binding.txtTime.text?.toString()?.trim().isNullOrEmpty())
+        setDescriptionError(
+            binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
+        )     // ← CHANGED
+        pointsAdapter.showLocationErrors(getEmptyLocationIndices())
+        pointsAdapter.showCoordinateErrors(getEmptyCoordinateIndices())
     }
 
     private fun markDescriptionIfFilled() {
@@ -355,6 +354,22 @@ class AdmiralRouteEditFragment : Fragment() {
     private fun setTimeError(error: Boolean) {
         val box = binding.boxTime
         box.setBackgroundResource(if (error) R.drawable.text_border_error else R.drawable.text_border)
+    }
+
+    private fun getEmptyLocationIndices(): Set<Int> {
+        return pointsAdapter.snapshotItems()
+            .mapIndexedNotNull { index, item ->
+                if (item.location.trim().isEmpty()) index else null
+            }
+            .toSet()
+    }
+
+    private fun getEmptyCoordinateIndices(): Set<Int> {
+        return pointsAdapter.snapshotItems()
+            .mapIndexedNotNull { index, item ->
+                if (item.lat.trim().isEmpty() || item.lng.trim().isEmpty()) index else null
+            }
+            .toSet()
     }
 
     // ======= DIALOGS / PICKERS =======
