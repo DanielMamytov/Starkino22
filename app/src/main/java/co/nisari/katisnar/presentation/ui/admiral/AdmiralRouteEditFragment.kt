@@ -249,7 +249,6 @@ class AdmiralRouteEditFragment : Fragment() {
         val descriptionEmpty =
             binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()   // ← CHANGED
         val emptyLocationIndices = getEmptyLocationIndices()
-        val emptyCoordinateIndices = getEmptyCoordinateIndices()
 
         if (validationActivated) {
             setNameError(nameEmpty)
@@ -257,14 +256,11 @@ class AdmiralRouteEditFragment : Fragment() {
             setTimeError(timeEmpty)
             setDescriptionError(descriptionEmpty)
             pointsAdapter.showLocationErrors(emptyLocationIndices)
-            pointsAdapter.showCoordinateErrors(emptyCoordinateIndices)
         } else {
             setNameError(false); setDateError(false); setTimeError(false); setDescriptionError(false)
             pointsAdapter.showLocationErrors(emptySet())
-            pointsAdapter.showCoordinateErrors(emptySet())
         }
-        return nameEmpty || dateEmpty || timeEmpty || descriptionEmpty ||
-            emptyLocationIndices.isNotEmpty() || emptyCoordinateIndices.isNotEmpty()
+        return nameEmpty || dateEmpty || timeEmpty || descriptionEmpty || emptyLocationIndices.isNotEmpty()
     }
 
     private fun syncErrorMasks() {
@@ -276,7 +272,6 @@ class AdmiralRouteEditFragment : Fragment() {
             binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
         )     // ← CHANGED
         pointsAdapter.showLocationErrors(getEmptyLocationIndices())
-        pointsAdapter.showCoordinateErrors(getEmptyCoordinateIndices())
     }
 
     private fun markDescriptionIfFilled() {
@@ -332,12 +327,6 @@ class AdmiralRouteEditFragment : Fragment() {
     private fun getEmptyLocationIndices(): Set<Int> {
         return vm.state.value.points.mapIndexedNotNull { index, item ->
             if (item.location.trim().isEmpty()) index else null
-        }.toSet()
-    }
-
-    private fun getEmptyCoordinateIndices(): Set<Int> {
-        return vm.state.value.points.mapIndexedNotNull { index, item ->
-            if (item.lat.trim().isEmpty() || item.lng.trim().isEmpty()) index else null
         }.toSet()
     }
 
