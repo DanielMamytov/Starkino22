@@ -1,6 +1,5 @@
 package co.nisari.katisnar.presentation.ui.admiral
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -85,11 +84,7 @@ class PointAdapter(
         private val cardCoordinates: MaterialCardView = view.findViewById(R.id.card_coordinates)
         private val cardLocation: MaterialCardView = view.findViewById(R.id.card_location)
 
-        private val strokeWidthPx = view.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
-        private val normalStrokeColor = ColorStateList.valueOf(Color.parseColor("#B8FFFFFF"))
-        private val errorStrokeColor = ColorStateList.valueOf(
-            ContextCompat.getColor(view.context, R.color.seg_border)
-        )
+        private val errorStrokeColor = ContextCompat.getColor(view.context, R.color.seg_border)
 
         private var latWatcher: TextWatcher? = null
         private var lngWatcher: TextWatcher? = null
@@ -186,8 +181,13 @@ class PointAdapter(
         private fun applyCoordinateErrorState(position: Int) {
             if (position == RecyclerView.NO_POSITION) return
             val showError = shouldHighlightCoordinates(position)
-            cardCoordinates.strokeWidth = strokeWidthPx
-            cardCoordinates.setStrokeColor(if (showError) errorStrokeColor else normalStrokeColor)
+            if (showError) {
+                cardCoordinates.strokeWidth = itemView.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+                cardCoordinates.strokeColor = errorStrokeColor
+            } else {
+                cardCoordinates.strokeWidth = 0
+                cardCoordinates.strokeColor = Color.TRANSPARENT
+            }
         }
 
         private fun shouldHighlightCoordinates(position: Int): Boolean {
@@ -199,8 +199,13 @@ class PointAdapter(
         private fun applyLocationErrorState(position: Int) {
             if (position == RecyclerView.NO_POSITION) return
             val showError = shouldHighlightLocation(position)
-            cardLocation.strokeWidth = strokeWidthPx
-            cardLocation.setStrokeColor(if (showError) errorStrokeColor else normalStrokeColor)
+            if (showError) {
+                cardLocation.strokeWidth = itemView.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+                cardLocation.strokeColor = errorStrokeColor
+            } else {
+                cardLocation.strokeWidth = 0
+                cardLocation.strokeColor = Color.TRANSPARENT
+            }
         }
 
         private fun shouldHighlightLocation(position: Int): Boolean {
