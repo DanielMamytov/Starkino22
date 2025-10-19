@@ -77,12 +77,26 @@ class AdmiralRouteEditFragment : Fragment() {
     /** Включать подсветку ошибок только после первого нажатия Save */
     private var validationActivated = false
 
-    /** Нужна ли обязательность Description */
-    private val requireDescription = true
-
     // Цвета обводки
     private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") } // полупрозрачный белый
     private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }   // красный
+
+    private data class ValidationResult(
+        val nameEmpty: Boolean,
+        val dateEmpty: Boolean,
+        val timeEmpty: Boolean,
+        val descriptionEmpty: Boolean,
+        val emptyLocationIndices: Set<Int>,
+        val emptyCoordinateIndices: Set<Int>
+    ) {
+        val hasError: Boolean =
+            nameEmpty ||
+                dateEmpty ||
+                timeEmpty ||
+                descriptionEmpty ||
+                emptyLocationIndices.isNotEmpty() ||
+                emptyCoordinateIndices.isNotEmpty()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -155,6 +169,11 @@ class AdmiralRouteEditFragment : Fragment() {
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnSave.setOnClickListener { onSaveClicked() }
 
+        binding.txtDescription.doOnTextChanged { t, _, _, _ ->
+            vm.onDescChange(t?.toString().orEmpty())
+            markDescriptionIfFilled()
+        }
+
         binding.cvDescription.setOnClickListener {
             // 1) фокус на EditText
             binding.txtDescription.requestFocus()
@@ -183,11 +202,6 @@ class AdmiralRouteEditFragment : Fragment() {
                 val timeStr = s.time?.format(timeFmt) ?: ""
                 if (binding.txtTime.text?.toString() != timeStr) binding.txtTime.setText(timeStr)
 
-                // description
-                binding.txtDescription.doOnTextChanged { t, _, _, _ ->
-                    vm.onDescChange(t?.toString().orEmpty())
-                    markDescriptionIfFilled()
-                }
                 // description  ← было: binding.txtDescription.text = s.description
                 if (binding.txtDescription.text?.toString() != s.description) {
                     binding.txtDescription.setText(s.description)
@@ -229,56 +243,75 @@ class AdmiralRouteEditFragment : Fragment() {
         setDateError(false)
         setTimeError(false)
         setDescriptionError(false)
+        pointsAdapter.validationActivated = false
     }
 
     // ======= SAVE + VALIDATION =======
     private fun onSaveClicked() {
-        if (!validationActivated) validationActivated = true
-        val hasError = validateAndMark()
-        if (!hasError) {
+        val result = computeValidation()
+
+        if (!result.hasError) {
             vm.onSave()
-        } else {
-            Toast.makeText(requireContext(), "Enter Latitude, Enter longitude", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        val adapterWasActive = pointsAdapter.validationActivated
+        if (!validationActivated) {
+            validationActivated = true
+        }
+
+        pointsAdapter.validationActivated = validationActivated
+
+        applyValidationToUI(result, adapterWasActive)
+
+        Toast.makeText(requireContext(), "Enter Latitude, Enter longitude", Toast.LENGTH_SHORT).show()
     }
 
-    private fun validateAndMark(): Boolean {
+    private fun computeValidation(): ValidationResult {
         val nameEmpty = binding.etName.text?.toString()?.trim().isNullOrEmpty()
         val dateEmpty = binding.txtDate.text?.toString()?.trim().isNullOrEmpty()
         val timeEmpty = binding.txtTime.text?.toString()?.trim().isNullOrEmpty()
-        val descriptionEmpty =
-            binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()   // ← CHANGED
-        val emptyLocationIndices = getEmptyLocationIndices()
+        val descriptionEmpty = binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
 
-        if (validationActivated) {
-            setNameError(nameEmpty)
-            setDateError(dateEmpty)
-            setTimeError(timeEmpty)
-            setDescriptionError(descriptionEmpty)
-            pointsAdapter.showLocationErrors(emptyLocationIndices)
-        } else {
-            setNameError(false); setDateError(false); setTimeError(false); setDescriptionError(false)
-            pointsAdapter.showLocationErrors(emptySet())
+        val snapshot = pointsAdapter.snapshotItems()
+        val emptyLocationIndices = snapshot.mapIndexedNotNull { index, item ->
+            if (item.location.trim().isEmpty()) index else null
+        }.toSet()
+        val emptyCoordinateIndices = snapshot.mapIndexedNotNull { index, item ->
+            if (item.lat.trim().isEmpty() || item.lng.trim().isEmpty()) index else null
+        }.toSet()
+
+        return ValidationResult(
+            nameEmpty = nameEmpty,
+            dateEmpty = dateEmpty,
+            timeEmpty = timeEmpty,
+            descriptionEmpty = descriptionEmpty,
+            emptyLocationIndices = emptyLocationIndices,
+            emptyCoordinateIndices = emptyCoordinateIndices
+        )
+    }
+
+    private fun applyValidationToUI(result: ValidationResult, adapterWasActive: Boolean = true) {
+        if (!validationActivated) return
+
+        setNameError(result.nameEmpty)
+        setDateError(result.dateEmpty)
+        setTimeError(result.timeEmpty)
+        setDescriptionError(result.descriptionEmpty)
+
+        if (adapterWasActive) {
+            pointsAdapter.notifyDataSetChanged()
         }
-        return nameEmpty || dateEmpty || timeEmpty || descriptionEmpty || emptyLocationIndices.isNotEmpty()
     }
 
     private fun syncErrorMasks() {
         if (!validationActivated) return
-        setNameError(binding.etName.text?.toString()?.trim().isNullOrEmpty())
-        setDateError(binding.txtDate.text?.toString()?.trim().isNullOrEmpty())
-        setTimeError(binding.txtTime.text?.toString()?.trim().isNullOrEmpty())
-        setDescriptionError(
-            binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
-        )     // ← CHANGED
-        pointsAdapter.showLocationErrors(getEmptyLocationIndices())
+        applyValidationToUI(computeValidation())
     }
 
     private fun markDescriptionIfFilled() {
         if (!validationActivated) return
-        if (!binding.txtDescription.text?.toString()?.trim()
-                .isNullOrEmpty()
-        ) {                  // ← CHANGED
+        if (!binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()) {
             setDescriptionError(false)
         }
     }
@@ -322,11 +355,6 @@ class AdmiralRouteEditFragment : Fragment() {
     private fun setTimeError(error: Boolean) {
         val box = binding.boxTime
         box.setBackgroundResource(if (error) R.drawable.text_border_error else R.drawable.text_border)
-    }
-
-    private fun getEmptyLocationIndices(): Set<Int> {
-        return pointsAdapter.snapshotItems().mapIndexedNotNull { index, item ->            if (item.location.trim().isEmpty()) index else null
-        }.toSet()
     }
 
     // ======= DIALOGS / PICKERS =======
