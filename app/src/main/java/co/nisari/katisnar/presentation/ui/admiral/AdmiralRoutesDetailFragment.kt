@@ -22,7 +22,6 @@ import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.drop
 
 
 @AndroidEntryPoint
@@ -32,6 +31,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
     private val vm: StarRouteDetailViewModel by viewModels()
     private val pointsAdapter = AdmiralRoutePointsAdapter()
     private var navigatingAfterDelete = false
+    private var initialRouteLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -78,9 +78,11 @@ class AdmiralRoutesDetailFragment : Fragment() {
         // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.state
-                .drop(1)
                 .collectLatest { data ->
                     if (data == null) {
+                        if (!initialRouteLoaded) {
+                            return@collectLatest
+                        }
                         if (navigatingAfterDelete || vm.isRouteDeleted()) {
                             navigatingAfterDelete = true
                             return@collectLatest
@@ -89,6 +91,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
                         findNavController().popBackStack()
                         return@collectLatest
                     }
+                    initialRouteLoaded = true
                     val route = data.route
                     binding.txtName.text = route.name
                     binding.txtDate.text = route.date.format(dateFmt)
