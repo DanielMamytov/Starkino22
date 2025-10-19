@@ -19,7 +19,8 @@
         app:cardBackgroundColor="#330200"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:strokeWidth="0dp">
+        app:strokeColor="#B8FFFFFF"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -141,9 +142,11 @@
         android:layout_marginTop="20dp"
 
         app:cardBackgroundColor="#330200"
+        app:strokeColor="#B8FFFFFF"
+
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:strokeWidth="0dp">
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"

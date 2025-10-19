@@ -238,7 +238,7 @@ class AdmiralRouteEditFragment : Fragment() {
         if (!hasError) {
             vm.onSave()
         } else {
-            Toast.makeText(requireContext(), "Fill Name, Date and Time", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Enter Latitude, Enter longitude", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -325,8 +325,7 @@ class AdmiralRouteEditFragment : Fragment() {
     }
 
     private fun getEmptyLocationIndices(): Set<Int> {
-        return vm.state.value.points.mapIndexedNotNull { index, item ->
-            if (item.location.trim().isEmpty()) index else null
+        return pointsAdapter.snapshotItems().mapIndexedNotNull { index, item ->            if (item.location.trim().isEmpty()) index else null
         }.toSet()
     }
 
