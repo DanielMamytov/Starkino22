@@ -44,6 +44,7 @@ class PointAdapter(
 
     fun snapshotItems(): List<PointItem> = items.map { it.copy() }
 
+
     /** Добавляем новую точку */
     fun addPoint(item: PointItem) {
         items.add(item)
