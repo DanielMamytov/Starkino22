@@ -70,13 +70,23 @@ class PointAdapter(
     }
 
     fun showLocationErrors(indices: Set<Int>) {
-        locationErrorPositions = indices
-        notifyDataSetChanged()
+        val filtered = indices.filter { it in items.indices }.toSet()
+        val previous = locationErrorPositions
+        locationErrorPositions = filtered
+        val changed = (previous union filtered) - (previous intersect filtered)
+        changed.forEach { index ->
+            if (index in items.indices) notifyItemChanged(index)
+        }
     }
 
     fun showCoordinateErrors(indices: Set<Int>) {
-        coordinateErrorPositions = indices
-        notifyDataSetChanged()
+        val filtered = indices.filter { it in items.indices }.toSet()
+        val previous = coordinateErrorPositions
+        coordinateErrorPositions = filtered
+        val changed = (previous union filtered) - (previous intersect filtered)
+        changed.forEach { index ->
+            if (index in items.indices) notifyItemChanged(index)
+        }
     }
 
 
@@ -134,11 +144,13 @@ class PointAdapter(
             if (etLat.text.toString() != item.lat) etLat.setText(item.lat)
             latWatcher = etLat.doAfterTextChanged { text ->
                 val v = text?.toString().orEmpty()
-                if (items.getOrNull(bindingAdapterPosition)?.lat != v) {
-                    items[bindingAdapterPosition].lat = v
-                    onLatChanged(bindingAdapterPosition, v)
+                val idx = bindingAdapterPosition
+                if (idx in items.indices && items[idx].lat != v) {
+                    items[idx].lat = v
+                    onLatChanged(idx, v)
                 }
-                applyCoordinateErrorState(bindingAdapterPosition)
+                clearCoordinateErrorIfResolved(idx)
+                applyCoordinateErrorState(idx)
             }
 
             // --- LNG ---
@@ -146,11 +158,13 @@ class PointAdapter(
             if (etLng.text.toString() != item.lng) etLng.setText(item.lng)
             lngWatcher = etLng.doAfterTextChanged { text ->
                 val v = text?.toString().orEmpty()
-                if (items.getOrNull(bindingAdapterPosition)?.lng != v) {
-                    items[bindingAdapterPosition].lng = v
-                    onLngChanged(bindingAdapterPosition, v)
+                val idx = bindingAdapterPosition
+                if (idx in items.indices && items[idx].lng != v) {
+                    items[idx].lng = v
+                    onLngChanged(idx, v)
                 }
-                applyCoordinateErrorState(bindingAdapterPosition)
+                clearCoordinateErrorIfResolved(idx)
+                applyCoordinateErrorState(idx)
             }
 
             // --- LOCATION ---
@@ -158,18 +172,23 @@ class PointAdapter(
             if (etLocation.text.toString() != item.location) etLocation.setText(item.location)
             locWatcher = etLocation.doAfterTextChanged { text ->
                 val v = text?.toString().orEmpty()
-                if (items.getOrNull(bindingAdapterPosition)?.location != v) {
-                    items[bindingAdapterPosition].location = v
-                    onLocationChanged(bindingAdapterPosition, v)
+                val idx = bindingAdapterPosition
+                if (idx in items.indices && items[idx].location != v) {
+                    items[idx].location = v
+                    onLocationChanged(idx, v)
                 }
-                if (locationErrorPositions.contains(bindingAdapterPosition)) {
+                if (locationErrorPositions.contains(idx)) {
                     etLocation.error = if (v.isBlank()) {
                         itemView.context.getString(R.string.error_location_required)
                     } else {
                         null
                     }
                 }
-                applyLocationErrorState(bindingAdapterPosition)
+                if (!locationErrorPositions.contains(idx)) {
+                    etLocation.error = null
+                }
+                clearLocationErrorIfResolved(idx)
+                applyLocationErrorState(idx)
             }
 
             btnDelete.visibility = View.VISIBLE
@@ -192,7 +211,7 @@ class PointAdapter(
 
         private fun applyCoordinateErrorState(position: Int) {
             if (position == RecyclerView.NO_POSITION) return
-            val showError = shouldHighlightCoordinates(position)
+            val showError = coordinateErrorPositions.contains(position)
             if (showError) {
                 cardCoordinates.strokeWidth = errorStrokeWidth
                 cardCoordinates.strokeColor = errorStrokeColor
@@ -202,15 +221,9 @@ class PointAdapter(
             }
         }
 
-        private fun shouldHighlightCoordinates(position: Int): Boolean {
-            if (!coordinateErrorPositions.contains(position)) return false
-            val item = items.getOrNull(position) ?: return true
-            return item.lat.isBlank() || item.lng.isBlank()
-        }
-
         private fun applyLocationErrorState(position: Int) {
             if (position == RecyclerView.NO_POSITION) return
-            val showError = shouldHighlightLocation(position)
+            val showError = locationErrorPositions.contains(position)
             if (showError) {
                 cardLocation.strokeWidth = errorStrokeWidth
                 cardLocation.strokeColor = errorStrokeColor
@@ -220,10 +233,13 @@ class PointAdapter(
             }
         }
 
-        private fun shouldHighlightLocation(position: Int): Boolean {
-            if (!locationErrorPositions.contains(position)) return false
-            val item = items.getOrNull(position) ?: return true
-            return item.location.isBlank()
+        private fun clearLocationErrorIfResolved(position: Int) {
+            if (position == RecyclerView.NO_POSITION) return
+            if (!locationErrorPositions.contains(position)) return
+            val item = items.getOrNull(position) ?: return
+            if (item.location.isNotBlank()) {
+                locationErrorPositions = locationErrorPositions - position
+            }
         }
     }
 
