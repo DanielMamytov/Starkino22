@@ -22,8 +22,7 @@ import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.drop
-
+import kotlinx.coroutines.flow.filterNotNull
 
 @AndroidEntryPoint
 class AdmiralRoutesDetailFragment : Fragment() {
@@ -78,17 +77,8 @@ class AdmiralRoutesDetailFragment : Fragment() {
         // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.state
-                .drop(1)
+                .filterNotNull()
                 .collectLatest { data ->
-                    if (data == null) {
-                        if (navigatingAfterDelete || vm.isRouteDeleted()) {
-                            navigatingAfterDelete = true
-                            return@collectLatest
-                        }
-                        Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack()
-                        return@collectLatest
-                    }
                     val route = data.route
                     binding.txtName.text = route.name
                     binding.txtDate.text = route.date.format(dateFmt)
@@ -102,6 +92,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
                     pointsAdapter.submit(points)
                     binding.rvPoints.isVisible = points.isNotEmpty()
                 }
+        }
 //                    val countText = resources.getQuantityString(
 //                        R.plurals.points_count,
 //                        points.size,

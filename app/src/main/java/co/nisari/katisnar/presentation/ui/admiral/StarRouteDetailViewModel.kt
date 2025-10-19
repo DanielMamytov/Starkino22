@@ -26,6 +26,7 @@ class StarRouteDetailViewModel @Inject constructor(
 
     private var currentRouteId: Long? = null
     private var routeDeleted = false
+    private var missingRouteNotified = false
 
     private val _ui = Channel<UiEvent>(Channel.BUFFERED)
     val ui = _ui.receiveAsFlow()
@@ -37,11 +38,22 @@ class StarRouteDetailViewModel @Inject constructor(
 
     fun load(id: Long) {
         currentRouteId = id
+        missingRouteNotified = false
         viewModelScope.launch {
             repo.getRouteWithPoints(id).collect { loaded ->
-                if (loaded != null) {
-                    currentRouteId = loaded.route.id
+                if (loaded == null) {
+                    if (routeDeleted) {
+                        return@collect
+                    }
+                    if (!missingRouteNotified) {
+                        missingRouteNotified = true
+                        _ui.send(UiEvent.ShowToast("Item not found"))
+                        _ui.send(UiEvent.NavigateBack)
+                    }
+                    return@collect
                 }
+                missingRouteNotified = false
+                currentRouteId = loaded.route.id
                 _state.value = loaded
             }
         }
