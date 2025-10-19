@@ -49,6 +49,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        hasLoadedRoute = false
         // 1) аргумент id (через SafeArgs или обычный Bundle)
         val routeId = requireArguments().getLong("id", -1L)
         if (routeId == -1L) {
@@ -99,12 +100,24 @@ class AdmiralRoutesDetailFragment : Fragment() {
                     if (binding.txtTime.text?.toString() != timeFormatted) {
                         binding.txtTime.setText(timeFormatted)
                     }
-                    binding.txtDescription.text = route.description
-
-                    val points = data.points
-                    pointsAdapter.submit(points)
-                    binding.rvPoints.isVisible = points.isNotEmpty()
+                    Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                    return@collectLatest
                 }
+                hasLoadedRoute = true
+                val route = data.route
+                binding.txtName.text = route.name
+                binding.txtDate.text = route.date.format(dateFmt)
+                val timeFormatted = route.time.format(timeFmt)
+                if (binding.txtTime.text?.toString() != timeFormatted) {
+                    binding.txtTime.setText(timeFormatted)
+                }
+                binding.txtDescription.text = route.description
+
+                val points = data.points
+                pointsAdapter.submit(points)
+                binding.rvPoints.isVisible = points.isNotEmpty()
+            }
 //                    val countText = resources.getQuantityString(
 //                        R.plurals.points_count,
 //                        points.size,
