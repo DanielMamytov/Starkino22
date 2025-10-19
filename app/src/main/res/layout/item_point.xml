@@ -136,6 +136,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
+
         app:cardBackgroundColor="#330200"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
@@ -145,7 +146,6 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-
             android:paddingHorizontal="10dp">
 
             <TextView
