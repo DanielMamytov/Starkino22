@@ -16,7 +16,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import co.nisari.katisnar.R
 import co.nisari.katisnar.databinding.FragmentStarLocationDetailBinding
@@ -29,15 +31,16 @@ import eightbitlab.com.blurview.BlurTarget
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.drop
 import java.net.URLEncoder
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class StarLocationDetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentStarLocationDetailBinding
+    private var _binding: FragmentStarLocationDetailBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: StarLocationDetailViewModel by viewModels()
+    private var currentLocation: StarLocation? = null
 
     private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") }
     private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }
@@ -46,7 +49,7 @@ class StarLocationDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStarLocationDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentStarLocationDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -85,71 +88,76 @@ class StarLocationDetailFragment : Fragment() {
 
         var hasLoadedLocation = false
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.location
-                .drop(1)
-                .collectLatest { loc ->
-                    if (loc == null) {
-                        val messageRes = if (hasLoadedLocation) {
-                            R.string.toast_star_location_deleted
-                        } else {
-                            R.string.toast_star_location_not_found
-                        }
-                        Toast.makeText(requireContext(), getString(messageRes), Toast.LENGTH_SHORT)
-                            .show()
-
-                        val controller = findNavController()
-                        if (controller.currentDestination?.id == R.id.starLocationDetailFragment) {
-                            val popped = controller.popBackStack(R.id.starLocationFragment, false)
-                            if (!popped) {
-                                controller.popBackStack()
-                            }
-                        }
-                        return@collectLatest
-                    }
-
-                    hasLoadedLocation = true
-
-                    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
-                    binding.txtName.text = loc.name
-                    binding.txtLocation.text = loc.location
-                    binding.txtDate.text = loc.date.format(dateFormatter)
-                    binding.txtTime.text = loc.time.format(timeFormatter)
-                    binding.txtLatitude.text = String.format("%.4f", loc.lat)
-                    binding.txtLongitude.text = String.format("%.4f", loc.lng)
-                    binding.txtWeather.text =
-                        loc.weather.name.lowercase().replaceFirstChar { it.uppercase() }
-                    binding.txtNotes.text = loc.notes
-
-                    applyValidation(loc)
-
-                    // Кнопка показать на карте
-                    binding.root.findViewById<View>(R.id.btn_show_map).setOnClickListener {
-                        viewModel.onShowOnMap(loc.lat, loc.lng, loc.location)
-                    }
-
-                    // Edit
-                    binding.btnEdit.setOnClickListener {
-                        viewModel.onEditClick(loc.id)
-                    }
-
-                    // Delete
-                    binding.btnDelete.setOnClickListener {
-                        viewModel.onDeleteClick(loc.id)
-                    }
-
-                    // Back
-                    binding.btnBack.setOnClickListener {
-                        viewModel.onBackClick()
-                    }
-                }
+        binding.root.findViewById<View>(R.id.btn_show_map).setOnClickListener {
+            currentLocation?.let { loc ->
+                viewModel.onShowOnMap(loc.lat, loc.lng, loc.location)
+            }
         }
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.uiEvent.collect { event ->
-                when (event) {
+        binding.btnEdit.setOnClickListener {
+            currentLocation?.let { viewModel.onEditClick(it.id) }
+        }
+
+        binding.btnDelete.setOnClickListener {
+            currentLocation?.let { viewModel.onDeleteClick(it.id) }
+        }
+
+        binding.btnBack.setOnClickListener {
+            viewModel.onBackClick()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.location
+                    .collectLatest { loc ->
+                        if (loc == null) {
+                            if (!hasLoadedLocation) {
+                                return@collectLatest
+                            }
+
+                            currentLocation = null
+
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.toast_star_location_deleted),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            val controller = findNavController()
+                            if (controller.currentDestination?.id == R.id.starLocationDetailFragment) {
+                                val popped = controller.popBackStack(R.id.starLocationFragment, false)
+                                if (!popped) {
+                                    controller.popBackStack()
+                                }
+                            }
+                            return@collectLatest
+                        }
+
+                        hasLoadedLocation = true
+                        currentLocation = loc
+
+                        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+                        binding.txtName.text = loc.name
+                        binding.txtLocation.text = loc.location
+                        binding.txtDate.text = loc.date.format(dateFormatter)
+                        binding.txtTime.text = loc.time.format(timeFormatter)
+                        binding.txtLatitude.text = String.format("%.4f", loc.lat)
+                        binding.txtLongitude.text = String.format("%.4f", loc.lng)
+                        binding.txtWeather.text =
+                            loc.weather.name.lowercase().replaceFirstChar { it.uppercase() }
+                        binding.txtNotes.text = loc.notes
+
+                        applyValidation(loc)
+                    }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiEvent.collect { event ->
+                    when (event) {
                     is UiEvent.NavigateBack -> findNavController().popBackStack()
 
                     is UiEvent.NavigateToEdit -> {
@@ -181,10 +189,17 @@ class StarLocationDetailFragment : Fragment() {
                     is UiEvent.NavigateToDetail -> TODO()
                     is UiEvent.OpenMaps1 -> TODO()
                     is UiEvent.NavigateToList -> Unit
+                    }
                 }
             }
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        currentLocation = null
+        _binding = null
     }
 
 
