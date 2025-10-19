@@ -2,6 +2,7 @@ package co.nisari.katisnar.presentation.ui.admiral
 
 import android.graphics.Color
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import co.nisari.katisnar.R
 import co.nisari.katisnar.presentation.util.DoubleRangeInputFilter
 import com.google.android.material.card.MaterialCardView
+import kotlin.math.roundToInt
 
 data class PointItem(
     var lat: String = "",
@@ -68,13 +69,23 @@ class PointAdapter(
     }
 
     fun showLocationErrors(indices: Set<Int>) {
-        locationErrorPositions = indices
-        notifyDataSetChanged()
+        val filtered = indices.filter { it in items.indices }.toSet()
+        val previous = locationErrorPositions
+        locationErrorPositions = filtered
+        val changed = (previous union filtered) - (previous intersect filtered)
+        changed.forEach { index ->
+            if (index in items.indices) notifyItemChanged(index)
+        }
     }
 
     fun showCoordinateErrors(indices: Set<Int>) {
-        coordinateErrorPositions = indices
-        notifyDataSetChanged()
+        val filtered = indices.filter { it in items.indices }.toSet()
+        val previous = coordinateErrorPositions
+        coordinateErrorPositions = filtered
+        val changed = (previous union filtered) - (previous intersect filtered)
+        changed.forEach { index ->
+            if (index in items.indices) notifyItemChanged(index)
+        }
     }
 
 
@@ -87,7 +98,14 @@ class PointAdapter(
         private val cardCoordinates: MaterialCardView = view.findViewById(R.id.card_coordinates)
         private val cardLocation: MaterialCardView = view.findViewById(R.id.card_location)
 
-        private val errorStrokeColor = ContextCompat.getColor(view.context, R.color.seg_border)
+        private val errorStrokeColor = Color.parseColor("#FF0000")
+        private val errorStrokeWidth = view.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+        private val normalStrokeColor = Color.parseColor("#B8FFFFFF")
+        private val normalStrokeWidth = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            1f,
+            view.resources.displayMetrics
+        ).roundToInt().coerceAtLeast(1)
 
         private var latWatcher: TextWatcher? = null
         private var lngWatcher: TextWatcher? = null
@@ -125,11 +143,13 @@ class PointAdapter(
             if (etLat.text.toString() != item.lat) etLat.setText(item.lat)
             latWatcher = etLat.doAfterTextChanged { text ->
                 val v = text?.toString().orEmpty()
-                if (items.getOrNull(bindingAdapterPosition)?.lat != v) {
-                    items[bindingAdapterPosition].lat = v
-                    onLatChanged(bindingAdapterPosition, v)
+                val idx = bindingAdapterPosition
+                if (idx in items.indices && items[idx].lat != v) {
+                    items[idx].lat = v
+                    onLatChanged(idx, v)
                 }
-                applyCoordinateErrorState(bindingAdapterPosition)
+                clearCoordinateErrorIfResolved(idx)
+                applyCoordinateErrorState(idx)
             }
 
             // --- LNG ---
@@ -137,11 +157,13 @@ class PointAdapter(
             if (etLng.text.toString() != item.lng) etLng.setText(item.lng)
             lngWatcher = etLng.doAfterTextChanged { text ->
                 val v = text?.toString().orEmpty()
-                if (items.getOrNull(bindingAdapterPosition)?.lng != v) {
-                    items[bindingAdapterPosition].lng = v
-                    onLngChanged(bindingAdapterPosition, v)
+                val idx = bindingAdapterPosition
+                if (idx in items.indices && items[idx].lng != v) {
+                    items[idx].lng = v
+                    onLngChanged(idx, v)
                 }
-                applyCoordinateErrorState(bindingAdapterPosition)
+                clearCoordinateErrorIfResolved(idx)
+                applyCoordinateErrorState(idx)
             }
 
             // --- LOCATION ---
@@ -149,18 +171,23 @@ class PointAdapter(
             if (etLocation.text.toString() != item.location) etLocation.setText(item.location)
             locWatcher = etLocation.doAfterTextChanged { text ->
                 val v = text?.toString().orEmpty()
-                if (items.getOrNull(bindingAdapterPosition)?.location != v) {
-                    items[bindingAdapterPosition].location = v
-                    onLocationChanged(bindingAdapterPosition, v)
+                val idx = bindingAdapterPosition
+                if (idx in items.indices && items[idx].location != v) {
+                    items[idx].location = v
+                    onLocationChanged(idx, v)
                 }
-                if (locationErrorPositions.contains(bindingAdapterPosition)) {
+                if (locationErrorPositions.contains(idx)) {
                     etLocation.error = if (v.isBlank()) {
                         itemView.context.getString(R.string.error_location_required)
                     } else {
                         null
                     }
                 }
-                applyLocationErrorState(bindingAdapterPosition)
+                if (!locationErrorPositions.contains(idx)) {
+                    etLocation.error = null
+                }
+                clearLocationErrorIfResolved(idx)
+                applyLocationErrorState(idx)
             }
 
             btnDelete.visibility = View.VISIBLE
@@ -183,38 +210,44 @@ class PointAdapter(
 
         private fun applyCoordinateErrorState(position: Int) {
             if (position == RecyclerView.NO_POSITION) return
-            val showError = shouldHighlightCoordinates(position)
+            val showError = coordinateErrorPositions.contains(position)
             if (showError) {
-                cardCoordinates.strokeWidth = itemView.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+                cardCoordinates.strokeWidth = errorStrokeWidth
                 cardCoordinates.strokeColor = errorStrokeColor
             } else {
-                cardCoordinates.strokeWidth = 0
-                cardCoordinates.strokeColor = Color.TRANSPARENT
+                cardCoordinates.strokeWidth = normalStrokeWidth
+                cardCoordinates.strokeColor = normalStrokeColor
             }
-        }
-
-        private fun shouldHighlightCoordinates(position: Int): Boolean {
-            if (!coordinateErrorPositions.contains(position)) return false
-            val item = items.getOrNull(position) ?: return true
-            return item.lat.isBlank() || item.lng.isBlank()
         }
 
         private fun applyLocationErrorState(position: Int) {
             if (position == RecyclerView.NO_POSITION) return
-            val showError = shouldHighlightLocation(position)
+            val showError = locationErrorPositions.contains(position)
             if (showError) {
-                cardLocation.strokeWidth = itemView.resources.getDimensionPixelSize(R.dimen.stroke_2dp)
+                cardLocation.strokeWidth = errorStrokeWidth
                 cardLocation.strokeColor = errorStrokeColor
             } else {
-                cardLocation.strokeWidth = 0
-                cardLocation.strokeColor = Color.TRANSPARENT
+                cardLocation.strokeWidth = normalStrokeWidth
+                cardLocation.strokeColor = normalStrokeColor
             }
         }
 
-        private fun shouldHighlightLocation(position: Int): Boolean {
-            if (!locationErrorPositions.contains(position)) return false
-            val item = items.getOrNull(position) ?: return true
-            return item.location.isBlank()
+        private fun clearCoordinateErrorIfResolved(position: Int) {
+            if (position == RecyclerView.NO_POSITION) return
+            if (!coordinateErrorPositions.contains(position)) return
+            val item = items.getOrNull(position) ?: return
+            if (item.lat.isNotBlank() && item.lng.isNotBlank()) {
+                coordinateErrorPositions = coordinateErrorPositions - position
+            }
+        }
+
+        private fun clearLocationErrorIfResolved(position: Int) {
+            if (position == RecyclerView.NO_POSITION) return
+            if (!locationErrorPositions.contains(position)) return
+            val item = items.getOrNull(position) ?: return
+            if (item.location.isNotBlank()) {
+                locationErrorPositions = locationErrorPositions - position
+            }
         }
     }
 
