@@ -169,6 +169,11 @@ class AdmiralRouteEditFragment : Fragment() {
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnSave.setOnClickListener { onSaveClicked() }
 
+        binding.txtDescription.doOnTextChanged { t, _, _, _ ->
+            vm.onDescChange(t?.toString().orEmpty())
+            markDescriptionIfFilled()
+        }
+
         binding.cvDescription.setOnClickListener {
             // 1) фокус на EditText
             binding.txtDescription.requestFocus()
@@ -197,11 +202,6 @@ class AdmiralRouteEditFragment : Fragment() {
                 val timeStr = s.time?.format(timeFmt) ?: ""
                 if (binding.txtTime.text?.toString() != timeStr) binding.txtTime.setText(timeStr)
 
-                // description
-                binding.txtDescription.doOnTextChanged { t, _, _, _ ->
-                    vm.onDescChange(t?.toString().orEmpty())
-                    markDescriptionIfFilled()
-                }
                 // description  ← было: binding.txtDescription.text = s.description
                 if (binding.txtDescription.text?.toString() != s.description) {
                     binding.txtDescription.setText(s.description)
