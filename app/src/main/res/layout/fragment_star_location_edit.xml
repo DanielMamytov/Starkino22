@@ -11,474 +11,475 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="66dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/btn_back" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/btn_delete"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_gravity="start|top"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="40dp"
-                android:src="@drawable/btn_delete" />
-        </LinearLayout>
+            android:orientation="vertical">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/route_detail_header"
-            android:gravity="center"
-            android:padding="20dp">
-
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_extrabold"
-                android:text="Star location edit"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="66dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/btn_back" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_marginHorizontal="20dp">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
+                <ImageView
+                    android:id="@+id/btn_delete"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="start|top"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:src="@drawable/btn_delete" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/route_detail_header"
+                android:gravity="center"
+                android:padding="20dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:text="Star location edit"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="30dp">
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp">
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="30dp">
 
 
                     <!-- здесь твой фон/контент, который должен размываться -->
 
 
+                    <LinearLayout
+                        android:id="@+id/blur_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_bottom_round_white_9"
+                        android:clipToOutline="true"
+                        android:orientation="vertical"
+                        android:paddingBottom="30dp">
+
+
+                        <LinearLayout
+                            android:id="@+id/box_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/edittext_border_bg"
+                            android:orientation="horizontal"
+                            android:paddingVertical="10dp">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Name:"
+                                android:textColor="#A2A2A2"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/et_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/poppins_medium"
+                                android:hint="Enter name"
+                                android:inputType="textPersonName"
+                                android:maxLines="1"
+                                android:padding="0dp"
+                                android:textColor="@color/white"
+                                android:textColorHint="#A2A2A2"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/box_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/edittext_border_bg"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingVertical="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Location:"
+                                android:textColor="#A2A2A2"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/txt_location"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/poppins_medium"
+                                android:hint="Enter location"
+                                android:inputType="textCapWords"
+                                android:padding="0dp"
+                                android:textColor="@color/white"
+                                android:textColorHint="#A2A2A2"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/box_date"
+                                android:layout_width="134dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="5dp"
+                                android:layout_weight="1"
+
+                                android:background="@drawable/text_border"
+                                android:orientation="horizontal"
+                                android:padding="8dp">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/img_date" />
+
+                                <TextView
+                                    android:id="@+id/txt_date"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:background="@android:color/transparent"
+                                    android:ellipsize="end"
+                                    android:gravity="center"
+                                    android:maxLines="1"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/ic_arrow_date"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/img_arrow_down" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/box_time"
+                                android:layout_width="134dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="end"
+                                android:layout_marginStart="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/text_border"
+                                android:orientation="horizontal"
+                                android:padding="8dp">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:contentDescription="Calendar icon"
+                                    android:src="@drawable/img_time" />
+
+                                <EditText
+                                    android:id="@+id/txt_time"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:background="@android:color/transparent"
+                                    android:ellipsize="end"
+                                    android:gravity="center"
+                                    android:maxLines="1"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/ic_arrow_time"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:contentDescription="Dropdown arrow"
+                                    android:src="@drawable/img_arrow_down" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <!-- Latitude -->
+                            <LinearLayout
+                                android:id="@+id/box_latitude"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_border_bg"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingVertical="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="Latitude:"
+                                    android:textColor="#A2A2A2"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txt_latitude"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@android:color/transparent"
+                                    android:digits="-0123456789."
+                                    android:ellipsize="end"
+                                    android:hint=""
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:maxLines="1"
+                                    android:padding="0dp"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="#A2A2A2"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <!-- Longitude -->
+                            <LinearLayout
+                                android:id="@+id/box_longitude"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/edittext_border_bg"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingVertical="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="Longitude:"
+                                    android:textColor="#A2A2A2"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txt_longitude"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@android:color/transparent"
+                                    android:digits="-0123456789."
+                                    android:ellipsize="end"
+                                    android:hint=""
+                                    android:inputType="numberDecimal|numberSigned"
+                                    android:maxLines="1"
+                                    android:padding="0dp"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="#A2A2A2"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/box_weather"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/edittext_border_bg"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="8dp">
+
+                            <!-- Иконка погоды -->
+                            <ImageView
+                                android:id="@+id/ic_weather"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/weather_icon" />
+
+                            <!-- Текст Weather -->
+                            <TextView
+                                android:id="@+id/txt_weather"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:text="Weather"
+                                android:textColor="#C5FFFFFF"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <!-- Иконка стрелки вниз -->
+                            <ImageView
+                                android:id="@+id/ic_dropdown"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/img_arrow_down" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/box_notes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:padding="15dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/edittext_border_bg"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/label_notes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Notes:"
+                                android:textColor="#A2A2A2"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/et_notes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/poppins_bold"
+                                android:gravity="top|start"
+                                android:hint="Write your note..."
+                                android:inputType="textMultiLine"
+                                android:overScrollMode="never"
+                                android:scrollbars="none"
+                                android:scrollHorizontally="false"
+                                android:textColor="@color/white"
+                                android:textColorHint="#A2A2A2"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
                 <LinearLayout
-                    android:id="@+id/blur_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToOutline="true"
-                    android:background="@drawable/bg_bottom_round_white_9"
-                    android:orientation="vertical"
-                    android:paddingBottom="30dp">
+                    android:layout_gravity="bottom"
+                    android:layout_marginHorizontal="30dp"
+                    android:orientation="horizontal">
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_save"
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF0000"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_extrabold"
+                        android:maxLines="1"
+                        android:text="Save"
+                        android:textAllCaps="true"
+                        android:textSize="16sp" />
 
-                    <LinearLayout
-                        android:id="@+id/box_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/edittext_border_bg"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="Name:"
-                            android:textColor="#A2A2A2"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/et_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:layout_weight="1"
-                            android:hint="Enter name"
-                            android:fontFamily="@font/poppins_medium"
-                            android:background="@android:color/transparent"
-                            android:inputType="textPersonName"
-                            android:padding="0dp"
-                            android:textColorHint="#A2A2A2"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/box_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/edittext_border_bg"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="Location:"
-                            android:textColor="#A2A2A2"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins_medium"/>
-
-                        <EditText
-                            android:id="@+id/txt_location"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:hint="Enter location"
-                            android:textColor="@color/white"
-                            android:textColorHint="#A2A2A2"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins_medium"
-                            android:inputType="textCapWords"
-                            android:padding="0dp"/>
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/box_date"
-                            android:layout_width="134dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-
-                            android:background="@drawable/text_border"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/img_date" />
-
-                            <TextView
-                                android:id="@+id/txt_date"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@android:color/transparent"
-                                android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/ic_arrow_date"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/img_arrow_down" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/box_time"
-                            android:layout_width="134dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="end"
-                            android:layout_marginStart="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/text_border"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Calendar icon"
-                                android:src="@drawable/img_time" />
-
-                            <EditText
-                                android:id="@+id/txt_time"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:background="@android:color/transparent"
-                                android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/ic_arrow_time"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="Dropdown arrow"
-                                android:src="@drawable/img_arrow_down" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical">
-
-                        <!-- Latitude -->
-                        <LinearLayout
-                            android:id="@+id/box_latitude"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/edittext_border_bg"
-                            android:orientation="horizontal"
-                            android:padding="10dp"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:fontFamily="@font/poppins_medium"
-                                android:text="Latitude:"
-                                android:textColor="#A2A2A2"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/txt_latitude"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_weight="1"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@android:color/transparent"
-                                android:hint=""
-                                android:textColor="@color/white"
-                                android:textColorHint="#A2A2A2"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:digits="-0123456789."
-                                android:inputType="numberDecimal|numberSigned"
-                                android:padding="0dp" />
-                        </LinearLayout>
-
-                        <!-- Longitude -->
-                        <LinearLayout
-                            android:id="@+id/box_longitude"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/edittext_border_bg"
-                            android:orientation="horizontal"
-                            android:padding="10dp"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:fontFamily="@font/poppins_medium"
-                                android:text="Longitude:"
-                                android:textColor="#A2A2A2"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/txt_longitude"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_weight="1"
-                                android:background="@android:color/transparent"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:hint=""
-                                android:textColor="@color/white"
-                                android:textColorHint="#A2A2A2"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:digits="-0123456789."
-                                android:inputType="numberDecimal|numberSigned"
-                                android:padding="0dp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/box_weather"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittext_border_bg"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="14dp"
-                        android:paddingVertical="8dp">
-
-                        <!-- Иконка погоды -->
-                        <ImageView
-                            android:id="@+id/ic_weather"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/weather_icon" />
-
-                        <!-- Текст Weather -->
-                        <TextView
-                            android:id="@+id/txt_weather"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Weather"
-                            android:textColor="#C5FFFFFF"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <!-- Иконка стрелки вниз -->
-                        <ImageView
-                            android:id="@+id/ic_dropdown"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/img_arrow_down" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/box_notes"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/edittext_border_bg"
-                        android:orientation="vertical"
-                        android:padding="12dp">
-
-                        <TextView
-                            android:id="@+id/label_notes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="Notes:"
-                            android:textColor="#A2A2A2"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/et_notes"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:background="@android:color/transparent"
-                            android:fontFamily="@font/poppins_bold"
-                            android:gravity="top|start"
-                            android:hint="Write your note..."
-                            android:inputType="textMultiLine"
-                            android:minLines="4"
-                            android:scrollbars="none"
-                            android:overScrollMode="never"
-                            android:scrollHorizontally="false"
-                            android:textColor="@color/white"
-                            android:textColorHint="#A2A2A2"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#707070"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_extrabold"
+                        android:maxLines="1"
+                        android:text="Cancel"
+                        android:textAllCaps="true"
+                        android:textSize="16sp" />
                 </LinearLayout>
-
             </FrameLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginHorizontal="30dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_save"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#FF0000"
-                    android:fontFamily="@font/poppins_extrabold"
-                    android:text="Save"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textAllCaps="true"
-                    android:textSize="16sp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#707070"
-                    android:fontFamily="@font/poppins_extrabold"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:text="Cancel"
-                    android:textAllCaps="true"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </FrameLayout>
 
 
-    </LinearLayout>
+        </LinearLayout>
     </FrameLayout>
 
 </ScrollView>
