@@ -248,16 +248,19 @@ class AdmiralRouteEditFragment : Fragment() {
         val timeEmpty = binding.txtTime.text?.toString()?.trim().isNullOrEmpty()
         val descriptionEmpty =
             binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()   // ← CHANGED
+        val emptyLocationIndices = getEmptyLocationIndices()
 
         if (validationActivated) {
             setNameError(nameEmpty)
             setDateError(dateEmpty)
             setTimeError(timeEmpty)
             setDescriptionError(descriptionEmpty)
+            pointsAdapter.showLocationErrors(emptyLocationIndices)
         } else {
             setNameError(false); setDateError(false); setTimeError(false); setDescriptionError(false)
+            pointsAdapter.showLocationErrors(emptySet())
         }
-        return nameEmpty || dateEmpty || timeEmpty || descriptionEmpty
+        return nameEmpty || dateEmpty || timeEmpty || descriptionEmpty || emptyLocationIndices.isNotEmpty()
     }
 
     private fun syncErrorMasks() {
@@ -268,6 +271,7 @@ class AdmiralRouteEditFragment : Fragment() {
         setDescriptionError(
             binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()
         )     // ← CHANGED
+        pointsAdapter.showLocationErrors(getEmptyLocationIndices())
     }
 
     private fun markDescriptionIfFilled() {
@@ -318,6 +322,12 @@ class AdmiralRouteEditFragment : Fragment() {
     private fun setTimeError(error: Boolean) {
         val box = binding.boxTime
         box.setBackgroundResource(if (error) R.drawable.text_border_error else R.drawable.text_border)
+    }
+
+    private fun getEmptyLocationIndices(): Set<Int> {
+        return vm.state.value.points.mapIndexedNotNull { index, item ->
+            if (item.location.trim().isEmpty()) index else null
+        }.toSet()
     }
 
     // ======= DIALOGS / PICKERS =======

@@ -27,11 +27,13 @@ class PointAdapter(
 ) : RecyclerView.Adapter<PointAdapter.VH>() {
 
     private val items = mutableListOf<PointItem>()
+    private var locationErrorPositions: Set<Int> = emptySet()
 
     /** Обновляем все элементы из VM */
     fun submit(newItems: List<PointItem>) {
         items.clear()
         items.addAll(newItems)
+        locationErrorPositions = locationErrorPositions.filter { it < newItems.size }.toSet()
         notifyDataSetChanged()
     }
 
@@ -45,8 +47,17 @@ class PointAdapter(
     fun removeAt(index: Int) {
         if (index in items.indices) {
             items.removeAt(index)
+            locationErrorPositions = locationErrorPositions
+                .filter { it != index }
+                .map { if (it > index) it - 1 else it }
+                .toSet()
             notifyItemRemoved(index)
         }
+    }
+
+    fun showLocationErrors(indices: Set<Int>) {
+        locationErrorPositions = indices
+        notifyDataSetChanged()
     }
 
 
@@ -119,6 +130,13 @@ class PointAdapter(
                     items[bindingAdapterPosition].location = v
                     onLocationChanged(bindingAdapterPosition, v)
                 }
+                if (locationErrorPositions.contains(bindingAdapterPosition)) {
+                    etLocation.error = if (v.isBlank()) {
+                        itemView.context.getString(R.string.error_location_required)
+                    } else {
+                        null
+                    }
+                }
             }
 
             btnDelete.visibility = View.VISIBLE
@@ -127,6 +145,12 @@ class PointAdapter(
                 if (idx in items.indices) {
                     onRemove(idx)
                 }
+            }
+
+            etLocation.error = if (locationErrorPositions.contains(position)) {
+                itemView.context.getString(R.string.error_location_required)
+            } else {
+                null
             }
         }
     }

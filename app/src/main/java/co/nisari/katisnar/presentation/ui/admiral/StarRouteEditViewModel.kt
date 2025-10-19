@@ -133,6 +133,12 @@ class StarRouteEditViewModel @Inject constructor(
                 location = pi.location.trim()
             )
         }
+        if (routePoints.any { it.location.isBlank() }) {
+            viewModelScope.launch {
+                _ui.send(UiEvent.ShowToast("Enter location for all points before adding route"))
+            }
+            return
+        }
         if (routePoints.any { it.lat.isNaN() || it.lng.isNaN() }) {
             viewModelScope.launch {
                 _ui.send(UiEvent.ShowToast("Check latitude and longitude values before adding point"))
