@@ -77,12 +77,26 @@ class AdmiralRouteEditFragment : Fragment() {
     /** Включать подсветку ошибок только после первого нажатия Save */
     private var validationActivated = false
 
-    /** Нужна ли обязательность Description */
-    private val requireDescription = true
-
     // Цвета обводки
     private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") } // полупрозрачный белый
     private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }   // красный
+
+    private data class ValidationResult(
+        val nameEmpty: Boolean,
+        val dateEmpty: Boolean,
+        val timeEmpty: Boolean,
+        val descriptionEmpty: Boolean,
+        val emptyLocationIndices: Set<Int>,
+        val emptyCoordinateIndices: Set<Int>
+    ) {
+        val hasError: Boolean =
+            nameEmpty ||
+                dateEmpty ||
+                timeEmpty ||
+                descriptionEmpty ||
+                emptyLocationIndices.isNotEmpty() ||
+                emptyCoordinateIndices.isNotEmpty()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -229,20 +243,31 @@ class AdmiralRouteEditFragment : Fragment() {
         setDateError(false)
         setTimeError(false)
         setDescriptionError(false)
+        pointsAdapter.validationActivated = false
     }
 
     // ======= SAVE + VALIDATION =======
     private fun onSaveClicked() {
-        if (!validationActivated) validationActivated = true
-        val hasError = validateAndMark()
-        if (!hasError) {
+        val result = computeValidation()
+
+        if (!result.hasError) {
             vm.onSave()
-        } else {
-            Toast.makeText(requireContext(), "Enter Latitude, Enter longitude", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        val adapterWasActive = pointsAdapter.validationActivated
+        if (!validationActivated) {
+            validationActivated = true
+        }
+
+        pointsAdapter.validationActivated = validationActivated
+
+        applyValidationToUI(result, adapterWasActive)
+
+        Toast.makeText(requireContext(), "Enter Latitude, Enter longitude", Toast.LENGTH_SHORT).show()
     }
 
-    private fun validateAndMark(): Boolean {
+    private fun computeValidation(): ValidationResult {
         val nameEmpty = binding.etName.text?.toString()?.trim().isNullOrEmpty()
         val dateEmpty = binding.txtDate.text?.toString()?.trim().isNullOrEmpty()
         val timeEmpty = binding.txtTime.text?.toString()?.trim().isNullOrEmpty()
@@ -285,9 +310,7 @@ class AdmiralRouteEditFragment : Fragment() {
 
     private fun markDescriptionIfFilled() {
         if (!validationActivated) return
-        if (!binding.txtDescription.text?.toString()?.trim()
-                .isNullOrEmpty()
-        ) {                  // ← CHANGED
+        if (!binding.txtDescription.text?.toString()?.trim().isNullOrEmpty()) {
             setDescriptionError(false)
         }
     }

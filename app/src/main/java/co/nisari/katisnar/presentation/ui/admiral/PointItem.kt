@@ -31,16 +31,19 @@ class PointAdapter(
     private val onRemove: (index: Int) -> Unit = {}
 ) : RecyclerView.Adapter<PointAdapter.VH>() {
 
+    var validationActivated: Boolean = false
+        set(value) {
+            if (field == value) return
+            field = value
+            notifyDataSetChanged()
+        }
+
     private val items = mutableListOf<PointItem>()
-    private var locationErrorPositions: Set<Int> = emptySet()
-    private var coordinateErrorPositions: Set<Int> = emptySet()
 
     /** Обновляем все элементы из VM */
     fun submit(newItems: List<PointItem>) {
         items.clear()
         items.addAll(newItems)
-        locationErrorPositions = locationErrorPositions.filter { it < newItems.size }.toSet()
-        coordinateErrorPositions = coordinateErrorPositions.filter { it < newItems.size }.toSet()
         notifyDataSetChanged()
     }
 
@@ -57,14 +60,6 @@ class PointAdapter(
     fun removeAt(index: Int) {
         if (index in items.indices) {
             items.removeAt(index)
-            locationErrorPositions = locationErrorPositions
-                .filter { it != index }
-                .map { if (it > index) it - 1 else it }
-                .toSet()
-            coordinateErrorPositions = coordinateErrorPositions
-                .filter { it != index }
-                .map { if (it > index) it - 1 else it }
-                .toSet()
             notifyItemRemoved(index)
         }
     }
@@ -111,6 +106,36 @@ class PointAdapter(
         private var latWatcher: TextWatcher? = null
         private var lngWatcher: TextWatcher? = null
         private var locWatcher: TextWatcher? = null
+
+        private fun coordEmpty(idx: Int): Boolean {
+            if (idx !in items.indices) return false
+            val point = items[idx]
+            return point.lat.isBlank() || point.lng.isBlank()
+        }
+
+        private fun locEmpty(idx: Int): Boolean {
+            if (idx !in items.indices) return false
+            return items[idx].location.isBlank()
+        }
+
+        private fun applyCoordinateUI(idx: Int) {
+            if (idx !in items.indices) return
+            val showError = validationActivated && coordEmpty(idx)
+            cardCoordinates.strokeWidth = if (showError) errorStrokeWidth else normalStrokeWidth
+            cardCoordinates.strokeColor = if (showError) errorStrokeColor else normalStrokeColor
+        }
+
+        private fun applyLocationUI(idx: Int) {
+            if (idx !in items.indices) return
+            val showError = validationActivated && locEmpty(idx)
+            cardLocation.strokeWidth = if (showError) errorStrokeWidth else normalStrokeWidth
+            cardLocation.strokeColor = if (showError) errorStrokeColor else normalStrokeColor
+            etLocation.error = if (showError) {
+                itemView.context.getString(R.string.error_location_required)
+            } else {
+                null
+            }
+        }
 
         init {
             val context = itemView.context
