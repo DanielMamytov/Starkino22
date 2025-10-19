@@ -35,6 +35,7 @@
     <string name="dialog_delete_title">Please confirm deletion</string>
     <string name="dialog_delete_confirm">Confirm</string>
     <string name="dialog_delete_cancel">Cancel</string>
+    <string name="error_no_maps_app">No maps application found</string>
     <string name="toast_star_location_not_found">Star location not found</string>
     <string name="toast_star_location_deleted">Star location deleted</string>
     <string name="content_description_back">Back</string>
