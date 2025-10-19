@@ -22,8 +22,6 @@ import co.nisari.katisnar.presentation.ui.starlocation.UiEvent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.drop
-
 
 @AndroidEntryPoint
 class AdmiralRoutesDetailFragment : Fragment() {
@@ -32,6 +30,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
     private val vm: StarRouteDetailViewModel by viewModels()
     private val pointsAdapter = AdmiralRoutePointsAdapter()
     private var navigatingAfterDelete = false
+    private var hasLoadedRoute = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,6 +48,7 @@ class AdmiralRoutesDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        hasLoadedRoute = false
         // 1) аргумент id (через SafeArgs или обычный Bundle)
         val routeId = requireArguments().getLong("id", -1L)
         if (routeId == -1L) {
@@ -77,31 +77,33 @@ class AdmiralRoutesDetailFragment : Fragment() {
 
         // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.state
-                .drop(1)
-                .collectLatest { data ->
-                    if (data == null) {
-                        if (navigatingAfterDelete || vm.isRouteDeleted()) {
-                            navigatingAfterDelete = true
-                            return@collectLatest
-                        }
-                        Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack()
+            vm.state.collectLatest { data ->
+                if (data == null) {
+                    if (!hasLoadedRoute) {
                         return@collectLatest
                     }
-                    val route = data.route
-                    binding.txtName.text = route.name
-                    binding.txtDate.text = route.date.format(dateFmt)
-                    val timeFormatted = route.time.format(timeFmt)
-                    if (binding.txtTime.text?.toString() != timeFormatted) {
-                        binding.txtTime.setText(timeFormatted)
+                    if (navigatingAfterDelete || vm.isRouteDeleted()) {
+                        navigatingAfterDelete = true
+                        return@collectLatest
                     }
-                    binding.txtDescription.text = route.description
-
-                    val points = data.points
-                    pointsAdapter.submit(points)
-                    binding.rvPoints.isVisible = points.isNotEmpty()
+                    Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                    return@collectLatest
                 }
+                hasLoadedRoute = true
+                val route = data.route
+                binding.txtName.text = route.name
+                binding.txtDate.text = route.date.format(dateFmt)
+                val timeFormatted = route.time.format(timeFmt)
+                if (binding.txtTime.text?.toString() != timeFormatted) {
+                    binding.txtTime.setText(timeFormatted)
+                }
+                binding.txtDescription.text = route.description
+
+                val points = data.points
+                pointsAdapter.submit(points)
+                binding.rvPoints.isVisible = points.isNotEmpty()
+            }
 //                    val countText = resources.getQuantityString(
 //                        R.plurals.points_count,
 //                        points.size,
