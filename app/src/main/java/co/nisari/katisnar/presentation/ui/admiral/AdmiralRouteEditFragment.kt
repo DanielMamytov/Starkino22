@@ -74,10 +74,8 @@ class AdmiralRouteEditFragment : Fragment() {
         )
     }
 
-    /** Включать подсветку ошибок только после первого нажатия Save */
     private var validationActivated = false
 
-    // Цвета обводки
     private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") } // полупрозрачный белый
     private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }   // красный
 
@@ -111,7 +109,6 @@ class AdmiralRouteEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // режим: Create vs Edit
         val id = arguments?.getLong("id", -1L)?.takeIf { it != -1L }
         if (id != null) {
             vm.load(id)
@@ -122,21 +119,17 @@ class AdmiralRouteEditFragment : Fragment() {
             vm.ensureAtLeastOnePoint()
         }
 
-        // список точек
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = pointsAdapter
             isNestedScrollingEnabled = false
         }
-        // ==== ЛИСТЕНЕРЫ ДЛЯ ПОЛЕЙ ====
-        // NAME
         binding.etName.doOnTextChanged { t, _, _, _ ->
             vm.onNameChange(t?.toString().orEmpty())
             markNameIfFilled()
         }
 
-        // DATE
         val openDatePicker = {
             showDatePicker(vm.state.value.date) {
                 vm.onDatePick(it)
@@ -146,7 +139,6 @@ class AdmiralRouteEditFragment : Fragment() {
         binding.icArrowDate.setOnClickListener { openDatePicker() }
         binding.txtDate.setOnClickListener { openDatePicker() }
 
-        // TIME
         val openTimePicker = {
             showTimePicker(vm.state.value.time) {
                 vm.onTimePick(it)
@@ -162,7 +154,6 @@ class AdmiralRouteEditFragment : Fragment() {
 
 
 
-        // Кнопки
         binding.btnBack.setOnClickListener { vm.onBack() }
         binding.btnDelete.setOnClickListener { vm.requestDelete() }
         binding.btnAddPoint.setOnClickListener { vm.addEmptyPoint() }
@@ -175,42 +166,31 @@ class AdmiralRouteEditFragment : Fragment() {
         }
 
         binding.cvDescription.setOnClickListener {
-            // 1) фокус на EditText
             binding.txtDescription.requestFocus()
-            // курсор в конец
             binding.txtDescription.setSelection(binding.txtDescription.text?.length ?: 0)
-            // 2) имитируем клик по самому EditText (если на нём есть свои обработчики)
             binding.txtDescription.performClick()
-            // 3) показать клавиатуру
             val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.txtDescription, InputMethodManager.SHOW_IMPLICIT)
-            // 4) проскроллить, чтобы поле не было скрыто
             binding.root.post {
                 (binding.root as? View)?.let {
                     it.parent?.requestChildFocus(it, binding.txtDescription)
                 }
             }
         }
-        // ==== Подписки ====
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.state.collectLatest { s ->
-                // name
                 if (binding.etName.text?.toString() != s.name) binding.etName.setText(s.name)
 
-                // date/time
                 binding.txtDate.text = s.date?.format(dateFmt) ?: ""
                 val timeStr = s.time?.format(timeFmt) ?: ""
                 if (binding.txtTime.text?.toString() != timeStr) binding.txtTime.setText(timeStr)
 
-                // description  ← было: binding.txtDescription.text = s.description
                 if (binding.txtDescription.text?.toString() != s.description) {
                     binding.txtDescription.setText(s.description)
                 }
 
-                // points
                 pointsAdapter.submit(s.points)
 
-                // Поддерживаем визуальное состояние ошибок только после Save
                 syncErrorMasks()
             }
         }
@@ -238,7 +218,6 @@ class AdmiralRouteEditFragment : Fragment() {
             }
         }
 
-        // Стартовое состояние — без красных рамок
         validationActivated = false
         setNameError(false)
         setDateError(false)
@@ -247,7 +226,6 @@ class AdmiralRouteEditFragment : Fragment() {
         pointsAdapter.validationActivated = false
     }
 
-    // ======= SAVE + VALIDATION =======
     private fun onSaveClicked() {
         val result = computeValidation()
 
