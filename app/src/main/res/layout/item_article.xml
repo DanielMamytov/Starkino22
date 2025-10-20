@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="190dp"
     android:layout_marginTop="10dp">
 
     <LinearLayout
         android:id="@+id/cardArticle"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="135dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/round_item"
         android:orientation="horizontal">
@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
@@ -34,10 +33,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/poppins_extrabold"
                 android:maxLines="2"
                 android:paddingEnd="20dp"
-
                 android:text="THE CITY THAT NEVER SLEEPS UNDER THE STARS"
+
+                android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -47,6 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:fontFamily="@font/poppins_medium"
+
                 android:maxLines="2"
                 android:text="There is a moment each evening when the city begins to glow with the light of thousands of stars, both above and around you. Neon reflections ripple on wet streets, music drifts from rooftop bars, and every building seems to hum with hidden stories. This is the true pulse of the night, and Starkino invites you to capture it. Every coordinate you save becomes a portal to memory, a digital echo of where you once stood.
 The modern traveler is not guided by maps alone. Instead, we navigate emotions, experiences, and atmosphere. The street corner where you shared a secret, the terrace where the skyline felt infinite, the park where the wind whispered something only you could understand. Each of these deserves a place in your personal constellation of memories.
@@ -65,12 +68,11 @@ As you explore, remember to look up once in a while. The same stars above your c
         android:id="@+id/btnMoreDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FF0000"
-        android:text="More details"
-        android:textAllCaps="true"
-        android:fontFamily="@font/poppins_extrabold"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginStart="30dp"
-    />
+        android:backgroundTint="#FF0000"
+        android:fontFamily="@font/poppins_extrabold"
+        android:text="More details"
+        android:textAllCaps="true" />
 
 </FrameLayout>

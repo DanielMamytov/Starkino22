@@ -68,6 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_extrabold"
+                    android:gravity="center"
                     android:text="Star Notes Detail"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
@@ -101,20 +102,23 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="20dp"
+                            app:strokeColor="#B7FFFFFF"
+                            app:strokeWidth="1dp"
                             app:cardBackgroundColor="#330200"
-                            app:cardCornerRadius="4dp"
+                            app:cardCornerRadius="8dp"
                             app:cardElevation="4dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:paddingVertical="10dp"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="10dp"
+                                android:paddingVertical="10dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Name: "
                                     android:layout_marginStart="10dp"
+                                    android:text="Name: "
                                     android:textColor="#9E9E9E"
                                     android:textStyle="bold" />
 
@@ -122,10 +126,11 @@
                                     android:id="@+id/txt_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Hiking along the valley"
                                     android:layout_marginStart="5dp"
-                                    android:maxLines="1"
                                     android:ellipsize="end"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:maxLines="1"
+                                    android:text="Hiking along the valley"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
 
@@ -138,20 +143,26 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
+                            app:strokeColor="#B7FFFFFF"
+
+                            app:strokeWidth="1dp"
                             android:layout_marginTop="20dp"
                             app:cardBackgroundColor="#330200"
-                            app:cardCornerRadius="4dp"
+                            app:cardCornerRadius="8dp"
                             app:cardElevation="4dp">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
                                     android:text="Notes: "
                                     android:textColor="#9E9E9E"
                                     android:textStyle="bold" />
@@ -160,9 +171,10 @@
                                     android:id="@+id/txt_notes"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="10dp"
+                                    android:layout_marginTop="10dp"
+
+                                    android:fontFamily="@font/poppins_bold"
                                     android:text="Lorem ipsum dolor sit amet consectetur. Rutrum pellentesque tellus in phasellus quam aliquam. Rutrum in dignissim egestas purus consequat at curabitur. Sem cras nunc tempus mauris vestibulum donec eu aliquet. Leo aliquam turpis lectus ut quis aliquam. Aenean eu praesent leo sed. "
-                                    android:layout_marginBottom="20dp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
 

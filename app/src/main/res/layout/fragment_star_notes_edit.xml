@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -54,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_extrabold"
+                android:gravity="center"
                 android:text="Star Notes edit"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
@@ -88,21 +89,23 @@
                         android:layout_marginTop="20dp"
                         app:cardBackgroundColor="#330200"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:strokeColor="#B7FFFFFF"
+                        app:strokeWidth="2dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
-                            android:paddingVertical="10dp"
-                            android:layout_height="match_parent">
+                            android:paddingVertical="10dp">
 
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Name: "
-                                android:textSize="16sp"
                                 android:textColor="#9E9E9E"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
 
 
@@ -112,10 +115,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="8dp"
+                                android:layout_marginEnd="10dp"
                                 android:layout_weight="1"
                                 android:background="@android:color/transparent"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/poppins_medium"
+                                android:fontFamily="@font/poppins_bold"
                                 android:hint="Enter name"
                                 android:inputType="textCapWords"
                                 android:maxLines="1"
@@ -136,20 +140,26 @@
                         android:layout_marginTop="20dp"
                         app:cardBackgroundColor="#330200"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:strokeColor="#B7FFFFFF"
+                        app:strokeWidth="2dp">
+
 
                         <LinearLayout
+                            android:id="@+id/box_notes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_marginTop="10dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:padding="15dp">
 
                             <TextView
+                                android:id="@+id/label_notes"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Notes: "
-                                android:textColor="#9E9E9E"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Notes:"
+                                android:textColor="#A2A2A2"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
                             <EditText
@@ -157,23 +167,68 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:layout_marginBottom="20dp"
                                 android:background="@android:color/transparent"
-                                android:fontFamily="@font/poppins_medium"
+                                android:fontFamily="@font/montserrat_bold"
                                 android:gravity="top|start"
-                                android:hint="Enter notes"
+                                android:hint="Write your note..."
                                 android:inputType="textMultiLine"
-                                android:minHeight="100dp"
                                 android:overScrollMode="never"
                                 android:scrollbars="none"
+                                android:scrollHorizontally="false"
                                 android:textColor="@color/white"
-                                android:textColorHint="#9E9E9E"
-                                android:textSize="16sp"
-                                android:textStyle="bold" /> <!-- Убрали maxLines и поставили wrap_content для высоты -->
-
+                                android:textColorHint="#A2A2A2"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
-
                     </com.google.android.material.card.MaterialCardView>
+
+
+                    <!--                    <com.google.android.material.card.MaterialCardView-->
+                    <!--                        android:id="@+id/card_notes"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        app:strokeColor="#B7FFFFFF"-->
+                    <!--                        app:strokeWidth="1dp"-->
+                    <!--                        android:layout_marginHorizontal="20dp"-->
+                    <!--                        android:layout_marginTop="20dp"-->
+                    <!--                        app:cardBackgroundColor="#330200"-->
+                    <!--                        app:cardCornerRadius="8dp"-->
+                    <!--                        app:cardElevation="4dp">-->
+
+                    <!--                        <LinearLayout-->
+                    <!--                            android:layout_width="match_parent"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginHorizontal="15dp"-->
+                    <!--                            android:layout_marginTop="15dp"-->
+                    <!--                            android:orientation="vertical">-->
+
+                    <!--                            <TextView-->
+                    <!--                                android:layout_width="wrap_content"-->
+                    <!--                                android:layout_height="wrap_content"-->
+                    <!--                                android:text="Notes: "-->
+                    <!--                                android:textColor="#9E9E9E"-->
+                    <!--                                android:textStyle="bold" />-->
+
+                    <!--                            <EditText-->
+                    <!--                                android:id="@+id/txt_notes"-->
+                    <!--                                android:layout_width="match_parent"-->
+                    <!--                                android:layout_height="wrap_content"-->
+                    <!--                                android:layout_marginTop="6dp"-->
+                    <!--                                android:layout_marginBottom="20dp"-->
+                    <!--                                android:background="@android:color/transparent"-->
+                    <!--                                android:fontFamily="@font/poppins_medium"-->
+                    <!--                                android:gravity="top|start"-->
+                    <!--                                android:hint="Enter notes"-->
+                    <!--                                android:inputType="textMultiLine"-->
+                    <!--                                android:scrollbars="none"-->
+                    <!--                                android:textColor="@color/white"-->
+                    <!--                                android:textColorHint="#9E9E9E"-->
+                    <!--                                android:textSize="16sp"-->
+                    <!--                                android:textStyle="bold" /> &lt;!&ndash; Убрали maxLines и поставили wrap_content для высоты &ndash;&gt;-->
+
+                    <!--                        </LinearLayout>-->
+
+                    <!--                    </com.google.android.material.card.MaterialCardView>-->
 
                 </LinearLayout>
 
@@ -220,4 +275,4 @@
     </LinearLayout>
 
 
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>

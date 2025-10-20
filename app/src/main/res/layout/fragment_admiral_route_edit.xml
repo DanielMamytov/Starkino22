@@ -93,6 +93,7 @@
                             android:layout_height="55dp"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="20dp"
+                            app:strokeWidth="@dimen/stroke_2dp"
                             app:cardBackgroundColor="#330200"
                             app:cardCornerRadius="8dp"
                             app:cardElevation="4dp"
@@ -103,16 +104,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@android:color/transparent"
-                                android:fontFamily="@font/poppins_medium"
+                                android:fontFamily="@font/poppins_bold"
+
                                 android:hint="Name:  "
                                 android:imeOptions="actionDone"
+
                                 android:inputType="textCapWords"
                                 android:maxLines="1"
-                                android:textSize="16sp"
                                 android:paddingHorizontal="16dp"
                                 android:paddingVertical="12dp"
                                 android:textColor="@color/white"
                                 android:textColorHint="#9E9E9E"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
                         </com.google.android.material.card.MaterialCardView>
 
@@ -248,6 +251,8 @@
                             android:layout_marginBottom="30dp"
                             app:cardBackgroundColor="#330200"
                             app:cardCornerRadius="8dp"
+                            app:strokeWidth="@dimen/stroke_2dp"
+
                             app:cardElevation="4dp"
                             app:strokeColor="#B7FFFFFF">
 
@@ -277,13 +282,14 @@
                                     android:layout_marginEnd="10dp"
                                     android:layout_marginBottom="20dp"
                                     android:background="@android:color/transparent"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_bold"
                                     android:gravity="start"
-                                    android:textSize="16sp"
+
                                     android:imeOptions="actionDone"
                                     android:inputType="textMultiLine"
                                     android:textColor="@color/white"
                                     android:textColorHint="@color/white"
+                                    android:textSize="16sp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>

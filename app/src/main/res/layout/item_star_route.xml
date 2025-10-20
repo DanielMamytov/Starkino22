@@ -32,13 +32,15 @@
                 <TextView
                     android:id="@+id/txt_city_location"
                     android:layout_width="wrap_content"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/poppins_extrabold"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="ISLAND DISCOVERY"
                     android:textColor="@color/white"
-                    android:textSize="17sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -50,14 +52,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2024-10-26,"
+                        android:fontFamily="@font/poppins_medium"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="#A4A4A4"
                         android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/txt_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="14:30"
                         android:textColor="#A4A4A4"
                         android:textSize="15sp" />

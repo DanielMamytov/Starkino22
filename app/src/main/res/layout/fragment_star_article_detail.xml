@@ -23,10 +23,10 @@
             android:id="@+id/img_header"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
+            android:paddingHorizontal="15dp"
             android:layout_height="55dp"
-            android:layout_marginHorizontal="55dp"
+            android:layout_marginHorizontal="60dp"
             android:contentDescription="@string/article_cover_content_description"
-            android:padding="16dp"
             android:scaleType="centerInside"
             android:background="@drawable/title_article_bg">
 
@@ -38,7 +38,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textAllCaps="true"
                 android:fontFamily="@font/poppins_extrabold"
                 android:layout_gravity="center"/>
@@ -89,6 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="15dp"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="There is a moment each evening when the city begins to glow with the light of thousands of stars, both above and around you. Neon reflections ripple on wet streets, music drifts from rooftop bars, and every building seems to hum with hidden stories. This is the true pulse of the night, and Starkino invites you to capture it. Every coordinate you save becomes a portal to memory, a digital echo of where you once stood. [...]"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />

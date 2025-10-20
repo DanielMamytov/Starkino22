@@ -11,196 +11,201 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/card_coordinates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:cardBackgroundColor="#330200"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:strokeColor="#B8FFFFFF"
-        app:strokeWidth="1dp">
-
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/card_coordinates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dp">
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#330200"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
 
-            <!-- Заголовок с точкой -->
+            app:strokeColor="#B8FFFFFF"
+            app:strokeWidth="@dimen/stroke_2dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingTop="10dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_point" />
-
-                <TextView
-                    android:id="@+id/tv_point_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_extrabold"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    tools:text="Point 1" />
-
-
-            </LinearLayout>
-
-            <!-- Latitude -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Latitude:"
-                    android:textColor="#A2A2A2"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/et_latitude1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:background="@android:color/transparent"
-                    android:fontFamily="@font/poppins_medium"
-                    android:hint="Enter latitude"
-                    android:imeOptions="actionNext"
-                    android:digits="-0123456789."
-                    android:inputType="numberDecimal|numberSigned"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/white"
-                    android:textColorHint="#A2A2A2"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Longitude -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingTop="10dp"
+                android:orientation="vertical"
                 android:paddingBottom="10dp">
 
+                <!-- Заголовок с точкой -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="10dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_point" />
+
+                    <TextView
+                        android:id="@+id/tv_point_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_extrabold"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        tools:text="Point 1" />
+
+
+                </LinearLayout>
+
+                <!-- Latitude -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Latitude:"
+                        android:textColor="#A2A2A2"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_latitude1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:digits="-0123456789."
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_medium"
+                        android:hint="Enter latitude"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="#A2A2A2"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Longitude -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Longitude:"
+                        android:textColor="#A2A2A2"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_longitude1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:digits="-0123456789."
+
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_medium"
+                        android:hint="Enter longitude"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="#A2A2A2"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_location"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#330200"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:strokeColor="#B8FFFFFF"
+            app:strokeWidth="@dimen/stroke_2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Longitude:"
+                    android:text="Location:"
+
                     android:textColor="#A2A2A2"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/et_longitude1"
+                    android:id="@+id/et_location1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:textSize="15sp"
-
                     android:background="@android:color/transparent"
+                    android:ellipsize="end"
                     android:fontFamily="@font/poppins_medium"
-                    android:hint="Enter longitude"
+                    android:hint="Enter location"
                     android:imeOptions="actionDone"
-                    android:digits="-0123456789."
-                    android:inputType="numberDecimal|numberSigned"
+                    android:inputType="textCapWords"
                     android:maxLines="1"
                     android:textColor="@color/white"
                     android:textColorHint="#A2A2A2"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-        </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_location"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-
-        app:cardBackgroundColor="#330200"
-        app:strokeColor="#B8FFFFFF"
-
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:strokeWidth="1dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Location:"
-
-                android:textColor="#A2A2A2"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_location1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:hint="Enter location"
-                android:imeOptions="actionDone"
-                android:inputType="textCapWords"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:fontFamily="@font/poppins_medium"
-                android:textColorHint="#A2A2A2"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-    </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_delete_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete point"
-            android:textAllCaps="true"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#FF0000"
             android:fontFamily="@font/poppins_extrabold"
-            android:backgroundTint="#FF0000"/>
+            android:text="Delete point"
+            android:textAllCaps="true" />
 
-    <View
-        android:layout_width="100dp"
-        android:layout_height="2dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:background="#FF0000" />
+        <View
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="#FF0000" />
     </LinearLayout>
 
 </FrameLayout>

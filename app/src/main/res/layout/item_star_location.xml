@@ -23,16 +23,18 @@
             android:id="@+id/txt_city_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:textAllCaps="true"
+            android:fontFamily="@font/poppins_extrabold"
+            android:maxLines="1"
+            android:paddingEnd="10dp"
+            android:scrollHorizontally="false"
+            android:singleLine="true"
             android:text="ISLAND DISCOVERY"
             android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:paddingEnd="10dp"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_weight="1"
-            android:scrollHorizontally="false" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
         <LinearLayout
@@ -43,9 +45,10 @@
                 android:id="@+id/txt_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2024-10-26,"
                 android:ellipsize="end"
+                android:fontFamily="@font/poppins_medium"
                 android:maxLines="1"
+                android:text="2024-10-26,"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -54,12 +57,14 @@
                 android:id="@+id/txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ellipsize="end"
+
+                android:fontFamily="@font/poppins_medium"
+                android:maxLines="1"
                 android:text="14:30"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
-                android:ellipsize="end"
-                android:layout_marginStart="5dp"
-                android:maxLines="1"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -71,9 +76,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lat:"
                 android:ellipsize="end"
+                android:fontFamily="@font/poppins_medium"
                 android:maxLines="1"
+
+                android:text="Lat:"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -82,9 +89,11 @@
                 android:id="@+id/txt_lat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15,234"
                 android:ellipsize="end"
+                android:fontFamily="@font/poppins_medium"
                 android:maxLines="1"
+                android:text="15,234"
+
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -93,10 +102,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:ellipsize="end"
+
+                android:fontFamily="@font/poppins_medium"
+                android:maxLines="1"
                 android:text="Lon."
                 android:textColor="#A4A4A4"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -104,12 +115,14 @@
                 android:id="@+id/txt_lon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-61.789"
+
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_medium"
+                android:maxLines="1"
                 android:paddingEnd="10dp"
+                android:text="-61.789"
                 android:textColor="#A4A4A4"
                 android:textSize="15sp"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:textStyle="bold" />
 
         </LinearLayout>
