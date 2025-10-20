@@ -183,52 +183,52 @@
                     </com.google.android.material.card.MaterialCardView>
 
 
-                    <!--                    <com.google.android.material.card.MaterialCardView-->
-                    <!--                        android:id="@+id/card_notes"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        app:strokeColor="#B7FFFFFF"-->
-                    <!--                        app:strokeWidth="1dp"-->
-                    <!--                        android:layout_marginHorizontal="20dp"-->
-                    <!--                        android:layout_marginTop="20dp"-->
-                    <!--                        app:cardBackgroundColor="#330200"-->
-                    <!--                        app:cardCornerRadius="8dp"-->
-                    <!--                        app:cardElevation="4dp">-->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                        <LinearLayout-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginHorizontal="15dp"-->
-                    <!--                            android:layout_marginTop="15dp"-->
-                    <!--                            android:orientation="vertical">-->
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                            <TextView-->
-                    <!--                                android:layout_width="wrap_content"-->
-                    <!--                                android:layout_height="wrap_content"-->
-                    <!--                                android:text="Notes: "-->
-                    <!--                                android:textColor="#9E9E9E"-->
-                    <!--                                android:textStyle="bold" />-->
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                            <EditText-->
-                    <!--                                android:id="@+id/txt_notes"-->
-                    <!--                                android:layout_width="match_parent"-->
-                    <!--                                android:layout_height="wrap_content"-->
-                    <!--                                android:layout_marginTop="6dp"-->
-                    <!--                                android:layout_marginBottom="20dp"-->
-                    <!--                                android:background="@android:color/transparent"-->
-                    <!--                                android:fontFamily="@font/poppins_medium"-->
-                    <!--                                android:gravity="top|start"-->
-                    <!--                                android:hint="Enter notes"-->
-                    <!--                                android:inputType="textMultiLine"-->
-                    <!--                                android:scrollbars="none"-->
-                    <!--                                android:textColor="@color/white"-->
-                    <!--                                android:textColorHint="#9E9E9E"-->
-                    <!--                                android:textSize="16sp"-->
-                    <!--                                android:textStyle="bold" /> &lt;!&ndash; Убрали maxLines и поставили wrap_content для высоты &ndash;&gt;-->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                        </LinearLayout>-->
+                    
 
-                    <!--                    </com.google.android.material.card.MaterialCardView>-->
+                    
 
                 </LinearLayout>
 

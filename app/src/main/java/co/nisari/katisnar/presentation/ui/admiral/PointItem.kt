@@ -30,7 +30,6 @@ class PointAdapter(
     private val onRemove: (index: Int) -> Unit = {}
 ) : RecyclerView.Adapter<PointAdapter.VH>() {
 
-    // когда true — показываем красные рамки для пустых полей
     var validationActivated: Boolean = false
         set(value) {
             if (field == value) return
@@ -48,13 +47,11 @@ class PointAdapter(
 
     fun snapshotItems(): List<PointItem> = items.map { it.copy() }
 
-    /** Добавляем новую точку */
     fun addPoint(item: PointItem) {
         items.add(item)
         notifyItemInserted(items.size - 1)
     }
 
-    /** Удаляем по индексу */
     fun removeAt(index: Int) {
         if (index in items.indices) {
             items.removeAt(index)
@@ -134,7 +131,6 @@ class PointAdapter(
 
             tvTitle.text = itemView.context.getString(R.string.point_title_placeholder, position + 1)
 
-            // --- LAT ---
             latWatcher?.let { etLat.removeTextChangedListener(it) }
             if (etLat.text.toString() != item.lat) etLat.setText(item.lat)
             latWatcher = etLat.doAfterTextChanged { text ->
@@ -147,7 +143,6 @@ class PointAdapter(
                 applyCoordinateUI(idx)
             }
 
-            // --- LNG ---
             lngWatcher?.let { etLng.removeTextChangedListener(it) }
             if (etLng.text.toString() != item.lng) etLng.setText(item.lng)
             lngWatcher = etLng.doAfterTextChanged { text ->
@@ -160,7 +155,6 @@ class PointAdapter(
                 applyCoordinateUI(idx)
             }
 
-            // --- LOCATION ---
             locWatcher?.let { etLocation.removeTextChangedListener(it) }
             if (etLocation.text.toString() != item.location) etLocation.setText(item.location)
             locWatcher = etLocation.doAfterTextChanged { text ->

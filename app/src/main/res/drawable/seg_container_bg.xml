@@ -1,6 +1,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Внешнее "свечение" и рамка -->
+    
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="14dp"/>
@@ -9,7 +9,7 @@
         </shape>
     </item>
 
-    <!-- Внутренний фон (тёмно-синий #00133C) -->
+    
     <item android:left="3dp" android:top="3dp" android:right="3dp" android:bottom="3dp">
         <shape android:shape="rectangle">
             <corners android:radius="14dp"/>

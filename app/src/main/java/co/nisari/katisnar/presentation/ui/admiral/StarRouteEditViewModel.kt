@@ -26,7 +26,7 @@ class StarRouteEditViewModel @Inject constructor(
         val date: LocalDate? = null,
         val time: LocalTime? = null,
         val description: String = "",
-        val points: List<PointItem> = emptyList(), // (latStr, lngStr) в UI
+        val points: List<PointItem> = emptyList(),
         val isLoading: Boolean = false
     )
 
@@ -158,7 +158,6 @@ class StarRouteEditViewModel @Inject constructor(
         }
     }
 
-    // Инициализация значений для режима Create
     fun prefillNowIfNeeded(nowDate: LocalDate, nowTime: LocalTime) {
         state.update { st ->
             val withDateTime = st.copy(

@@ -72,12 +72,12 @@
                     android:src="@drawable/cube_img" />
 
             </LinearLayout>
-            <!--            <androidx.viewpager2.widget.ViewPager2-->
-            <!--                android:id="@+id/img_mark"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="198dp"-->
-            <!--                android:layout_marginTop="90dp"-->
-            <!--             />-->
+            
+            
+            
+            
+            
+            
 
 
             <FrameLayout

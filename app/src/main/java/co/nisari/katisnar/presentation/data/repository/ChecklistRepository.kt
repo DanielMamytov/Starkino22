@@ -20,7 +20,7 @@ class ChecklistRepository @Inject constructor(
 
     suspend fun updateChecklist(id: Long, title: String, createdAt: Long, items: List<ChecklistItemEntity>) {
         dao.updateChecklist(ChecklistEntity(id = id, title = title, createdAt = createdAt))
-        dao.deleteItemsByChecklist(id)               // простой путь: подчистить
+        dao.deleteItemsByChecklist(id)
         if (items.isNotEmpty()) {
             dao.insertItems(items.map { it.copy(id = 0, checklistId = id) })
         }

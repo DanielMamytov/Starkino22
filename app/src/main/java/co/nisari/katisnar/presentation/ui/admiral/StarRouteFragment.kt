@@ -36,8 +36,6 @@ class StarRouteFragment : Fragment() {
         )
     }
 
-    // простейший «пустой стейт» поверх лейаута без правок XML
-// простейший «пустой стейт» поверх лейаута без привязки к типу корня
     private var emptyView: TextView? = null
 
     private fun showEmpty(show: Boolean) {
@@ -55,10 +53,8 @@ class StarRouteFragment : Fragment() {
                     setPadding(24, 24, 24, 24)
                 }
 
-                // гарантируем id у родителя для констрейнтов
                 ensureHasId(parent)
 
-                // корректные LayoutParams под тип контейнера
                 val lp: ViewGroup.LayoutParams = when (parent) {
                     is ConstraintLayout -> {
                         ConstraintLayout.LayoutParams(
@@ -109,14 +105,11 @@ class StarRouteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // список
         binding.rvLocations.adapter = adapter
 
-        // кнопки
         binding.btnAddRoute.setOnClickListener { vm.onAddRouteClick() }
         binding.btnBack.setOnClickListener { vm.onBack() }
 
-        // данные списка
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.routes.collect { list ->
                 adapter.submitList(list)
@@ -124,20 +117,17 @@ class StarRouteFragment : Fragment() {
             }
         }
 
-        // события навигации/тосты
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.ui.collect { e ->
                 when (e) {
                     is UiEvent.NavigateBack -> findNavController().popBackStack()
                     is UiEvent.NavigateToDetail -> {
-                        // замените на ваш action/id и аргумент "id"
                         findNavController().navigate(
                             R.id.action_starRouteFragment_to_admiralRouteDetailFragment,
                             bundleOf("id" to e.id)
                         )
                     }
                     is UiEvent.NavigateToEdit -> {
-                        // null = создание; не передаём аргумент
                         if (e.id == null) {
                             findNavController().navigate(R.id.action_starRouteFragment_to_admiralRouteEditFragment)
                         } else {

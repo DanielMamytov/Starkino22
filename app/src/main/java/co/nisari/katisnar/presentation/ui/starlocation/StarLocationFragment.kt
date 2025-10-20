@@ -39,7 +39,6 @@ class StarLocationFragment : Fragment() {
 
         binding.rvLocations.adapter = adapter
 
-        // подписка на список
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.locations.collect { locations ->
                 adapter.submitList(locations)
@@ -47,12 +46,10 @@ class StarLocationFragment : Fragment() {
             }
         }
 
-        // подписка на события UI
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.NavigateToDetail -> {
-                        // переход на экран деталей
                         findNavController().navigate(
                             R.id.action_starLocationFragment_to_starLocationDetailFragment,
                             bundleOf("id" to event.id)

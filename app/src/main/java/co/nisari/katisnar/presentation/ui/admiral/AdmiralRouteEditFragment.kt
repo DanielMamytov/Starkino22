@@ -76,8 +76,8 @@ class AdmiralRouteEditFragment : Fragment() {
 
     private var validationActivated = false
 
-    private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") } // полупрозрачный белый
-    private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }   // красный
+    private val normalStrokeColor by lazy { Color.parseColor("#B8FFFFFF") }
+    private val errorStrokeColor by lazy { Color.parseColor("#FF0000") }
 
     private data class ValidationResult(
         val nameEmpty: Boolean,
@@ -318,9 +318,8 @@ class AdmiralRouteEditFragment : Fragment() {
         if (!binding.txtTime.text?.toString()?.trim().isNullOrEmpty()) setTimeError(false)
     }
 
-    // ======= ВКЛ/ВЫКЛ КРАСНЫХ РАМОК =======
     private fun setNameError(error: Boolean) {
-        val card: MaterialCardView = binding.name   // id у MaterialCardView вокруг Name: @+id/name
+        val card: MaterialCardView = binding.name
         card.strokeWidth = resources.getDimensionPixelSize(R.dimen.stroke_2dp)
         card.strokeColor = if (error) errorStrokeColor else normalStrokeColor
     }
@@ -342,7 +341,6 @@ class AdmiralRouteEditFragment : Fragment() {
         box.setBackgroundResource(if (error) R.drawable.text_border_error else R.drawable.text_border)
     }
 
-    // ======= DIALOGS / PICKERS =======
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showDatePicker(current: LocalDate?, onPicked: (LocalDate) -> Unit) {
         val c = current ?: LocalDate.now()
@@ -370,7 +368,6 @@ class AdmiralRouteEditFragment : Fragment() {
             .setView(et)
             .setPositiveButton("OK") { _, _ ->
                 vm.onDescChange(et.text.toString())
-                // если уже активирована валидация — снимем красную рамку, если поле непустое
                 markDescriptionIfFilled()
             }
             .setNegativeButton("Cancel", null)

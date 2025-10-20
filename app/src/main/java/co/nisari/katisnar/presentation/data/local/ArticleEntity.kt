@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class ArticleEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
-    val coverUri: Int?,   // путь к локальному ресурсу/файлу, можно null
+    val coverUri: Int?,
     val content: String
 )

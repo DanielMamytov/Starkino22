@@ -19,7 +19,6 @@ class ChecklistAdapter(
             cb.text = item.text
             cb.isChecked = item.checked
 
-            // снимаем старый listener, чтобы не дёргался при переиспользовании
             cb.setOnCheckedChangeListener(null)
             cb.isChecked = item.checked
             cb.setOnCheckedChangeListener { _, isChecked ->

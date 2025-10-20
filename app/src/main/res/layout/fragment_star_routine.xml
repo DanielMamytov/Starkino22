@@ -7,7 +7,7 @@
     android:background="@drawable/background_star_location_screen"
     tools:context=".presentation.ui.admiral.StarRouteFragment">
 
-    <!-- Back -->
+    
     <ImageView
         android:id="@+id/btn_back"
         android:layout_width="66dp"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_back">
 
-        <!-- Заголовок -->
+        
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -47,8 +47,8 @@
 
     </FrameLayout>
 
-    <!-- Список -->
-    <!-- Список -->
+    
+    
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_locations"
         android:layout_width="0dp"
@@ -68,7 +68,7 @@
         tools:listitem="@layout/item_star_route" />
 
 
-    <!-- Кнопка добавления -->
+    
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_route"
         android:layout_width="wrap_content"

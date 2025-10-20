@@ -20,7 +20,7 @@
             android:orientation="vertical"
             android:paddingBottom="10dp">
 
-            <!-- Заголовок с точкой -->
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Latitude -->
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Longitude -->
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -35,7 +35,6 @@ class StarLocationEditFragment : Fragment() {
     private lateinit var binding: FragmentStarLocationEditBinding
     private val vm: StarLocationEditViewModel by viewModels()
 
-    /** Включать подсветку ошибок только после первого нажатия Save */
     private var validationActivated = false
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -54,10 +53,6 @@ class StarLocationEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
-        // 1) Режим: создание или редактирование
         val args = arguments
         val id = if (args != null && args.containsKey("id")) args.getLong("id") else null
         if (id != null) {
@@ -65,34 +60,27 @@ class StarLocationEditFragment : Fragment() {
             binding.btnDelete.visibility = View.VISIBLE
         } else {
             binding.btnDelete.visibility = View.GONE
-            // Префилл текущей датой/временем
             if (vm.state.value.date == null) vm.onDatePicked(LocalDate.now())
             if (vm.state.value.time == null) vm.onTimePicked(
                 LocalTime.now().withSecond(0).withNano(0)
             )
         }
 
-        // 2) Подписка на состояние
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.state.collect { s ->
-                // name
                 if (binding.etName.text.toString() != s.name)
                     binding.etName.setText(s.name)
 
-                // location
                 binding.txtLocation.setTextIfDifferent(s.location)
 
-                // time
                 val timeText = s.time?.format(timeFmt) ?: ""
                 binding.txtTime.setTextIfDifferent(timeText)
 
-                // date
                 binding.txtDate.text = s.date?.format(dateFmt) ?: ""
 
                 val dateText = s.date?.format(dateFmt) ?: ""
                 binding.txtDate.setTextIfDifferent(dateText)
 
-                // lat/lng
                 if (binding.txtLatitude.text?.toString() != s.lat) {
                     binding.txtLatitude.setText(s.lat)
                 }
@@ -107,7 +95,6 @@ class StarLocationEditFragment : Fragment() {
                     ?.lowercase()?.replaceFirstChar { it.uppercase() } ?: "Weather"
                 binding.txtWeather.setTextIfDifferent(weatherText)
 
-                // notes
                 if (binding.etNotes.text.toString() != s.notes)
                     binding.etNotes.setText(s.notes)
 
@@ -115,7 +102,6 @@ class StarLocationEditFragment : Fragment() {
             }
         }
 
-        // 3) Слушатели ввода
         binding.etName.doOnTextChanged { t, _, _, _ ->
             vm.onNameChanged(t?.toString().orEmpty())
             markNameIfFilled()
@@ -131,21 +117,18 @@ class StarLocationEditFragment : Fragment() {
             markTimeIfFilled()
         }
 
-        // 4) Выбор даты
         val openDate = {
             showDatePicker()
         }
         binding.txtDate.setOnClickListener { openDate() }
         binding.icArrowDate.setOnClickListener { openDate() }
 
-        // 5) Выбор времени
         val openTime = {
             showTimePicker()
         }
         binding.txtTime.setOnClickListener { openTime() }
         binding.icArrowTime.setOnClickListener { openTime() }
 
-        // 6) Ввод координат (диалоги на TextView, т.к. у тебя они не EditText)
         binding.txtLocation.doOnTextChanged { t, _, _, _ ->
             vm.onLocationChanged(t?.toString().orEmpty())
             markLocationIfFilled()
@@ -175,19 +158,16 @@ class StarLocationEditFragment : Fragment() {
                 toast(getString(R.string.toast_longitude_range))
             }
         )
-        // 7) Выбор погоды
         val openWeather = { showWeatherDialog() }
         binding.txtWeather.setOnClickListener { openWeather() }
         binding.icDropdown.setOnClickListener { openWeather() }
         binding.icWeather.setOnClickListener { openWeather() }
 
-        // 8) Кнопки
         binding.btnSave.setOnClickListener { onSaveClicked() }
         binding.btnCancel.setOnClickListener { vm.onBack() }
         binding.btnBack.setOnClickListener { vm.onBack() }
         binding.btnDelete.setOnClickListener { vm.requestDelete() }
 
-        // 9) UI-события (тосты / диалоги / навигация)
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.events.collect { e ->
                 when (e) {
@@ -343,8 +323,6 @@ class StarLocationEditFragment : Fragment() {
     private fun setNotesError(error: Boolean) {
         binding.boxNotes.setBackgroundResource(if (error) R.drawable.edittext_border_error_bg else R.drawable.edittext_border_bg)
     }
-
-    // ---------- helpers ----------
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showDatePicker() {

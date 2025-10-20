@@ -57,21 +57,6 @@ class StarLocationDetailFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        val blurView = requireView().findViewById<BlurView>(R.id.blurView)
-//        val decorView = requireActivity().window.decorView
-//        val windowBackground: Drawable = decorView.background
-//
-//        blurView.setupWith(decorView.findViewById(android.R.id.content)) // размывает всё под ним
-//            .setFrameClearDrawable(windowBackground)
-//            .setBlurRadius(25f) // сила размытия
-//
-//        blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
-//        blurView.setClipToOutline(true)
-
-
-
-
         val id = arguments?.getLong("id") ?: run {
             Toast.makeText(
                 requireContext(),
@@ -84,7 +69,6 @@ class StarLocationDetailFragment : Fragment() {
         viewModel.loadLocation(id)
 
 
-        // Подписка на данные
         resetValidation()
 
         var hasLoadedLocation = false
@@ -170,10 +154,9 @@ class StarLocationDetailFragment : Fragment() {
                                         "id",
                                         event.id
                                     )
-                                } // здесь уже Long, не Long?
+                                }
                             )
                         } else {
-                            // вариант на будущее: открыть создание без аргументов
                             findNavController().navigate(
                                 R.id.action_starLocationDetailFragment_to_starLocationEditFragment
                             )

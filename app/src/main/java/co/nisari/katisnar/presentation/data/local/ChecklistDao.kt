@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ChecklistDao {
 
-    // Списки с пунктами
     @Transaction
     @Query("SELECT * FROM checklists ORDER BY createdAt DESC")
     fun getAllWithItems(): Flow<List<ChecklistWithItems>>
@@ -15,7 +14,6 @@ interface ChecklistDao {
     @Query("SELECT * FROM checklists WHERE id = :id")
     fun getWithItems(id: Long): Flow<ChecklistWithItems?>
 
-    // Чеклист
     @Insert
     suspend fun insertChecklist(list: ChecklistEntity): Long
 
@@ -25,7 +23,6 @@ interface ChecklistDao {
     @Query("DELETE FROM checklists WHERE id = :id")
     suspend fun deleteChecklist(id: Long)
 
-    // Пункты
     @Insert
     suspend fun insertItems(items: List<ChecklistItemEntity>)
 

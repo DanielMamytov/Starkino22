@@ -5,5 +5,5 @@
     android:endColor="#330200"
     android:centerX="50%"
     android:centerY="50%" />
-    <corners android:radius="0dp" /> <!-- You can adjust radius if needed -->
+    <corners android:radius="0dp" /> 
 </shape>

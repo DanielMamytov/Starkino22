@@ -1,7 +1,7 @@
-<!-- res/drawable/progress_layer.xml -->
+
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 1) Фон-трек (чёрный) -->
+    
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="999dp"/>
@@ -9,7 +9,7 @@
         </shape>
     </item>
 
-    <!-- 2) Прогресс (красный с клипом) -->
+    
     <item android:id="@android:id/progress">
         <clip android:clipOrientation="horizontal" android:gravity="left">
             <shape>
@@ -19,7 +19,7 @@
         </clip>
     </item>
 
-    <!-- 3) Оверлей-СТРОК сверху всего -->
+    
     <item>
         <shape>
             <corners android:radius="999dp"/>
