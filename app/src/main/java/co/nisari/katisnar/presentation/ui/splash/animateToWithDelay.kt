@@ -11,9 +11,7 @@ fun ProgressBar.animateToWithDelay(
     delayMs: Long = 300L,
     durationMs: Long = 600L
 ) {
-    // безопасное значение в пределах [0, max]
     val clamped = target.coerceIn(0, max)
-    // задержка без блокировки UI
     this.postDelayed({
         val anim = ValueAnimator.ofInt(progress, clamped).apply {
             duration = durationMs

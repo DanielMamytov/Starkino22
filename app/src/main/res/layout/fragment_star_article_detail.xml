@@ -44,7 +44,7 @@
                 android:layout_gravity="center"/>
         </FrameLayout>
 
-        <!-- Этот LinearLayout уже не требует прокрутки -->
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginHorizontal="20dp"
@@ -77,7 +77,7 @@
                 android:layout_marginBottom="10dp"
                 app:cardElevation="4dp">
 
-                <!-- Текст внутри этого ScrollView -->
+                
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

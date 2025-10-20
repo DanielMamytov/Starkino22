@@ -50,7 +50,6 @@ class AdmiralRoutesDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 1) аргумент id (через SafeArgs или обычный Bundle)
         val routeId = requireArguments().getLong("id", -1L)
         if (routeId == -1L) {
             Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
@@ -59,7 +58,6 @@ class AdmiralRoutesDetailFragment : Fragment() {
         }
         vm.load(routeId)
 
-        // 2) кнопки
         binding.btnBack.setOnClickListener { vm.onBack() }
         binding.btnEdit.setOnClickListener { vm.onEdit() }
         binding.btnDelete.setOnClickListener { vm.onDelete() }
@@ -76,7 +74,6 @@ class AdmiralRoutesDetailFragment : Fragment() {
             keyListener = null
         }
 
-        // 3) подписка на данные
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.state
                 .filterNotNull()

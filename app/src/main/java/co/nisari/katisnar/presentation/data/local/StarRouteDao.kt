@@ -10,11 +10,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StarRouteDao {
 
-    // список (без точек)
     @Query("SELECT * FROM star_routes ORDER BY date DESC, time DESC")
     fun getAll(): Flow<List<StarRoute>>
 
-    // детали/редактирование (с точками)
     @Transaction
     @Query("SELECT * FROM star_routes WHERE id = :id LIMIT 1")
     fun getRouteWithPoints(id: Long): Flow<StarRouteWithPoints?>

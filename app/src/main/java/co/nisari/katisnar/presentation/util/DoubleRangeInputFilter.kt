@@ -3,10 +3,6 @@ package co.nisari.katisnar.presentation.util
 import android.text.InputFilter
 import android.text.Spanned
 
-/**
- * InputFilter that restricts user input to a given [min]-[max] range for decimal numbers.
- * Allows intermediate states like "-" or "." while typing so the user can finish the input.
- */
 class DoubleRangeInputFilter(
     private val min: Double,
     private val max: Double,

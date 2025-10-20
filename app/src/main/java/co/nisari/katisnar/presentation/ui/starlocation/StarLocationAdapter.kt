@@ -58,7 +58,6 @@ class StarLocationAdapter(
             txtLat.text = String.format("%.4f", item.lat)
             txtLon.text = String.format("%.4f", item.lng)
 
-            // Клик по всей карточке
             itemView.setOnClickListener { onItemClick(item) }
         }
     }

@@ -94,8 +94,6 @@ class StarRouteDetailViewModel @Inject constructor(
             return
         }
 
-        // Google Maps App/Web поддерживают до ~25 пунктов (origin + destination + <=23 waypoints).
-        // Ограничим на всякий случай, чтобы не было слишком длинной ссылки.
         val limited = pts.take(25)
 
         val uri = if (limited.size == 1) {

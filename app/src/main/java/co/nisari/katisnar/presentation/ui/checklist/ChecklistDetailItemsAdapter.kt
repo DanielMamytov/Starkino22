@@ -42,7 +42,6 @@ class ChecklistDetailItemsAdapter(
                 etItem.keyListener = null
                 etItem.isLongClickable = false
 
-//                btnRemove.isVisible = false
             }
         }
     }

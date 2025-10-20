@@ -83,7 +83,7 @@
                     android:paddingBottom="30dp">
 
 
-                    <!-- здесь твой фон/контент, который должен размываться -->
+                    
 
 
                     <LinearLayout
@@ -277,7 +277,7 @@
                             android:layout_marginTop="10dp"
                             android:orientation="vertical">
 
-                            <!-- Latitude -->
+                            
                             <LinearLayout
                                 android:id="@+id/box_latitude"
                                 android:layout_width="match_parent"
@@ -319,7 +319,7 @@
                                     android:textStyle="bold" />
                             </LinearLayout>
 
-                            <!-- Longitude -->
+                            
                             <LinearLayout
                                 android:id="@+id/box_longitude"
                                 android:layout_width="match_parent"
@@ -378,14 +378,14 @@
                             android:paddingHorizontal="14dp"
                             android:paddingVertical="8dp">
 
-                            <!-- Иконка погоды -->
+                            
                             <ImageView
                                 android:id="@+id/ic_weather"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@drawable/weather_icon" />
 
-                            <!-- Текст Weather -->
+                            
                             <TextView
                                 android:id="@+id/txt_weather"
                                 android:layout_width="0dp"
@@ -398,7 +398,7 @@
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
 
-                            <!-- Иконка стрелки вниз -->
+                            
                             <ImageView
                                 android:id="@+id/ic_dropdown"
                                 android:layout_width="20dp"

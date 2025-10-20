@@ -187,57 +187,57 @@
                             android:textSize="15sp" />
                     </LinearLayout>
 
-                    <!--                        <CheckBox-->
-                    <!--                            android:id="@+id/checkBox1"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginStart="6dp"-->
-                    <!--                            android:checked="true"-->
-                    <!--                            android:text="Get up at 7:00 AM"-->
-                    <!--                            android:textColor="#FFFFFF"-->
-                    <!--                            android:textStyle="bold" />-->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                        <CheckBox-->
-                    <!--                            android:id="@+id/checkBox2"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginStart="6dp"-->
-                    <!--                            android:checked="true"-->
-                    <!--                            android:text="Have a coffee at DraftCoffee"-->
-                    <!--                            android:textColor="#FFFFFF"-->
-                    <!--                            android:textStyle="bold" />-->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                        <CheckBox-->
-                    <!--                            android:id="@+id/checkBox3"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginStart="6dp"-->
-                    <!--                            android:checked="false"-->
-                    <!--                            android:text="Take hiking boots with you"-->
-                    <!--                            android:textColor="#FFFFFF"-->
-                    <!--                            android:textStyle="bold" />-->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                        <CheckBox-->
-                    <!--                            android:id="@+id/checkBox4"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginStart="6dp"-->
-                    <!--                            android:checked="false"-->
-                    <!--                            android:text="Hike up the mountain 9 km"-->
-                    <!--                            android:textColor="#FFFFFF"-->
-                    <!--                            android:textStyle="bold" />-->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                        <CheckBox-->
-                    <!--                            android:id="@+id/checkBox5"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginStart="6dp"-->
-                    <!--                            android:checked="false"-->
-                    <!--                            android:text="Spend the night in a cabin in the mountains"-->
-                    <!--                            android:textColor="#FFFFFF"-->
-                    <!--                            android:textStyle="bold" />-->
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
-                    <!--                    </LinearLayout>-->
+                    
 
                 </com.google.android.material.card.MaterialCardView>
 
